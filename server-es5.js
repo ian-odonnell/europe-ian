@@ -127,7 +127,7 @@ app.set('views', _path2.default.join(__dirname, './client/views'));
 // define the folder that will be used for static assets
 app.use(_express2.default.static(_path2.default.join(__dirname, './client/static')));
 
-app.get('/api', _api2.default);
+app.use('/api', _api2.default);
 
 // universal routing and rendering
 app.get('*', function (req, res) {
@@ -395,6 +395,10 @@ var router = _express2.default.Router();
 
 router.get('/version', function (req, res) {
   res.json({ ver: 1.1 });
+});
+
+router.use(function (req, res, next) {
+  res.status(404).send('Not found');
 });
 
 exports.default = router;
