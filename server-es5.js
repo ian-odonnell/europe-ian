@@ -61,7 +61,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -80,28 +80,22 @@ module.exports = require("react-router-dom");
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("path");
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
 module.exports = require("express");
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _path = __webpack_require__(2);
+var _path = __webpack_require__(4);
 
 var _path2 = _interopRequireDefault(_path);
 
 var _http = __webpack_require__(5);
 
-var _express = __webpack_require__(3);
+var _express = __webpack_require__(2);
 
 var _express2 = _interopRequireDefault(_express);
 
@@ -171,6 +165,12 @@ server.listen(port, function (err) {
   }
   return console.info('\n      Server running on http://localhost:' + port + ' [' + env + ']\n      Universal rendering: ' + (process.env.UNIVERSAL ? 'enabled' : 'disabled') + '\n    ');
 });
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = require("path");
 
 /***/ }),
 /* 5 */
@@ -385,15 +385,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _express = __webpack_require__(3);
+var _express = __webpack_require__(2);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _dbmodels = __webpack_require__(11);
+var _sequelize = __webpack_require__(11);
 
-var _dbmodels2 = _interopRequireDefault(_dbmodels);
+var _sequelize2 = _interopRequireDefault(_sequelize);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var router = _express2.default.Router();
 
@@ -401,9 +403,46 @@ router.get('/version', function (req, res) {
   res.json({ ver: 1.1 });
 });
 
-router.get('/game', function (req, res) {
-  res.json({ name: 'Some game' });
-});
+router.get('/game', function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
+    var dbSettings, sequelize, result;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            dbSettings = {
+              host: 'ian-odonnell.ddatabase.windows.net', //config.host,
+              dialect: 'mssql',
+              dialectOptions: { encrypt: true },
+              pool: {
+                min: 0, //config.connectionPools.min,
+                max: 5, //config.connectionPools.max,
+                idle: 10000 //config.connectionPools.idle
+              },
+              logging: true
+            };
+            sequelize = new _sequelize2.default('chievechat', 'ian-odonnell', '001T6NgToml', dbSettings);
+            _context.next = 4;
+            return sequelize.query("select * from games");
+
+          case 4:
+            result = _context.sent;
+
+
+            res.json({ name: result[0] });
+
+          case 6:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, undefined);
+  }));
+
+  return function (_x, _x2) {
+    return _ref.apply(this, arguments);
+  };
+}());
 
 router.use(function (req, res, next) {
   res.status(404).send('Not found');
@@ -413,68 +452,6 @@ exports.default = router;
 
 /***/ }),
 /* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var fs = __webpack_require__(12);
-var path = __webpack_require__(2);
-var Sequelize = __webpack_require__(13);
-var env = process.env.NODE_ENV || "development";
-
-// var config = require(path.join(__dirname, '../../config', 'config.json'))[env];
-
-var dbSettings = {
-  host: 'ian-odonnell.database.windows.net', //config.host,
-  dialect: 'mssql',
-  dialectOptions: { encrypt: true },
-  pool: {
-    min: 0, //config.connectionPools.min,
-    max: 5, //config.connectionPools.max,
-    idle: 10000 //config.connectionPools.idle
-  },
-  logging: true
-};
-
-var sequelize;
-
-if (process.env.DATABASE_URL) {
-  sequelize = new Sequelize(process.env.DATABASE_URL, dbSettings);
-} else {
-  // var sequelize = new Sequelize(config.database, config.username, config.password, config);
-  // var sequelize = new Sequelize('one-goal', 'sa', '106Points', { host: 'localhost', dialect: 'mysql', pool: { max: 5, min: 0, idle: 10000 } });
-  // sequelize = new Sequelize(config.database, config.username, config.password, dbSettings);
-  sequelize = new Sequelize('chievechat', 'ian-odonnell', '001T6NgToml', dbSettings);
-}
-var db = {};
-
-fs.readdirSync(__dirname).filter(function (file) {
-  return file.indexOf(".") !== 0 && file !== "index.js" && file.endsWith(".js");
-}).forEach(function (file) {
-  var model = sequelize.import(path.join(__dirname, file));
-  db[model.name] = model;
-});
-
-Object.keys(db).forEach(function (modelName) {
-  if ("associate" in db[modelName]) {
-    db[modelName].associate(db);
-  }
-});
-
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-
-module.exports = db;
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports) {
-
-module.exports = require("fs");
-
-/***/ }),
-/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = require("sequelize");
