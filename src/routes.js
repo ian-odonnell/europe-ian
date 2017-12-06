@@ -3,11 +3,16 @@ import { Route, Switch } from 'react-router-dom';
 import Page from './components/Page';
 import Child from './components/Child';
 
-export default () => {
-  return (
-    <Switch>
-      <Route exact path='/' component={Page} />
-      <Route path='/child/:childId' component={Child} />
-    </Switch>
-  );
-};
+const renderPage = () => <Page />;
+
+const renderChild = (match, staticContext) => {
+  const id = match.match.params.childId;
+  return <Child childId={id} />;
+}
+
+export default () => (
+  <Switch>
+    <Route exact path='/' render={renderPage} />
+    <Route exact path='/child/:childId' render={renderChild} />
+  </Switch>
+);

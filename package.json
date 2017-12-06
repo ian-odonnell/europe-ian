@@ -6,7 +6,7 @@
   "scripts": {
     "security-check": "nsp check",
     "start": "npm-run-all --parallel open:src",
-    "open:src": "babel-node buildScripts/srcServer.js",
+    "open:src": "babel-node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +20,7 @@
   },
   "homepage": "https://gitlab.com/ian-odonnell/fullstack-seed#README",
   "dependencies": {
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "path": "^0.12.7",
     "react": "^16.2.0",
@@ -35,6 +36,7 @@
     "babel-preset-react": "^6.24.1",
     "npm-run-all": "^4.1.2",
     "open": "0.0.5",
-    "webpack": "^3.10.0"
+    "webpack": "^3.10.0",
+    "webpack-node-externals": "^1.6.0"
   }
 }

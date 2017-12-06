@@ -2,10 +2,10 @@ import React from 'react';
 
 export default class Child extends React.Component {
   render() {
-    console.log(this.props.match.params.childId);
+    console.log(this.props.childId);
 
     return (
-      <div>Child {this.props.match.params.childId}</div>
+      <div>Child {this.props.childId}</div>
     );
   }
 }
