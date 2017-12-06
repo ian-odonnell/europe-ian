@@ -4,17 +4,17 @@ import Express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router-dom';
-import Routes from './routes';
+import Routes from './client/routes';
 
 const app = new Express();
 const server = new Server(app);
 
 // use ejs templates
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, './views'));
+app.set('views', path.join(__dirname, './client/views'));
 
 // define the folder that will be used for static assets
-app.use(Express.static(path.join(__dirname, './static')));
+app.use(Express.static(path.join(__dirname, './client/static')));
 
 // universal routing and rendering
 app.get('*', (req, res) => {

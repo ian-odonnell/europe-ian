@@ -6,7 +6,7 @@
   "scripts": {
     "security-check": "nsp check",
     "start": "npm-run-all --parallel open:src",
-    "open:src": "babel-node src/server.js",
+    "open:src": "babel-node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

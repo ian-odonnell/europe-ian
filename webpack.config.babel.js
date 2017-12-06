@@ -3,16 +3,16 @@ import nodeExternals from 'webpack-node-externals';
 
 const client = {
   entry: {
-    js: './src/client.js',
+    js: './client.js',
   },
   output: {
-    path: path.join(__dirname, 'src', 'static', 'js'),
+    path: path.join(__dirname, 'client', 'static', 'js'),
     filename: 'bundle.js',
   },
   module: {
     rules: [
       {
-        test: path.join(__dirname, 'src'),
+        test: path.join(__dirname, 'client'),
         use: {
           loader: 'babel-loader',
           options: 'cacheDirectory=.babel_cache',
@@ -31,17 +31,17 @@ const server = {
     modulesFromFile: true,
   })],
   entry: {
-    js: './src/server.js',
+    js: './server.js',
   },
   output: {
-    path: path.join(__dirname, 'src'),
+    path: path.join(__dirname, ''),
     filename: 'server-es5.js',
     libraryTarget: 'commonjs2',
   },
   module: {
     rules: [
       {
-        test: path.join(__dirname, 'src'),
+        test: path.join(__dirname, ''),
         use: {
           loader: 'babel-loader',
           options: 'cacheDirectory=.babel_cache',

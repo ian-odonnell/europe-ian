@@ -112,10 +112,10 @@ var server = new _http.Server(app);
 
 // use ejs templates
 app.set('view engine', 'ejs');
-app.set('views', _path2.default.join(__dirname, './views'));
+app.set('views', _path2.default.join(__dirname, './client/views'));
 
 // define the folder that will be used for static assets
-app.use(_express2.default.static(_path2.default.join(__dirname, './static')));
+app.use(_express2.default.static(_path2.default.join(__dirname, './client/static')));
 
 // universal routing and rendering
 app.get('*', function (req, res) {
