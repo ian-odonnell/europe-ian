@@ -61,7 +61,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -80,22 +80,28 @@ module.exports = require("react-router-dom");
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("express");
+module.exports = require("path");
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("express");
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _path = __webpack_require__(4);
+var _path = __webpack_require__(2);
 
 var _path2 = _interopRequireDefault(_path);
 
 var _http = __webpack_require__(5);
 
-var _express = __webpack_require__(2);
+var _express = __webpack_require__(3);
 
 var _express2 = _interopRequireDefault(_express);
 
@@ -165,12 +171,6 @@ server.listen(port, function (err) {
   }
   return console.info('\n      Server running on http://localhost:' + port + ' [' + env + ']\n      Universal rendering: ' + (process.env.UNIVERSAL ? 'enabled' : 'disabled') + '\n    ');
 });
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("path");
 
 /***/ }),
 /* 5 */
@@ -385,9 +385,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _express = __webpack_require__(2);
+var _express = __webpack_require__(3);
 
 var _express2 = _interopRequireDefault(_express);
+
+var _dbmodels = __webpack_require__(11);
+
+var _dbmodels2 = _interopRequireDefault(_dbmodels);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -406,6 +410,74 @@ router.use(function (req, res, next) {
 });
 
 exports.default = router;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var fs = __webpack_require__(12);
+var path = __webpack_require__(2);
+var Sequelize = __webpack_require__(13);
+var env = process.env.NODE_ENV || "development";
+
+// var config = require(path.join(__dirname, '../../config', 'config.json'))[env];
+
+var dbSettings = {
+  host: 'ian-odonnell.database.windows.net', //config.host,
+  dialect: 'mssql',
+  dialectOptions: { encrypt: true },
+  pool: {
+    min: 0, //config.connectionPools.min,
+    max: 5, //config.connectionPools.max,
+    idle: 10000 //config.connectionPools.idle
+  },
+  logging: true
+};
+
+var sequelize;
+
+if (process.env.DATABASE_URL) {
+  sequelize = new Sequelize(process.env.DATABASE_URL, dbSettings);
+} else {
+  // var sequelize = new Sequelize(config.database, config.username, config.password, config);
+  // var sequelize = new Sequelize('one-goal', 'sa', '106Points', { host: 'localhost', dialect: 'mysql', pool: { max: 5, min: 0, idle: 10000 } });
+  // sequelize = new Sequelize(config.database, config.username, config.password, dbSettings);
+  sequelize = new Sequelize('chievechat', 'ian-odonnell', '001T6NgToml', dbSettings);
+}
+var db = {};
+
+fs.readdirSync(__dirname).filter(function (file) {
+  return file.indexOf(".") !== 0 && file !== "index.js" && file.endsWith(".js");
+}).forEach(function (file) {
+  var model = sequelize.import(path.join(__dirname, file));
+  db[model.name] = model;
+});
+
+Object.keys(db).forEach(function (modelName) {
+  if ("associate" in db[modelName]) {
+    db[modelName].associate(db);
+  }
+});
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+module.exports = db;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+module.exports = require("fs");
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+module.exports = require("sequelize");
 
 /***/ })
 /******/ ]);

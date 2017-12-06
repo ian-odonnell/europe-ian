@@ -1,4 +1,5 @@
 import express from 'express';
+import models from './dbmodels';
 
 const router = express.Router();
 

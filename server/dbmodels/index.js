@@ -4,16 +4,18 @@ var fs = require("fs");
 var path = require("path");
 var Sequelize = require("sequelize");
 var env = process.env.NODE_ENV || "development";
-var config = require(path.join(__dirname, '../../config', 'config.json'))[env];
+
+
+// var config = require(path.join(__dirname, '../../config', 'config.json'))[env];
 
 var dbSettings = {
-  host: config.host,
+  host: 'ian-odonnell.database.windows.net', //config.host,
   dialect: 'mssql',
   dialectOptions: {encrypt: true},
   pool: {
-    min: config.connectionPools.min,
-    max: config.connectionPools.max,
-    idle: config.connectionPools.idle
+    min: 0, //config.connectionPools.min,
+    max: 5, //config.connectionPools.max,
+    idle: 10000 //config.connectionPools.idle
   },
   logging: true
 };
@@ -25,7 +27,8 @@ if (process.env.DATABASE_URL) {
 } else {
   // var sequelize = new Sequelize(config.database, config.username, config.password, config);
   // var sequelize = new Sequelize('one-goal', 'sa', '106Points', { host: 'localhost', dialect: 'mysql', pool: { max: 5, min: 0, idle: 10000 } });
-  sequelize = new Sequelize(config.database, config.username, config.password, dbSettings);
+  // sequelize = new Sequelize(config.database, config.username, config.password, dbSettings);
+  sequelize = new Sequelize('chievechat', 'ian-odonnell', '001T6NgToml', dbSettings);
 }
 var db = {};
 
