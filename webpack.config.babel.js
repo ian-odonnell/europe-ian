@@ -3,7 +3,7 @@ import nodeExternals from 'webpack-node-externals';
 
 const client = {
   entry: {
-    js: './client.js',
+    js: ['babel-polyfill', './client.js'],
   },
   output: {
     path: path.join(__dirname, 'client', 'static', 'js'),
@@ -31,7 +31,7 @@ const server = {
     modulesFromFile: true,
   })],
   entry: {
-    js: './server.js',
+    js: ['babel-polyfill', './server.js'],
   },
   output: {
     path: path.join(__dirname, ''),
