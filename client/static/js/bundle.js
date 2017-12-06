@@ -23433,6 +23433,11 @@ var Page = function (_React$Component) {
         _react2.default.createElement(
           'div',
           null,
+          _react2.default.createElement('img', { src: '/images/Warning.png' })
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
           'Parent'
         ),
         _react2.default.createElement(
@@ -23510,14 +23515,14 @@ var Child = function (_React$Component) {
   }
 
   _createClass(Child, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      console.log(this.props.childId);
+      console.log("Render child - " + this.props.childId);
 
       return _react2.default.createElement(
-        'div',
+        "div",
         null,
-        'Child ',
+        "Child ",
         this.props.childId
       );
     }

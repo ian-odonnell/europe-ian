@@ -16,10 +16,15 @@ app.set('views', path.join(__dirname, './client/views'));
 // define the folder that will be used for static assets
 app.use(Express.static(path.join(__dirname, './client/static')));
 
+import api from './server/api';
+app.use('/api', api);
+
 // universal routing and rendering
 app.get('*', (req, res) => {
   let markup = '';
   let status = 200;
+
+  console.log("app.get(*) - " + req);
 
   const context = {};
   markup = renderToString(
@@ -34,6 +39,7 @@ app.get('*', (req, res) => {
   }
 
   if (context.is404) {
+    console.log("404");
     status = 404;
   }
 

@@ -61,7 +61,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -78,18 +78,24 @@ module.exports = require("react-router-dom");
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("express");
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _path = __webpack_require__(3);
+var _path = __webpack_require__(4);
 
 var _path2 = _interopRequireDefault(_path);
 
-var _http = __webpack_require__(4);
+var _http = __webpack_require__(5);
 
-var _express = __webpack_require__(5);
+var _express = __webpack_require__(2);
 
 var _express2 = _interopRequireDefault(_express);
 
@@ -105,6 +111,10 @@ var _routes = __webpack_require__(7);
 
 var _routes2 = _interopRequireDefault(_routes);
 
+var _api = __webpack_require__(10);
+
+var _api2 = _interopRequireDefault(_api);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = new _express2.default();
@@ -117,10 +127,14 @@ app.set('views', _path2.default.join(__dirname, './client/views'));
 // define the folder that will be used for static assets
 app.use(_express2.default.static(_path2.default.join(__dirname, './client/static')));
 
+app.get('/api', _api2.default);
+
 // universal routing and rendering
 app.get('*', function (req, res) {
   var markup = '';
   var status = 200;
+
+  console.log("app.get(*) - " + req);
 
   var context = {};
   markup = (0, _server.renderToString)(_react2.default.createElement(
@@ -135,6 +149,7 @@ app.get('*', function (req, res) {
   }
 
   if (context.is404) {
+    console.log("404");
     status = 404;
   }
 
@@ -152,22 +167,16 @@ server.listen(port, function (err) {
 });
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 module.exports = require("path");
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("http");
-
-/***/ }),
 /* 5 */
 /***/ (function(module, exports) {
 
-module.exports = require("express");
+module.exports = require("http");
 
 /***/ }),
 /* 6 */
@@ -265,6 +274,11 @@ var Page = function (_React$Component) {
         _react2.default.createElement(
           'div',
           null,
+          _react2.default.createElement('img', { src: '/images/Warning.png' })
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
           'Parent'
         ),
         _react2.default.createElement(
@@ -342,14 +356,14 @@ var Child = function (_React$Component) {
   }
 
   _createClass(Child, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      console.log(this.props.childId);
+      console.log("Render child - " + this.props.childId);
 
       return _react2.default.createElement(
-        'div',
+        "div",
         null,
-        'Child ',
+        "Child ",
         this.props.childId
       );
     }
@@ -359,6 +373,31 @@ var Child = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Child;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _express = __webpack_require__(2);
+
+var _express2 = _interopRequireDefault(_express);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var router = _express2.default.Router();
+
+router.get('/version', function (req, res) {
+  res.json({ ver: 1.1 });
+});
+
+exports.default = router;
 
 /***/ })
 /******/ ]);

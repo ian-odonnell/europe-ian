@@ -5,6 +5,7 @@ export default class Page extends React.Component {
   render() {
     return (
       <div>
+        <div><img src='/images/Warning.png'/></div>
         <div>Parent</div>
         <ul>
           <li><Link to='/child/1'>One</Link></li>
