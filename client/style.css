@@ -1,0 +1,85 @@
+a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #006600;
+}
+
+a:hover{
+  color: #00cc00;
+}
+
+body {
+  background-color: #004400;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+tr.chatMessage td {
+  background-color: #ffff99;
+  background:linear-gradient(#eeffbb, #eeffdd);
+  padding: 6px;
+  border: solid 1px #003300;
+}
+
+.chatMessageBody {
+  vertical-align: top;
+}
+
+.chatMessageTimestamp {
+  font-size: small;
+  text-align: right;
+}
+
+.chatMessagePersona {
+  vertical-align: top;
+  min-width: 100px;
+}
+
+.chatMessagePersona div {
+  padding-bottom: 5px;
+}
+
+.chatMessagePersona img {
+  height: 80px;
+  width: 80px;
+}
+
+.chatMessageGame {
+  vertical-align: top;
+  min-width: 150px;
+}
+
+.chatMessageBody {
+  width: 100%;
+}
+
+.bodyAchievement div {
+  float: left;
+  padding-right: 10px;
+}
+
+.bodyAchievement span.achievementName {
+  font-weight: bold;
+}
+
+.bodyAchievement span.achievementDescription {
+  font-style: italic;
+}
+
+table.chatMessageReplies {
+  margin: 10px 0 0 100px;
+}
+
+td.replyPersona {
+  vertical-align: top;
+  min-width: 100px;
+  font-weight: bold;
+  background: linear-gradient(#eeeeee, #dddddd)!important;
+}
+
+td.replyBody {
+  background: linear-gradient(#ffffff, #eeeeee)!important;
+  min-width: 300px;
+}

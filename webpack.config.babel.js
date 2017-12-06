@@ -10,6 +10,12 @@ const client = {
     filename: 'bundle.js',
   },
   module: {
+    loaders: [
+      { test: /\.css$/, loader: "style-loader!css-loader" },
+      { test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader'] },
+      { test: /\.js$/, include: [/whatwg-.*/], loaders: ['babel-loader'] }
+    ]
+    /*
     rules: [
       {
         test: path.join(__dirname, 'client'),
@@ -18,7 +24,7 @@ const client = {
           options: 'cacheDirectory=.babel_cache',
         },
       },
-    ],
+    ],*/
   },
 };
 
