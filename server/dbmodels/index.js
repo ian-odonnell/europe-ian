@@ -5,7 +5,6 @@ var path = require("path");
 var Sequelize = require("sequelize");
 var env = process.env.NODE_ENV || "development";
 
-
 // var config = require(path.join(__dirname, '../../config', 'config.json'))[env];
 
 var dbSettings = {
@@ -28,24 +27,19 @@ if (process.env.DATABASE_URL) {
   // var sequelize = new Sequelize(config.database, config.username, config.password, config);
   // var sequelize = new Sequelize('one-goal', 'sa', '106Points', { host: 'localhost', dialect: 'mysql', pool: { max: 5, min: 0, idle: 10000 } });
   // sequelize = new Sequelize(config.database, config.username, config.password, dbSettings);
-  sequelize = new Sequelize('chievechat', 'ian-odonnell', '001T6NgToml', dbSettings);
+  sequelize = new Sequelize('chievechat', 'ian-odonnell', '001T6NgTomzl', dbSettings);
 }
+
 var db = {};
 
-fs
-  .readdirSync(__dirname)
-  .filter(function (file) {
-    return (file.indexOf(".") !== 0) && (file !== "index.js") && (file.endsWith(".js"));
-  })
-  .forEach(function (file) {
-    var model = sequelize.import(path.join(__dirname, file));
-    db[model.name] = model;
-  });
+var models = [
+  require('./game'),
+  require('./persona')
+];
 
-Object.keys(db).forEach(function (modelName) {
-  if ("associate" in db[modelName]) {
-    db[modelName].associate(db);
-  }
+models.forEach(model => {
+  const sequelizeModel = model(sequelize, Sequelize);
+  db[sequelizeModel.name] = sequelizeModel;
 });
 
 db.sequelize = sequelize;
