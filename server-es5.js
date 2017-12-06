@@ -397,6 +397,10 @@ router.get('/version', function (req, res) {
   res.json({ ver: 1.1 });
 });
 
+router.get('/game', function (req, res) {
+  res.json({ name: 'Some game' });
+});
+
 router.use(function (req, res, next) {
   res.status(404).send('Not found');
 });
