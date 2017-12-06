@@ -1,5 +1,6 @@
 import express from 'express';
 import Sequelize from 'sequelize';
+import gameModel from './dbmodels/game';
 
 const router = express.Router();
 
@@ -21,9 +22,13 @@ router.get('/game', async (req, res) => {
     logging: true
   };
   const sequelize = new Sequelize('chievechat', 'ian-odonnell', '001T6NgTomzl', dbSettings);
-  const result = await sequelize.query("select * from games");
 
-  res.json({ name: result[0][0].name });
+  var GM = gameModel(sequelize, Sequelize);
+
+  const result = await GM.findAll();
+  // const result = await sequelize.query("select * from games", {model: GM});
+
+  res.json(result);
 } catch(err){
   console.log(err);
 }

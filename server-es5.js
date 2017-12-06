@@ -9869,6 +9869,10 @@ var _sequelize = __webpack_require__(338);
 
 var _sequelize2 = _interopRequireDefault(_sequelize);
 
+var _game = __webpack_require__(339);
+
+var _game2 = _interopRequireDefault(_game);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -9881,7 +9885,7 @@ router.get('/version', function (req, res) {
 
 router.get('/game', function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
-    var dbSettings, sequelize, result;
+    var dbSettings, sequelize, GM, result;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -9899,29 +9903,30 @@ router.get('/game', function () {
               logging: true
             };
             sequelize = new _sequelize2.default('chievechat', 'ian-odonnell', '001T6NgTomzl', dbSettings);
-            _context.next = 5;
-            return sequelize.query("select * from games");
+            GM = (0, _game2.default)(sequelize, _sequelize2.default);
+            _context.next = 6;
+            return sequelize.query("select * from games", { model: GM });
 
-          case 5:
+          case 6:
             result = _context.sent;
 
 
-            res.json({ name: result[0][0].name });
-            _context.next = 12;
+            res.json(result);
+            _context.next = 13;
             break;
 
-          case 9:
-            _context.prev = 9;
+          case 10:
+            _context.prev = 10;
             _context.t0 = _context['catch'](0);
 
             console.log(_context.t0);
 
-          case 12:
+          case 13:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, undefined, [[0, 9]]);
+    }, _callee, undefined, [[0, 10]]);
   }));
 
   return function (_x, _x2) {
@@ -9940,6 +9945,26 @@ exports.default = router;
 /***/ (function(module, exports) {
 
 module.exports = require("sequelize");
+
+/***/ }),
+/* 339 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (sequelize, DataTypes) {
+  var Game = sequelize.define("game", {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    // steamId: {type: DataTypes.INTEGER },
+    name: { type: DataTypes.STRING },
+    logoUrl: { type: DataTypes.STRING }
+  });
+
+  Game.associate = function () {};
+
+  return Game;
+};
 
 /***/ })
 /******/ ]);
