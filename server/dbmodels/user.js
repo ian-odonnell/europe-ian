@@ -5,7 +5,8 @@ module.exports = function (sequelize, DataTypes) {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
   });
 
-  User.associate = function () {
+  User.associate = function (models) {
+    User.hasMany(models.persona);
   }
 
   return User;
