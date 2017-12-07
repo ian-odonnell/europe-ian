@@ -6,6 +6,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router-dom';
 import passport from 'passport';
+import session from 'express-session';
 
 // Client
 import Routes from './client/routes';
@@ -40,6 +41,19 @@ app.set('views', path.join(__dirname, './client/views'));
 
 // Define the folder that will be used for static assets
 app.use(Express.static(path.join(__dirname, './client/static')));
+
+// Set up session handling and authentication
+app.use(session({ secret: 'secretkey' }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
 
 // Set up API routing
 app.use('/api', chatApi);

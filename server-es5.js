@@ -1907,7 +1907,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(470)("./" + name);
+                __webpack_require__(471)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -5679,7 +5679,7 @@ module.exports = require("react-dom");
 "use strict";
 
 
-var _fs = __webpack_require__(473);
+var _fs = __webpack_require__(474);
 
 var _fs2 = _interopRequireDefault(_fs);
 
@@ -5727,7 +5727,7 @@ var toLink = [];
 
 // TODO: Maybe file scan the current directory (and children?) - Sequelize's import functionality was struggling once deployed to Azure,
 // so dropped back to this hard-coded list of models for now
-var models = [__webpack_require__(474), __webpack_require__(475), __webpack_require__(476), __webpack_require__(477), __webpack_require__(478), __webpack_require__(479)];
+var models = [__webpack_require__(475), __webpack_require__(476), __webpack_require__(477), __webpack_require__(478), __webpack_require__(479), __webpack_require__(480)];
 
 models.forEach(function (model) {
   var sequelizeModel = model(sequelize, _sequelize2.default);
@@ -25912,23 +25912,27 @@ var _passport = __webpack_require__(132);
 
 var _passport2 = _interopRequireDefault(_passport);
 
-var _routes = __webpack_require__(460);
+var _expressSession = __webpack_require__(460);
+
+var _expressSession2 = _interopRequireDefault(_expressSession);
+
+var _routes = __webpack_require__(461);
 
 var _routes2 = _interopRequireDefault(_routes);
 
-var _chat = __webpack_require__(472);
+var _chat = __webpack_require__(473);
 
 var _chat2 = _interopRequireDefault(_chat);
 
-var _admin = __webpack_require__(480);
+var _admin = __webpack_require__(481);
 
 var _admin2 = _interopRequireDefault(_admin);
 
-var _update = __webpack_require__(481);
+var _update = __webpack_require__(482);
 
 var _update2 = _interopRequireDefault(_update);
 
-var _auth = __webpack_require__(490);
+var _auth = __webpack_require__(491);
 
 var _auth2 = _interopRequireDefault(_auth);
 
@@ -25939,17 +25943,17 @@ var _config2 = _interopRequireDefault(_config);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Client
+// 3rd party
 var app = new _express2.default();
 
 // Config
 
 
 // Server
-// 3rd party
 
 var server = new _http.Server(app);
 
-var GoogleStrategy = __webpack_require__(491).OAuth2Strategy;
+var GoogleStrategy = __webpack_require__(492).OAuth2Strategy;
 _passport2.default.use(new GoogleStrategy({
   clientID: _config2.default.googleClientId,
   clientSecret: _config2.default.googleClientSecret,
@@ -25964,6 +25968,19 @@ app.set('views', _path2.default.join(__dirname, './client/views'));
 
 // Define the folder that will be used for static assets
 app.use(_express2.default.static(_path2.default.join(__dirname, './client/static')));
+
+// Set up session handling and authentication
+app.use((0, _expressSession2.default)({ secret: 'secretkey' }));
+app.use(_passport2.default.initialize());
+app.use(_passport2.default.session());
+
+_passport2.default.serializeUser(function (user, done) {
+  done(null, user);
+});
+
+_passport2.default.deserializeUser(function (user, done) {
+  done(null, user);
+});
 
 // Set up API routing
 app.use('/api', _chat2.default);
@@ -26022,6 +26039,12 @@ module.exports = require("react-dom/server");
 
 /***/ }),
 /* 460 */
+/***/ (function(module, exports) {
+
+module.exports = require("express-session");
+
+/***/ }),
+/* 461 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26037,7 +26060,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(131);
 
-var _chatPage = __webpack_require__(461);
+var _chatPage = __webpack_require__(462);
 
 var _chatPage2 = _interopRequireDefault(_chatPage);
 
@@ -26056,7 +26079,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 461 */
+/* 462 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26076,11 +26099,11 @@ var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _chatHeader = __webpack_require__(462);
+var _chatHeader = __webpack_require__(463);
 
 var _chatHeader2 = _interopRequireDefault(_chatHeader);
 
-var _chatFeed = __webpack_require__(463);
+var _chatFeed = __webpack_require__(464);
 
 var _chatFeed2 = _interopRequireDefault(_chatFeed);
 
@@ -26148,7 +26171,7 @@ var ChatPage = function (_React$Component) {
 exports.default = ChatPage;
 
 /***/ }),
-/* 462 */
+/* 463 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26239,7 +26262,7 @@ var ChatHeader = function (_React$Component) {
 exports.default = ChatHeader;
 
 /***/ }),
-/* 463 */
+/* 464 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26259,11 +26282,11 @@ var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _chieveChatApi = __webpack_require__(464);
+var _chieveChatApi = __webpack_require__(465);
 
 var _chieveChatApi2 = _interopRequireDefault(_chieveChatApi);
 
-var _chatMessage = __webpack_require__(466);
+var _chatMessage = __webpack_require__(467);
 
 var _chatMessage2 = _interopRequireDefault(_chatMessage);
 
@@ -26403,7 +26426,7 @@ var ChatFeed = function (_React$Component) {
 exports.default = ChatFeed;
 
 /***/ }),
-/* 464 */
+/* 465 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26413,7 +26436,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _externalApi = __webpack_require__(465);
+var _externalApi = __webpack_require__(466);
 
 var _config = __webpack_require__(68);
 
@@ -26448,7 +26471,7 @@ chieveChatApi.getChat = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(
 exports.default = chieveChatApi;
 
 /***/ }),
-/* 465 */
+/* 466 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26551,7 +26574,7 @@ var ExternalApi = exports.ExternalApi = function () {
 }();
 
 /***/ }),
-/* 466 */
+/* 467 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26571,15 +26594,15 @@ var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _chatMessagePersona = __webpack_require__(467);
+var _chatMessagePersona = __webpack_require__(468);
 
 var _chatMessagePersona2 = _interopRequireDefault(_chatMessagePersona);
 
-var _chatMessageBody = __webpack_require__(468);
+var _chatMessageBody = __webpack_require__(469);
 
 var _chatMessageBody2 = _interopRequireDefault(_chatMessageBody);
 
-var _chatMessageGame = __webpack_require__(471);
+var _chatMessageGame = __webpack_require__(472);
 
 var _chatMessageGame2 = _interopRequireDefault(_chatMessageGame);
 
@@ -26665,7 +26688,7 @@ var ChatMessage = function (_React$Component) {
 exports.default = ChatMessage;
 
 /***/ }),
-/* 467 */
+/* 468 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26761,7 +26784,7 @@ var ChatMessagePersona = function (_React$Component) {
 exports.default = ChatMessagePersona;
 
 /***/ }),
-/* 468 */
+/* 469 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26781,7 +26804,7 @@ var _reactDom = __webpack_require__(33);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _chatMessageReplies = __webpack_require__(469);
+var _chatMessageReplies = __webpack_require__(470);
 
 var _chatMessageReplies2 = _interopRequireDefault(_chatMessageReplies);
 
@@ -26901,7 +26924,7 @@ var ChatMessageBody = function (_React$Component) {
 exports.default = ChatMessageBody;
 
 /***/ }),
-/* 469 */
+/* 470 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27041,7 +27064,7 @@ var ChatMessageReplies = function (_React$Component) {
 exports.default = ChatMessageReplies;
 
 /***/ }),
-/* 470 */
+/* 471 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -27296,10 +27319,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 470;
+webpackContext.id = 471;
 
 /***/ }),
-/* 471 */
+/* 472 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27382,7 +27405,7 @@ var ChatMessageGame = function (_React$Component) {
 exports.default = ChatMessageGame;
 
 /***/ }),
-/* 472 */
+/* 473 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27517,13 +27540,13 @@ router.use(function (req, res, next) {
 exports.default = router;
 
 /***/ }),
-/* 473 */
+/* 474 */
 /***/ (function(module, exports) {
 
 module.exports = require("fs");
 
 /***/ }),
-/* 474 */
+/* 475 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27548,7 +27571,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 475 */
+/* 476 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27576,7 +27599,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 476 */
+/* 477 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27596,7 +27619,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 477 */
+/* 478 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27619,7 +27642,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 478 */
+/* 479 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27639,7 +27662,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 479 */
+/* 480 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27659,7 +27682,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 480 */
+/* 481 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27754,7 +27777,7 @@ router.get('/steam/*', function () {
 exports.default = router;
 
 /***/ }),
-/* 481 */
+/* 482 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27768,27 +27791,27 @@ var _express = __webpack_require__(53);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _steamApi = __webpack_require__(482);
+var _steamApi = __webpack_require__(483);
 
 var _steamApi2 = _interopRequireDefault(_steamApi);
 
-var _Achievement = __webpack_require__(485);
+var _Achievement = __webpack_require__(486);
 
 var _Achievement2 = _interopRequireDefault(_Achievement);
 
-var _Game = __webpack_require__(486);
+var _Game = __webpack_require__(487);
 
 var _Game2 = _interopRequireDefault(_Game);
 
-var _Message = __webpack_require__(487);
+var _Message = __webpack_require__(488);
 
 var _Message2 = _interopRequireDefault(_Message);
 
-var _Persona = __webpack_require__(488);
+var _Persona = __webpack_require__(489);
 
 var _Persona2 = _interopRequireDefault(_Persona);
 
-var _SteamUser = __webpack_require__(489);
+var _SteamUser = __webpack_require__(490);
 
 var _SteamUser2 = _interopRequireDefault(_SteamUser);
 
@@ -28150,7 +28173,7 @@ router.get('/steam', function () {
 exports.default = router;
 
 /***/ }),
-/* 482 */
+/* 483 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28160,9 +28183,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _externalApi = __webpack_require__(483);
+var _externalApi = __webpack_require__(484);
 
-var _baseUrl = __webpack_require__(484);
+var _baseUrl = __webpack_require__(485);
 
 var _baseUrl2 = _interopRequireDefault(_baseUrl);
 
@@ -28253,7 +28276,7 @@ steamApi.getGameSchema = function () {
 exports.default = steamApi;
 
 /***/ }),
-/* 483 */
+/* 484 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28452,7 +28475,7 @@ var ExternalApi = exports.ExternalApi = function () {
 }();
 
 /***/ }),
-/* 484 */
+/* 485 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28495,7 +28518,7 @@ function getBaseUrl(externalApiName) {
 }
 
 /***/ }),
-/* 485 */
+/* 486 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28524,7 +28547,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 486 */
+/* 487 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28556,7 +28579,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 487 */
+/* 488 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28585,7 +28608,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 488 */
+/* 489 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28614,7 +28637,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 489 */
+/* 490 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28638,7 +28661,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 490 */
+/* 491 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28661,7 +28684,7 @@ router.route('/google').get(passport.authenticate('google', {
 module.exports = router;
 
 /***/ }),
-/* 491 */
+/* 492 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-google-oauth");
