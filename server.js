@@ -1,23 +1,33 @@
+// 3rd party
 import path from 'path';
 import { Server } from 'http';
 import Express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router-dom';
+
+// Client
 import Routes from './client/routes';
+
+// Server
+import chatApi from './server/localApi/chat';
+import adminApi from './server/localApi/admin';
+import updateApi from './server/localApi/update';
 
 const app = new Express();
 const server = new Server(app);
 
-// use ejs templates
+// Use ejs templates
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './client/views'));
 
-// define the folder that will be used for static assets
+// Define the folder that will be used for static assets
 app.use(Express.static(path.join(__dirname, './client/static')));
 
-import api from './server/api';
-app.use('/api', api);
+// Set up API routing
+app.use('/api', chatApi);
+app.use('/admin', adminApi);
+app.use('/update', updateApi);
 
 // universal routing and rendering
 app.get('*', (req, res) => {
@@ -46,7 +56,7 @@ app.get('*', (req, res) => {
   return res.status(status).render('index', { markup });
 });
 
-// start the server
+// Start the server
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'production';
 server.listen(port, (err) => {
@@ -56,6 +66,5 @@ server.listen(port, (err) => {
   return console.info(
     `
       Server running on http://localhost:${port} [${env}]
-      Universal rendering: ${process.env.UNIVERSAL ? 'enabled' : 'disabled'}
     `);
 });

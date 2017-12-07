@@ -48630,7 +48630,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 // import getBaseUrl from '../baseUrl';
 
-var url = "https://fullstack-seed.azurewebsites.net/"; //getBaseUrl("chievechat");
+//var url = "https://fullstack-seed.azurewebsites.net/"; //getBaseUrl("chievechat");
+var url = "http://localhost:3000/";
 var chieveChatApi = new _externalApi.ExternalApi(url);
 
 chieveChatApi.getChat = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {

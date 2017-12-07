@@ -3,19 +3,20 @@
 import fs  from 'fs';
 import  path from 'path';
 import Sequelize from 'sequelize';
+import config from '../../config';
 
 const env = process.env.NODE_ENV || "development";
 
 // var config = require(path.join(__dirname, '../../config', 'config.json'))[env];
 
 var dbSettings = {
-  host: 'ian-odonnell.database.windows.net', //config.host,
+  host: config.databaseHost,
   dialect: 'mssql',
   dialectOptions: {encrypt: true},
   pool: {
-    min: 0, //config.connectionPools.min,
-    max: 5, //config.connectionPools.max,
-    idle: 10000 //config.connectionPools.idle
+    min: 0,
+    max: 5,
+    idle: 10000
   },
   logging: true
 };
@@ -26,7 +27,7 @@ if (process.env.DATABASE_URL) {
   sequelize = new Sequelize(process.env.DATABASE_URL, dbSettings);
 } else {
   // sequelize = new Sequelize(config.database, config.username, config.password, dbSettings);
-  sequelize = new Sequelize('chievechat', 'ian-odonnell', '001T6NgTomzl', dbSettings);
+  sequelize = new Sequelize(config.databaseName, config.databaseUser, config.databasePassword, dbSettings);
 }
 
 var db = {};
