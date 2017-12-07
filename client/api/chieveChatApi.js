@@ -1,9 +1,8 @@
 import { ExternalApi } from './externalApi';
-// import getBaseUrl from '../baseUrl';
+import config from '../../config';
 
-//var url = "https://fullstack-seed.azurewebsites.net/"; //getBaseUrl("chievechat");
-var url ="http://localhost:3000/";
-var chieveChatApi = new ExternalApi(url);
+var chieveChatApi = new ExternalApi(config.localApiBaseUrl);
+console.log("Test: " + config.localApiBaseUrl);
 
 chieveChatApi.getChat = async() => {
   return await chieveChatApi.get("/api/latest");

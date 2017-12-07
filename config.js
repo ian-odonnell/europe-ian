@@ -5,7 +5,7 @@ var config = {
   databaseName: process.env.DATABASE_NAME || "chievechat",
   databaseUser: process.env.DATABASE_USER || "ian-odonnell",
   databasePassword: process.env.DATABASE_PASSWORD || "",
-  localApiBaseUrl: process.env.LOCAL_API_BASE_URL || "http://localhost:3000/"
+  localApiBaseUrl: process.env.LOCAL_API_BASE_URL || ""
 }
 
 export default config;

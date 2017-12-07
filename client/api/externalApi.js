@@ -7,7 +7,12 @@ export class ExternalApi {
   }
 
   async get(relativeUrl) {
-    var fullUrl = urljoin(this.baseUrl, relativeUrl);
+    let fullUrl = relativeUrl;
+    if(this.baseUrl && this.baseUrl.length > 0) {
+      fullUrl = urljoin(this.baseUrl, relativeUrl);
+    }
+
+    console.log(this.baseUrl + " + " + relativeUrl + " = " + fullUrl);
     return await $.getJSON(fullUrl);
   }
 
