@@ -16,6 +16,8 @@ import chatApi from './server/localApi/chat';
 import adminApi from './server/localApi/admin';
 import updateApi from './server/localApi/update';
 import auth from './server/auth';
+import GoogleUser from './server/dblib/GoogleUser';
+import Persona from './server/dblib/Persona';
 
 // Config
 import config from './config';
@@ -30,10 +32,23 @@ passport.use(
     clientSecret: config.googleClientSecret,
     callbackURL: config.googleCallbackUrl
   },
-  function (req, accessToken, refreshToken, profile, done) {
-    console.log("Google callback in server.js: " + JSON.stringify(profile));
-    done(null, profile);
-  })
+    async function (req, accessToken, refreshToken, profile, done) {
+      var existingUser = await GoogleUser.getGoogleUsers({ googleId: profile.id });
+      if (existingUser.length == 0) {
+        let googlePersona = await Persona.createPersona({
+          name: profile.displayName,
+          avatarUrl: profile._json.image.url
+        });
+        let googleUser = await GoogleUser.createGoogleUser({ googleId: profile.id, personaId: googlePersona.id });
+        done(null, googleUser);
+      } else {
+        // TODO: Needs to be the parent user object, not the google one
+        done(null, existingUser);
+      }
+
+      console.log("Google callback in server.js: " + JSON.stringify(profile));
+      done(null, profile);
+    })
 );
 
 // Use ejs templates
@@ -44,7 +59,7 @@ app.set('views', path.join(__dirname, './client/views'));
 app.use(Express.static(path.join(__dirname, './client/static')));
 
 // Set up session handling and authentication
-app.use(session({ secret: 'secretkey', cookie: {maxAge:(60000 * 24 * 30)} }));
+app.use(session({ secret: 'secretkey', cookie: { maxAge: (60000 * 24 * 30) } }));
 app.use(passport.initialize());
 app.use(passport.session());
 

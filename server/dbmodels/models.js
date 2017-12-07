@@ -41,7 +41,8 @@ var models = [
   require('./game'),
   require('./message'),
   require('./persona'),
-  require('./steamuser')
+  require('./steamuser'),
+  require('./googleuser')
 ];
 
 models.forEach(model => {
