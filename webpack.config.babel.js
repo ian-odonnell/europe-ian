@@ -2,6 +2,7 @@ import path from 'path';
 import nodeExternals from 'webpack-node-externals';
 
 const client = {
+  watch: true,
   entry: {
     js: ['babel-polyfill', './client.js'],
   },
