@@ -25959,7 +25959,7 @@ _passport2.default.use(new GoogleStrategy({
   clientSecret: _config2.default.googleClientSecret,
   callbackURL: _config2.default.googleCallbackUrl
 }, function (req, accessToken, refreshToken, profile, done) {
-  console.log("Callback in server.js: " + JSON.stringify(profile));
+  console.log("Google callback in server.js: " + JSON.stringify(profile));
   done(null, profile);
 }));
 
@@ -25971,7 +25971,7 @@ app.set('views', _path2.default.join(__dirname, './client/views'));
 app.use(_express2.default.static(_path2.default.join(__dirname, './client/static')));
 
 // Set up session handling and authentication
-app.use((0, _expressSession2.default)({ secret: 'secretkey' }));
+app.use((0, _expressSession2.default)({ secret: 'secretkey', cookie: { maxAge: 60000 * 24 * 30 } }));
 app.use(_passport2.default.initialize());
 app.use(_passport2.default.session());
 

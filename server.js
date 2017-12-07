@@ -31,7 +31,7 @@ passport.use(
     callbackURL: config.googleCallbackUrl
   },
   function (req, accessToken, refreshToken, profile, done) {
-    console.log("Callback in server.js: " + JSON.stringify(profile));
+    console.log("Google callback in server.js: " + JSON.stringify(profile));
     done(null, profile);
   })
 );
@@ -44,7 +44,7 @@ app.set('views', path.join(__dirname, './client/views'));
 app.use(Express.static(path.join(__dirname, './client/static')));
 
 // Set up session handling and authentication
-app.use(session({ secret: 'secretkey' }));
+app.use(session({ secret: 'secretkey', cookie: {maxAge:(60000 * 24 * 30)} }));
 app.use(passport.initialize());
 app.use(passport.session());
 
