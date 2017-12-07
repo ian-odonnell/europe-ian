@@ -26005,8 +26005,7 @@ _passport2.default.use(new GoogleStrategy({
   callbackURL: _config2.default.googleCallbackUrl
 }, function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, accessToken, refreshToken, profile, done) {
-    var existingUser, parentUser, _parentUser, googlePersona, googleUser, existingPersona, existingParent;
-
+    var existingUser, parentUser, googlePersona, googleUser, existingPersona, existingParent;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -26034,7 +26033,7 @@ _passport2.default.use(new GoogleStrategy({
             return _User2.default.createUser({});
 
           case 8:
-            _parentUser = _context.sent;
+            parentUser = _context.sent;
 
           case 9:
             _context.next = 11;

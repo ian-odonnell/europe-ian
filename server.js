@@ -39,7 +39,7 @@ passport.use(
         // If we're not logged in already (e.g. with a Steam user) then create a new "parent" user
         let parentUser = req.user;
         if (!parentUser) {
-          let parentUser = await User.createUser({});
+          parentUser = await User.createUser({});
         }
 
         // Create a new persona for the new Google user
