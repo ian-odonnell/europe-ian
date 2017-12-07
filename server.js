@@ -31,6 +31,7 @@ passport.use(
     callbackURL: config.googleCallbackUrl
   },
   function (req, accessToken, refreshToken, profile, done) {
+    console.log("Callback in server.js: " + profile);
     done(null, profile);
   })
 );

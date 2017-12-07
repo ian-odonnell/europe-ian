@@ -25959,6 +25959,7 @@ _passport2.default.use(new GoogleStrategy({
   clientSecret: _config2.default.googleClientSecret,
   callbackURL: _config2.default.googleCallbackUrl
 }, function (req, accessToken, refreshToken, profile, done) {
+  console.log("Callback in server.js: " + profile);
   done(null, profile);
 }));
 
