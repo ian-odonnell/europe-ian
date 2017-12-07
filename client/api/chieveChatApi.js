@@ -8,4 +8,8 @@ chieveChatApi.getChat = async() => {
   return await chieveChatApi.get("/api/latest");
 }
 
+chieveChatApi.getAuth = async() => {
+  return await chieveChatApi.get("/auth");
+}
+
 export default chieveChatApi;

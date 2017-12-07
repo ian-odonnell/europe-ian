@@ -12,6 +12,18 @@ body {
   background-color: #004400;
 }
 
+.chatHeader {
+  width: 100%;
+}
+
+.headerPersona {
+  float: right;
+}
+
+.headerLogin {
+  float: right;
+}
+
 table {
   border-collapse: collapse;
 }

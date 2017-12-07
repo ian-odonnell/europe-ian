@@ -7,9 +7,9 @@ exports.createUser = (userData, transaction) => {
     return models.user.create(userData, txn);
 };
 
-exports.getAllUsers = () => {
+exports.getUsers = (where, include) => {
   return new Promise((resolve) => {
-    var allUsers = models.user.findAll();
+    var allUsers = models.user.findAll({where, include});
     resolve(allUsers);
   });
 };
