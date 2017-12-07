@@ -28671,6 +28671,10 @@ var express = __webpack_require__(53);
 var passport = __webpack_require__(132);
 var router = express.Router();
 
+router.get('/', function (req, res) {
+    res.json({ user: req.user });
+});
+
 /* GET home page. */
 router.route('/google/callback').get(passport.authenticate('google', {
     successRedirect: '/',
