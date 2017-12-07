@@ -53,7 +53,7 @@ passport.use(
         let googleUser = await GoogleUser.createGoogleUser({ googleId: profile.id, personaId: googlePersona.id });
         done(null, parentUser);
       } else {
-        let existingPersona = await existingUser.getPersona();
+        let existingPersona = await existingUser[0].getPersona();
         let existingParent = await existingPersona.getUser();
         done(null, existingParent);
       }
