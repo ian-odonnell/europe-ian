@@ -5043,6 +5043,81 @@ module.exports = require("react");
 "use strict";
 
 
+var _fs = __webpack_require__(475);
+
+var _fs2 = _interopRequireDefault(_fs);
+
+var _path = __webpack_require__(95);
+
+var _path2 = _interopRequireDefault(_path);
+
+var _sequelize = __webpack_require__(252);
+
+var _sequelize2 = _interopRequireDefault(_sequelize);
+
+var _config = __webpack_require__(68);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var env = process.env.NODE_ENV || "development";
+
+// var config = require(path.join(__dirname, '../../config', 'config.json'))[env];
+
+var dbSettings = {
+  host: _config2.default.databaseHost,
+  dialect: 'mssql',
+  dialectOptions: { encrypt: true },
+  pool: {
+    min: 0,
+    max: 5,
+    idle: 10000
+  },
+  logging: true
+};
+
+var sequelize;
+
+if (process.env.DATABASE_URL) {
+  sequelize = new _sequelize2.default(process.env.DATABASE_URL, dbSettings);
+} else {
+  // sequelize = new Sequelize(config.database, config.username, config.password, dbSettings);
+  sequelize = new _sequelize2.default(_config2.default.databaseName, _config2.default.databaseUser, _config2.default.databasePassword, dbSettings);
+}
+
+var db = {};
+var toLink = [];
+
+// TODO: Maybe file scan the current directory (and children?) - Sequelize's import functionality was struggling once deployed to Azure,
+// so dropped back to this hard-coded list of models for now
+var models = [__webpack_require__(476), __webpack_require__(477), __webpack_require__(478), __webpack_require__(479), __webpack_require__(480), __webpack_require__(481), __webpack_require__(482)];
+
+models.forEach(function (model) {
+  var sequelizeModel = model(sequelize, _sequelize2.default);
+  db[sequelizeModel.name] = sequelizeModel;
+  if (sequelizeModel.associate) {
+    toLink.push(sequelizeModel);
+  }
+});
+
+toLink.forEach(function (model) {
+  console.log(model);
+  model.associate(sequelize.models);
+});
+
+db.sequelize = sequelize;
+db.Sequelize = _sequelize2.default;
+
+module.exports = db;
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 if (__webpack_require__(7)) {
@@ -5526,7 +5601,7 @@ if (__webpack_require__(7)) {
 } else module.exports = function () {/* empty */};
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5587,81 +5662,6 @@ module.exports = {
   key: toMetaKey,
   exp: exp
 };
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _fs = __webpack_require__(475);
-
-var _fs2 = _interopRequireDefault(_fs);
-
-var _path = __webpack_require__(95);
-
-var _path2 = _interopRequireDefault(_path);
-
-var _sequelize = __webpack_require__(252);
-
-var _sequelize2 = _interopRequireDefault(_sequelize);
-
-var _config = __webpack_require__(68);
-
-var _config2 = _interopRequireDefault(_config);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var env = process.env.NODE_ENV || "development";
-
-// var config = require(path.join(__dirname, '../../config', 'config.json'))[env];
-
-var dbSettings = {
-  host: _config2.default.databaseHost,
-  dialect: 'mssql',
-  dialectOptions: { encrypt: true },
-  pool: {
-    min: 0,
-    max: 5,
-    idle: 10000
-  },
-  logging: true
-};
-
-var sequelize;
-
-if (process.env.DATABASE_URL) {
-  sequelize = new _sequelize2.default(process.env.DATABASE_URL, dbSettings);
-} else {
-  // sequelize = new Sequelize(config.database, config.username, config.password, dbSettings);
-  sequelize = new _sequelize2.default(_config2.default.databaseName, _config2.default.databaseUser, _config2.default.databasePassword, dbSettings);
-}
-
-var db = {};
-var toLink = [];
-
-// TODO: Maybe file scan the current directory (and children?) - Sequelize's import functionality was struggling once deployed to Azure,
-// so dropped back to this hard-coded list of models for now
-var models = [__webpack_require__(476), __webpack_require__(477), __webpack_require__(478), __webpack_require__(479), __webpack_require__(480), __webpack_require__(481), __webpack_require__(482)];
-
-models.forEach(function (model) {
-  var sequelizeModel = model(sequelize, _sequelize2.default);
-  db[sequelizeModel.name] = sequelizeModel;
-  if (sequelizeModel.associate) {
-    toLink.push(sequelizeModel);
-  }
-});
-
-toLink.forEach(function (model) {
-  console.log(model);
-  model.associate(sequelize.models);
-});
-
-db.sequelize = sequelize;
-db.Sequelize = _sequelize2.default;
-
-module.exports = db;
 
 /***/ }),
 /* 32 */
@@ -20323,7 +20323,7 @@ module.exports = require("request-promise");
 "use strict";
 
 
-var models = __webpack_require__(31);
+var models = __webpack_require__(29);
 
 /* eslint-disable no-extra-boolean-cast */
 
@@ -23398,7 +23398,7 @@ $export($export.G + $export.W + $export.F * !__webpack_require__(64).ABV, {
 "use strict";
 
 
-__webpack_require__(29)('Int8', 1, function (init) {
+__webpack_require__(30)('Int8', 1, function (init) {
   return function Int8Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -23411,7 +23411,7 @@ __webpack_require__(29)('Int8', 1, function (init) {
 "use strict";
 
 
-__webpack_require__(29)('Uint8', 1, function (init) {
+__webpack_require__(30)('Uint8', 1, function (init) {
   return function Uint8Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -23424,7 +23424,7 @@ __webpack_require__(29)('Uint8', 1, function (init) {
 "use strict";
 
 
-__webpack_require__(29)('Uint8', 1, function (init) {
+__webpack_require__(30)('Uint8', 1, function (init) {
   return function Uint8ClampedArray(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -23437,7 +23437,7 @@ __webpack_require__(29)('Uint8', 1, function (init) {
 "use strict";
 
 
-__webpack_require__(29)('Int16', 2, function (init) {
+__webpack_require__(30)('Int16', 2, function (init) {
   return function Int16Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -23450,7 +23450,7 @@ __webpack_require__(29)('Int16', 2, function (init) {
 "use strict";
 
 
-__webpack_require__(29)('Uint16', 2, function (init) {
+__webpack_require__(30)('Uint16', 2, function (init) {
   return function Uint16Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -23463,7 +23463,7 @@ __webpack_require__(29)('Uint16', 2, function (init) {
 "use strict";
 
 
-__webpack_require__(29)('Int32', 4, function (init) {
+__webpack_require__(30)('Int32', 4, function (init) {
   return function Int32Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -23476,7 +23476,7 @@ __webpack_require__(29)('Int32', 4, function (init) {
 "use strict";
 
 
-__webpack_require__(29)('Uint32', 4, function (init) {
+__webpack_require__(30)('Uint32', 4, function (init) {
   return function Uint32Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -23489,7 +23489,7 @@ __webpack_require__(29)('Uint32', 4, function (init) {
 "use strict";
 
 
-__webpack_require__(29)('Float32', 4, function (init) {
+__webpack_require__(30)('Float32', 4, function (init) {
   return function Float32Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -23502,7 +23502,7 @@ __webpack_require__(29)('Float32', 4, function (init) {
 "use strict";
 
 
-__webpack_require__(29)('Float64', 8, function (init) {
+__webpack_require__(30)('Float64', 8, function (init) {
   return function Float64Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -24637,7 +24637,7 @@ $export($export.S, 'Promise', { 'try': function _try(callbackfn) {
 "use strict";
 
 
-var metadata = __webpack_require__(30);
+var metadata = __webpack_require__(31);
 var anObject = __webpack_require__(2);
 var toMetaKey = metadata.key;
 var ordinaryDefineOwnMetadata = metadata.set;
@@ -24653,7 +24653,7 @@ metadata.exp({ defineMetadata: function defineMetadata(metadataKey, metadataValu
 "use strict";
 
 
-var metadata = __webpack_require__(30);
+var metadata = __webpack_require__(31);
 var anObject = __webpack_require__(2);
 var toMetaKey = metadata.key;
 var getOrCreateMetadataMap = metadata.map;
@@ -24676,7 +24676,7 @@ metadata.exp({ deleteMetadata: function deleteMetadata(metadataKey, target /* , 
 "use strict";
 
 
-var metadata = __webpack_require__(30);
+var metadata = __webpack_require__(31);
 var anObject = __webpack_require__(2);
 var getPrototypeOf = __webpack_require__(18);
 var ordinaryHasOwnMetadata = metadata.has;
@@ -24703,7 +24703,7 @@ metadata.exp({ getMetadata: function getMetadata(metadataKey, target /* , target
 
 var Set = __webpack_require__(119);
 var from = __webpack_require__(128);
-var metadata = __webpack_require__(30);
+var metadata = __webpack_require__(31);
 var anObject = __webpack_require__(2);
 var getPrototypeOf = __webpack_require__(18);
 var ordinaryOwnMetadataKeys = metadata.keys;
@@ -24728,7 +24728,7 @@ metadata.exp({ getMetadataKeys: function getMetadataKeys(target /* , targetKey *
 "use strict";
 
 
-var metadata = __webpack_require__(30);
+var metadata = __webpack_require__(31);
 var anObject = __webpack_require__(2);
 var ordinaryGetOwnMetadata = metadata.get;
 var toMetaKey = metadata.key;
@@ -24744,7 +24744,7 @@ metadata.exp({ getOwnMetadata: function getOwnMetadata(metadataKey, target /* , 
 "use strict";
 
 
-var metadata = __webpack_require__(30);
+var metadata = __webpack_require__(31);
 var anObject = __webpack_require__(2);
 var ordinaryOwnMetadataKeys = metadata.keys;
 var toMetaKey = metadata.key;
@@ -24760,7 +24760,7 @@ metadata.exp({ getOwnMetadataKeys: function getOwnMetadataKeys(target /* , targe
 "use strict";
 
 
-var metadata = __webpack_require__(30);
+var metadata = __webpack_require__(31);
 var anObject = __webpack_require__(2);
 var getPrototypeOf = __webpack_require__(18);
 var ordinaryHasOwnMetadata = metadata.has;
@@ -24784,7 +24784,7 @@ metadata.exp({ hasMetadata: function hasMetadata(metadataKey, target /* , target
 "use strict";
 
 
-var metadata = __webpack_require__(30);
+var metadata = __webpack_require__(31);
 var anObject = __webpack_require__(2);
 var ordinaryHasOwnMetadata = metadata.has;
 var toMetaKey = metadata.key;
@@ -24800,7 +24800,7 @@ metadata.exp({ hasOwnMetadata: function hasOwnMetadata(metadataKey, target /* , 
 "use strict";
 
 
-var $metadata = __webpack_require__(30);
+var $metadata = __webpack_require__(31);
 var anObject = __webpack_require__(2);
 var aFunction = __webpack_require__(11);
 var toMetaKey = $metadata.key;
@@ -25973,6 +25973,10 @@ var _Persona = __webpack_require__(254);
 
 var _Persona2 = _interopRequireDefault(_Persona);
 
+var _User = __webpack_require__(494);
+
+var _User2 = _interopRequireDefault(_User);
+
 var _config = __webpack_require__(68);
 
 var _config2 = _interopRequireDefault(_config);
@@ -25994,14 +25998,15 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 var app = new _express2.default();
 var server = new _http.Server(app);
 
-var GoogleStrategy = __webpack_require__(494).OAuth2Strategy;
+var GoogleStrategy = __webpack_require__(495).OAuth2Strategy;
 _passport2.default.use(new GoogleStrategy({
   clientID: _config2.default.googleClientId,
   clientSecret: _config2.default.googleClientSecret,
   callbackURL: _config2.default.googleCallbackUrl
 }, function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, accessToken, refreshToken, profile, done) {
-    var existingUser, googlePersona, googleUser;
+    var existingUser, parentUser, _parentUser, googlePersona, googleUser, existingPersona, existingParent;
+
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -26013,38 +26018,59 @@ _passport2.default.use(new GoogleStrategy({
             existingUser = _context.sent;
 
             if (!(existingUser.length == 0)) {
-              _context.next = 13;
+              _context.next = 18;
               break;
             }
 
-            _context.next = 6;
-            return _Persona2.default.createPersona({
-              name: profile.displayName,
-              avatarUrl: profile._json.image.url
-            });
+            // If we're not logged in already (e.g. with a Steam user) then create a new "parent" user
+            parentUser = req.user;
 
-          case 6:
-            googlePersona = _context.sent;
-            _context.next = 9;
-            return _GoogleUser2.default.createGoogleUser({ googleId: profile.id, personaId: googlePersona.id });
+            if (parentUser) {
+              _context.next = 9;
+              break;
+            }
+
+            _context.next = 8;
+            return _User2.default.createUser({});
+
+          case 8:
+            _parentUser = _context.sent;
 
           case 9:
-            googleUser = _context.sent;
+            _context.next = 11;
+            return _Persona2.default.createPersona({
+              name: profile.displayName,
+              avatarUrl: profile._json.image.url,
+              userId: parentUser.id
+            });
 
-            done(null, googleUser);
+          case 11:
+            googlePersona = _context.sent;
             _context.next = 14;
-            break;
-
-          case 13:
-            // TODO: Needs to be the parent user object, not the google one
-            done(null, existingUser);
+            return _GoogleUser2.default.createGoogleUser({ googleId: profile.id, personaId: googlePersona.id });
 
           case 14:
+            googleUser = _context.sent;
 
-            console.log("Google callback in server.js: " + JSON.stringify(profile));
-            done(null, profile);
+            done(null, parentUser);
+            _context.next = 25;
+            break;
 
-          case 16:
+          case 18:
+            _context.next = 20;
+            return existingUser.getPersona();
+
+          case 20:
+            existingPersona = _context.sent;
+            _context.next = 23;
+            return existingPersona.getUser();
+
+          case 23:
+            existingParent = _context.sent;
+
+            done(null, existingParent);
+
+          case 25:
           case 'end':
             return _context.stop();
         }
@@ -27518,7 +27544,7 @@ var _sequelize = __webpack_require__(252);
 
 var _sequelize2 = _interopRequireDefault(_sequelize);
 
-var _models = __webpack_require__(31);
+var _models = __webpack_require__(29);
 
 var _models2 = _interopRequireDefault(_models);
 
@@ -27751,7 +27777,9 @@ module.exports = function (sequelize, DataTypes) {
     profileUrl: { type: DataTypes.STRING }
   });
 
-  Persona.associate = function () {};
+  Persona.associate = function () {
+    Persona.belongsTo(models.user, { foreignKey: { allowNull: false } });
+  };
 
   return Persona;
 };
@@ -27811,7 +27839,7 @@ var _express = __webpack_require__(53);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _models = __webpack_require__(31);
+var _models = __webpack_require__(29);
 
 var _models2 = _interopRequireDefault(_models);
 
@@ -27836,6 +27864,9 @@ router.get('/initdb', function () {
             return _models2.default.sequelize.sync({ force: true });
 
           case 2:
+            res.json({ done: "Done" });
+
+          case 3:
           case 'end':
             return _context.stop();
         }
@@ -27930,7 +27961,7 @@ var _SteamUser = __webpack_require__(491);
 
 var _SteamUser2 = _interopRequireDefault(_SteamUser);
 
-var _models = __webpack_require__(31);
+var _models = __webpack_require__(29);
 
 var _models2 = _interopRequireDefault(_models);
 
@@ -28639,7 +28670,7 @@ function getBaseUrl(externalApiName) {
 "use strict";
 
 
-var models = __webpack_require__(31);
+var models = __webpack_require__(29);
 
 /* eslint-disable no-extra-boolean-cast */
 
@@ -28668,14 +28699,11 @@ exports.truncate = function () {
 "use strict";
 
 
-var models = __webpack_require__(31);
+var models = __webpack_require__(29);
 
 /* eslint-disable no-extra-boolean-cast */
 
 exports.createGame = function (gameData, transaction) {
-  var txn = !!transaction ? { transaction: transaction } : {};
-  return models.game.create(gameData, txn);
-};exports.createGame = function (gameData, transaction) {
   var txn = !!transaction ? { transaction: transaction } : {};
   return models.game.create(gameData, txn);
 };
@@ -28700,7 +28728,7 @@ exports.truncate = function () {
 "use strict";
 
 
-var models = __webpack_require__(31);
+var models = __webpack_require__(29);
 
 /* eslint-disable no-extra-boolean-cast */
 
@@ -28729,7 +28757,7 @@ exports.truncate = function () {
 "use strict";
 
 
-var models = __webpack_require__(31);
+var models = __webpack_require__(29);
 
 /* eslint-disable no-extra-boolean-cast */
 
@@ -28780,7 +28808,7 @@ module.exports = router;
 "use strict";
 
 
-var models = __webpack_require__(31);
+var models = __webpack_require__(29);
 
 /* eslint-disable no-extra-boolean-cast */
 
@@ -28804,6 +28832,35 @@ exports.truncate = function () {
 
 /***/ }),
 /* 494 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var models = __webpack_require__(29);
+
+/* eslint-disable no-extra-boolean-cast */
+
+exports.createUser = function (userData, transaction) {
+  var txn = !!transaction ? { transaction: transaction } : {};
+  return models.user.create(userData, txn);
+};
+
+exports.getAllUsers = function () {
+  return new Promise(function (resolve) {
+    var allUsers = models.user.findAll();
+    resolve(allUsers);
+  });
+};
+
+exports.truncate = function () {
+  return models.user.destroy({
+    where: {}
+  });
+};
+
+/***/ }),
+/* 495 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-google-oauth");

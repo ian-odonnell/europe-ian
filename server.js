@@ -18,6 +18,7 @@ import updateApi from './server/localApi/update';
 import auth from './server/auth';
 import GoogleUser from './server/dblib/GoogleUser';
 import Persona from './server/dblib/Persona';
+import User from './server/dblib/User';
 
 // Config
 import config from './config';
@@ -35,19 +36,27 @@ passport.use(
     async function (req, accessToken, refreshToken, profile, done) {
       var existingUser = await GoogleUser.getGoogleUsers({ googleId: profile.id });
       if (existingUser.length == 0) {
+        // If we're not logged in already (e.g. with a Steam user) then create a new "parent" user
+        let parentUser = req.user;
+        if (!parentUser) {
+          let parentUser = await User.createUser({});
+        }
+
+        // Create a new persona for the new Google user
         let googlePersona = await Persona.createPersona({
           name: profile.displayName,
-          avatarUrl: profile._json.image.url
+          avatarUrl: profile._json.image.url,
+          userId: parentUser.id
         });
-        let googleUser = await GoogleUser.createGoogleUser({ googleId: profile.id, personaId: googlePersona.id });
-        done(null, googleUser);
-      } else {
-        // TODO: Needs to be the parent user object, not the google one
-        done(null, existingUser);
-      }
 
-      console.log("Google callback in server.js: " + JSON.stringify(profile));
-      done(null, profile);
+        // Create the new Google user
+        let googleUser = await GoogleUser.createGoogleUser({ googleId: profile.id, personaId: googlePersona.id });
+        done(null, parentUser);
+      } else {
+        let existingPersona = await existingUser.getPersona();
+        let existingParent = await existingPersona.getUser();
+        done(null, existingParent);
+      }
     })
 );
 

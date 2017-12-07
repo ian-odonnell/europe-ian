@@ -7,6 +7,7 @@ const router = express.Router();
 // TODO: Christ, this is insecure.  And on a GET, as well?  Remove it when I have an actual deployment process!
 router.get('/initdb', async function (req, res, next) {
   await models.sequelize.sync({ force: true });
+  res.json({ done: "Done" });
 });
 
 router.get('/version', function (req, res) {

@@ -2,20 +2,20 @@ let models = require('../../dbmodels/models');
 
 /* eslint-disable no-extra-boolean-cast */
 
-exports.createGame = (gameData, transaction) => {
+exports.createUser = (userData, transaction) => {
     let txn = (!!transaction ? { transaction } : {});
-    return models.game.create(gameData, txn);
+    return models.user.create(userData, txn);
 };
 
-exports.getAllGames = () => {
+exports.getAllUsers = () => {
   return new Promise((resolve) => {
-    var allGames = models.game.findAll();
-    resolve(allGames);
+    var allUsers = models.user.findAll();
+    resolve(allUsers);
   });
 };
 
 exports.truncate = () => {
-  return models.game.destroy({
+  return models.user.destroy({
     where: {}
   });
 }

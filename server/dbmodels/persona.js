@@ -9,6 +9,7 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   Persona.associate = function () {
+    Persona.belongsTo(models.user, { foreignKey: { allowNull: false } });
   }
 
   return Persona;
