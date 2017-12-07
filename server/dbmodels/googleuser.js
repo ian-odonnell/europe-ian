@@ -1,14 +1,14 @@
 "use strict";
 
 module.exports = function (sequelize, DataTypes) {
-  var SteamUser = sequelize.define("steamuser", {
+  var GoogleUser = sequelize.define("googleuser", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    steamId: { type: DataTypes.STRING }
+    googleId: { type: DataTypes.STRING }
   });
 
-  SteamUser.associate = function (models) {
-    SteamUser.belongsTo(models.persona, { foreignKey: { allowNull: false } });
+  GoogleUser.associate = function (models) {
+    GoogleUser.belongsTo(models.persona, { foreignKey: { allowNull: false } });
   }
 
-  return SteamUser;
+  return GoogleUser;
 }
