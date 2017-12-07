@@ -28808,12 +28808,12 @@ router.get('/', function (req, res) {
 });
 
 /* GET home page. */
-router.route('/google/callback').get(passport.authorize('google', {
+router.route('/google/callback').get(passport.authenticate('google', {
     successRedirect: '/',
     failureRedirect: '/'
 }));
 
-router.route('/google').get(passport.authorize('google', {
+router.route('/google').get(passport.authenticate('google', {
     scope: ['profile', 'email']
 }));
 
