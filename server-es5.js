@@ -26057,7 +26057,7 @@ _passport2.default.use(new GoogleStrategy({
 
           case 18:
             _context.next = 20;
-            return existingUser.getPersona();
+            return existingUser[0].getPersona();
 
           case 20:
             existingPersona = _context.sent;
@@ -27795,7 +27795,9 @@ module.exports = function (sequelize, DataTypes) {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
   });
 
-  User.associate = function () {};
+  User.associate = function (models) {
+    User.hasMany(models.persona);
+  };
 
   return User;
 };
@@ -28806,12 +28808,12 @@ router.get('/', function (req, res) {
 });
 
 /* GET home page. */
-router.route('/google/callback').get(passport.authenticate('google', {
+router.route('/google/callback').get(passport.authorize('google', {
     successRedirect: '/',
     failureRedirect: '/'
 }));
 
-router.route('/google').get(passport.authenticate('google', {
+router.route('/google').get(passport.authorize('google', {
     scope: ['profile', 'email']
 }));
 
