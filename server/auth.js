@@ -8,13 +8,13 @@ router.get('/', function (req, res) {
 
 /* GET home page. */
 router.route('/google/callback')
-    .get(passport.authenticate('google', {
+    .get(passport.authorize('google', {
         successRedirect: '/',
         failureRedirect: '/'
     }));
 
 router.route('/google')
-    .get(passport.authenticate('google', {
+    .get(passport.authorize('google', {
         scope: ['profile', 'email']
     }));
 
