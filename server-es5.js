@@ -5091,7 +5091,7 @@ var toLink = [];
 
 // TODO: Maybe file scan the current directory (and children?) - Sequelize's import functionality was struggling once deployed to Azure,
 // so dropped back to this hard-coded list of models for now
-var models = [__webpack_require__(476), __webpack_require__(477), __webpack_require__(478), __webpack_require__(479), __webpack_require__(480), __webpack_require__(481), __webpack_require__(482)];
+var models = [__webpack_require__(476), __webpack_require__(477), __webpack_require__(478), __webpack_require__(479), __webpack_require__(480), __webpack_require__(481), __webpack_require__(482), __webpack_require__(483)];
 
 models.forEach(function (model) {
   var sequelizeModel = model(sequelize, _sequelize2.default);
@@ -25953,19 +25953,19 @@ var _chat = __webpack_require__(474);
 
 var _chat2 = _interopRequireDefault(_chat);
 
-var _admin = __webpack_require__(483);
+var _admin = __webpack_require__(484);
 
 var _admin2 = _interopRequireDefault(_admin);
 
-var _update = __webpack_require__(484);
+var _update = __webpack_require__(485);
 
 var _update2 = _interopRequireDefault(_update);
 
-var _auth = __webpack_require__(492);
+var _auth = __webpack_require__(493);
 
 var _auth2 = _interopRequireDefault(_auth);
 
-var _GoogleUser = __webpack_require__(493);
+var _GoogleUser = __webpack_require__(494);
 
 var _GoogleUser2 = _interopRequireDefault(_GoogleUser);
 
@@ -25973,7 +25973,7 @@ var _Persona = __webpack_require__(254);
 
 var _Persona2 = _interopRequireDefault(_Persona);
 
-var _User = __webpack_require__(494);
+var _User = __webpack_require__(495);
 
 var _User2 = _interopRequireDefault(_User);
 
@@ -25998,7 +25998,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 var app = new _express2.default();
 var server = new _http.Server(app);
 
-var GoogleStrategy = __webpack_require__(495).OAuth2Strategy;
+var GoogleStrategy = __webpack_require__(496).OAuth2Strategy;
 _passport2.default.use(new GoogleStrategy({
   clientID: _config2.default.googleClientId,
   clientSecret: _config2.default.googleClientSecret,
@@ -27792,6 +27792,23 @@ module.exports = function (sequelize, DataTypes) {
 
 
 module.exports = function (sequelize, DataTypes) {
+  var User = sequelize.define("user", {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
+  });
+
+  User.associate = function () {};
+
+  return User;
+};
+
+/***/ }),
+/* 482 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (sequelize, DataTypes) {
   var SteamUser = sequelize.define("steamuser", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     steamId: { type: DataTypes.STRING }
@@ -27805,7 +27822,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 482 */
+/* 483 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27825,7 +27842,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 483 */
+/* 484 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27923,7 +27940,7 @@ router.get('/steam/*', function () {
 exports.default = router;
 
 /***/ }),
-/* 484 */
+/* 485 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27937,19 +27954,19 @@ var _express = __webpack_require__(53);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _steamApi = __webpack_require__(485);
+var _steamApi = __webpack_require__(486);
 
 var _steamApi2 = _interopRequireDefault(_steamApi);
 
-var _Achievement = __webpack_require__(488);
+var _Achievement = __webpack_require__(489);
 
 var _Achievement2 = _interopRequireDefault(_Achievement);
 
-var _Game = __webpack_require__(489);
+var _Game = __webpack_require__(490);
 
 var _Game2 = _interopRequireDefault(_Game);
 
-var _Message = __webpack_require__(490);
+var _Message = __webpack_require__(491);
 
 var _Message2 = _interopRequireDefault(_Message);
 
@@ -27957,7 +27974,7 @@ var _Persona = __webpack_require__(254);
 
 var _Persona2 = _interopRequireDefault(_Persona);
 
-var _SteamUser = __webpack_require__(491);
+var _SteamUser = __webpack_require__(492);
 
 var _SteamUser2 = _interopRequireDefault(_SteamUser);
 
@@ -28319,7 +28336,7 @@ router.get('/steam', function () {
 exports.default = router;
 
 /***/ }),
-/* 485 */
+/* 486 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28329,9 +28346,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _externalApi = __webpack_require__(486);
+var _externalApi = __webpack_require__(487);
 
-var _baseUrl = __webpack_require__(487);
+var _baseUrl = __webpack_require__(488);
 
 var _baseUrl2 = _interopRequireDefault(_baseUrl);
 
@@ -28422,7 +28439,7 @@ steamApi.getGameSchema = function () {
 exports.default = steamApi;
 
 /***/ }),
-/* 486 */
+/* 487 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28621,7 +28638,7 @@ var ExternalApi = exports.ExternalApi = function () {
 }();
 
 /***/ }),
-/* 487 */
+/* 488 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28664,7 +28681,7 @@ function getBaseUrl(externalApiName) {
 }
 
 /***/ }),
-/* 488 */
+/* 489 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28693,7 +28710,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 489 */
+/* 490 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28722,7 +28739,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 490 */
+/* 491 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28751,7 +28768,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 491 */
+/* 492 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28775,7 +28792,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 492 */
+/* 493 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28802,7 +28819,7 @@ router.route('/google').get(passport.authenticate('google', {
 module.exports = router;
 
 /***/ }),
-/* 493 */
+/* 494 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28831,7 +28848,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 494 */
+/* 495 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28860,7 +28877,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 495 */
+/* 496 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-google-oauth");

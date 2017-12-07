@@ -41,6 +41,7 @@ var models = [
   require('./game'),
   require('./message'),
   require('./persona'),
+  require('./user'),
   require('./steamuser'),
   require('./googleuser')
 ];
