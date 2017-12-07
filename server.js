@@ -5,6 +5,7 @@ import Express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router-dom';
+import passport from 'passport';
 
 // Client
 import Routes from './client/routes';
@@ -13,9 +14,25 @@ import Routes from './client/routes';
 import chatApi from './server/localApi/chat';
 import adminApi from './server/localApi/admin';
 import updateApi from './server/localApi/update';
+import auth from './server/auth';
+
+// Config
+import config from './config';
 
 const app = new Express();
 const server = new Server(app);
+
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+passport.use(
+  new GoogleStrategy({
+    clientID: config.googleClientId,
+    clientSecret: config.googleClientSecret,
+    callbackURL: config.googleCallbackUrl
+  },
+  function (req, accessToken, refreshToken, profile, done) {
+    done(null, profile);
+  })
+);
 
 // Use ejs templates
 app.set('view engine', 'ejs');
@@ -28,6 +45,7 @@ app.use(Express.static(path.join(__dirname, './client/static')));
 app.use('/api', chatApi);
 app.use('/admin', adminApi);
 app.use('/update', updateApi);
+app.use('/auth', auth);
 
 // universal routing and rendering
 app.get('*', (req, res) => {

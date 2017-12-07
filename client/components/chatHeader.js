@@ -15,7 +15,7 @@ class ChatHeader extends React.Component {
   render() {
     return (
       <div className="chatHeader">
-        <h2>Test</h2>
+        <h2><a href='/auth/google'>Log in with Google</a></h2>
       </div>
     );
   }
