@@ -27420,7 +27420,7 @@ router.get('/latest', function () {
             return _models2.default.message.findAll({
               where: { parentMessageId: null },
               order: [['timestamp', 'DESC'], [{ model: _models2.default.message, as: 'replies' }, 'timestamp', 'ASC']],
-              limit: 20,
+              limit: 50,
               include: [{
                 model: _models2.default.persona
               }, {
@@ -27834,7 +27834,7 @@ router.get('/steam', function () {
                       return _Game2.default.createGame({
                         name: recentGame.name,
                         steamId: recentGame.appid,
-                        logoUrl: recentGame.img_logo_url // TODO: I think this is an identifier and needs converting into a full URL
+                        logoUrl: 'http://cdn.edgecast.steamstatic.com/steamcommunity/public/images/apps/' + recentGame.appid + '/' + recentGame.img_logo_url + '.jpg'
                       });
 
                     case 5:

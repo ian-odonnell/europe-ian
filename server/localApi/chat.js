@@ -28,7 +28,7 @@ router.get('/latest', async function (req, res, next) {
         ['timestamp', 'DESC'],
         [{ model: models.message, as: 'replies' }, 'timestamp', 'ASC']
       ],
-      limit: 20,
+      limit: 50,
       include: [
         {
           model: models.persona
