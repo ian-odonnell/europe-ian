@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
     profileUrl: { type: DataTypes.STRING }
   });
 
-  Persona.associate = function () {
+  Persona.associate = function (models) {
     Persona.belongsTo(models.user, { foreignKey: { allowNull: false } });
   }
 
