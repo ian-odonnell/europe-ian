@@ -10,6 +10,8 @@ import session from 'express-session';
 
 // Client
 import Routes from './client/routes';
+import configureStore from './client/store/configureStore';
+import { Provider } from 'react-redux';
 
 // Server
 import chatApi from './server/localApi/chat';
@@ -78,7 +80,7 @@ var sqlConfig = {
     encrypt: true
   }
 };
-app.use(session({ store: new MSSQLStore(sqlConfig, {ttl: 1000 * 60 * 24 * 30}), secret: 'secretkey', cookie: { maxAge: (1000 * 60 * 24 * 30) } }));
+app.use(session({ store: new MSSQLStore(sqlConfig, { ttl: 1000 * 60 * 24 * 30 }), secret: 'secretkey', cookie: { maxAge: (1000 * 60 * 24 * 30) } }));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -104,11 +106,14 @@ app.get('*', (req, res) => {
 
   console.log("app.get(*) - " + req);
 
+  const store = configureStore();
   const context = {};
   markup = renderToString(
-    <Router location={req.url} context={context}>
-      <Routes />
-    </Router>,
+    <Provider store={store}>
+      <Router location={req.url} context={context}>
+        <Routes />
+      </Router>
+    </Provider>,
   );
 
   // context.url will contain the URL to redirect to if a <Redirect> was used

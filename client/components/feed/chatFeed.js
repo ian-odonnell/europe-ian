@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ChieveChatApi from '../api/chieveChatApi';
+import ChieveChatApi from '../../api/chieveChatApi';
 import ChatMessage from './chatMessage';
+import {connect} from 'react-redux';
 
 class ChatFeed extends React.Component {
   constructor(props, context) {
@@ -48,16 +49,15 @@ class ChatFeed extends React.Component {
   render() {
     let chatRows = [];
 
-    // Determine the groups
     for (const message of this.state.chat) {
       chatRows.push(
-        <ChatMessage key={message.id} message={message} />
+        <ChatMessage key={message.id} message={message} filters={this.props.filters} />
       );
     }
 
     return (
       <div className="chatFeed">
-        <table>
+        <table className="chatTable">
           <tbody>
             {chatRows}
           </tbody>
@@ -67,4 +67,10 @@ class ChatFeed extends React.Component {
   }
 }
 
-export default ChatFeed;
+function mapStateToProps(state, ownProps) {
+  return {
+    filters: state.filters
+  };
+}
+
+export default connect(mapStateToProps)(ChatFeed);

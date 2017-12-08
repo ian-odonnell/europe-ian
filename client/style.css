@@ -16,6 +16,26 @@ body {
   width: 100%;
 }
 
+.chatFilters {
+  float: left;
+  padding-top: 20px;
+}
+
+.chatFilters td {
+  border: 2px;
+  padding: 4px;
+}
+
+.filterButtonShow {
+  background-color: white;
+  color: black;
+}
+
+.filterButtonHide {
+  background-color:#57fa57;
+  color: gray;
+}
+
 .headerPersona {
   float: right;
 }
@@ -35,8 +55,16 @@ body {
   height: 80px;
 }
 
-table {
+.chatFeed table {
   border-collapse: collapse;
+}
+
+.chatTable {
+  width: 100%;
+}
+
+tr.chatMessageHidden {
+  display:none;
 }
 
 tr.chatMessage td {
@@ -106,3 +134,4 @@ td.replyBody {
   background: linear-gradient(#ffffff, #eeeeee)!important;
   min-width: 300px;
 }
+

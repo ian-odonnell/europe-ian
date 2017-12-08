@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ChatHeader from './chatHeader';
-import ChatFeed from './chatFeed';
+import ChatHeader from './header/chatHeader';
+import ChatFeed from './feed/chatFeed';
 
 class ChatPage extends React.Component {
   constructor(props, context) {

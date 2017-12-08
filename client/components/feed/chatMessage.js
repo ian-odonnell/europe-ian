@@ -22,19 +22,24 @@ class ChatMessage extends React.Component {
     }
 
     let chatMessageGame = undefined;
-    if(this.props.message.achievement && this.props.message.gameRows) {
+    if (this.props.message.achievement && this.props.message.gameRows) {
       chatMessageGame = <ChatMessageGame game={this.props.message.achievement.game} rowcount={this.props.message.gameRows} />;
     }
 
     let colcount = 1;
-    if(!this.props.message.achievement) {
+    if (!this.props.message.achievement) {
       colcount = 2;
     }
 
-    let chatMessageBody = <ChatMessageBody message={this.props.message} colcount={colcount}/>;
+    let chatMessageBody = <ChatMessageBody message={this.props.message} colcount={colcount} />;
+
+    let messageClass = 'chatMessage';
+    if (!this.props.filters.showSteam) {
+      messageClass = 'chatMessageHidden';
+    }
 
     return (
-      <tr className="chatMessage">
+      <tr className={messageClass}>
         {chatMessagePersona}
         {chatMessageGame}
         {chatMessageBody}
