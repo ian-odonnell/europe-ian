@@ -17,7 +17,7 @@ class ChatMessageReplies extends React.Component {
     let replyRows = [];
     for (let reply of this.props.replies) {
       replyRows.push(
-        <tr>
+        <tr key={reply.id}>
           <td className="replyPersona">{reply.persona.name}</td>
           <td className="replyBody">
           <div>{reply.body}</div>

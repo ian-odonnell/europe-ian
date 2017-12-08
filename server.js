@@ -7,6 +7,7 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router-dom';
 import passport from 'passport';
 import session from 'express-session';
+import bodyParser from 'body-parser';
 
 // Client
 import Routes from './client/routes';
@@ -27,6 +28,12 @@ import config from './config';
 
 const app = new Express();
 const server = new Server(app);
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
 
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 passport.use(

@@ -135,3 +135,35 @@ td.replyBody {
   min-width: 300px;
 }
 
+div.postDialogWrapper {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+div.postDialog {
+  position: absolute;
+  left: 20%;
+  top: 20%;
+  width: 60%;
+  height: 60%;
+  background-color: #ffff99;
+}
+
+div.postDialog textarea {
+  position: absolute;
+  left: 5%;
+  top: 5%;
+  width: 90%;
+  height: 80%;
+  resize: none;
+}
+
+div.postDialog button {
+  position: absolute;
+  top: 90%;
+  left: 5%;
+}

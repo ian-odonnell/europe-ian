@@ -19,7 +19,7 @@ class ChatFeed extends React.Component {
     const latestChat = await ChieveChatApi.getChat();
     this.calculateChatGroups(latestChat);
     this.setState({ chat: latestChat });
-    setTimeout(this.loadChat.bind(this), 5000);
+    setTimeout(this.loadChat.bind(this), 60000);
   }
 
   calculateChatGroups(chatArray) {

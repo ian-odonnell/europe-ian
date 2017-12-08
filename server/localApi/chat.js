@@ -1,6 +1,7 @@
 import express from 'express';
 import Sequelize from 'sequelize';
 import models from '../dbmodels/models';
+import Message from '../dblib/Message';
 
 const router = express.Router();
 
@@ -59,6 +60,18 @@ router.get('/latest', async function (req, res, next) {
   catch (err) {
     res.status(500).send(JSON.stringify(err));
   }
+});
+
+router.post('/message', async function(req, res) {
+  console.log(req);
+  console.log(req.body);
+  const message = await Message.createMessage({
+    timestamp: Date(),
+    body: req.body.body,
+    personaId: 5,
+    parentMessageId: req.body.parentId
+  });
+  res.json(message);
 });
 
 router.use((req, res, next) => {
