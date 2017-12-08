@@ -26183,7 +26183,18 @@ app.set('views', _path2.default.join(__dirname, './client/views'));
 app.use(_express2.default.static(_path2.default.join(__dirname, './client/static')));
 
 // Set up session handling and authentication
-app.use((0, _expressSession2.default)({ secret: 'secretkey', cookie: { maxAge: 60000 * 24 * 30 } }));
+var MSSQLStore = __webpack_require__(497)(_expressSession2.default);
+var sqlConfig = {
+  user: _config2.default.databaseUser,
+  password: _config2.default.databasePassword,
+  server: _config2.default.databaseHost,
+  database: _config2.default.databaseName,
+  options: {
+    encrypt: true
+  }
+};
+app.use((0, _expressSession2.default)({ store: new MSSQLStore(sqlConfig, { ttl: 1000 * 60 * 24 * 30 }), secret: 'secretkey', cookie: { maxAge: 1000 * 60 * 24 * 30 } }));
+
 app.use(_passport2.default.initialize());
 app.use(_passport2.default.session());
 
@@ -29004,6 +29015,12 @@ exports.truncate = function () {
 /***/ (function(module, exports) {
 
 module.exports = require("passport-google-oauth");
+
+/***/ }),
+/* 497 */
+/***/ (function(module, exports) {
+
+module.exports = require("connect-mssql");
 
 /***/ })
 /******/ ]);

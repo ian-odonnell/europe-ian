@@ -68,7 +68,18 @@ app.set('views', path.join(__dirname, './client/views'));
 app.use(Express.static(path.join(__dirname, './client/static')));
 
 // Set up session handling and authentication
-app.use(session({ secret: 'secretkey', cookie: { maxAge: (60000 * 24 * 30) } }));
+var MSSQLStore = require('connect-mssql')(session);
+var sqlConfig = {
+  user: config.databaseUser,
+  password: config.databasePassword,
+  server: config.databaseHost,
+  database: config.databaseName,
+  options: {
+    encrypt: true
+  }
+};
+app.use(session({ store: new MSSQLStore(sqlConfig, {ttl: 1000 * 60 * 24 * 30}), secret: 'secretkey', cookie: { maxAge: (1000 * 60 * 24 * 30) } }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
