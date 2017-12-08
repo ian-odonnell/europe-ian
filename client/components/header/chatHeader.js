@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import ChieveChatApi from '../../api/chieveChatApi';
 import ChatFilters from './chatFilters';
 import UserPanel from './userPanel';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as chatActions from '../../actions/chatActions';
 
 class ChatHeader extends React.Component {
@@ -14,24 +14,18 @@ class ChatHeader extends React.Component {
   }
 
   async componentDidMount() {
-    var auth = await ChieveChatApi.getAuth();
-    if (auth && auth.personas) {
-      this.setState({
-        selectedPersona: auth.personas[0]
-      })
-    }
-    else {
-      this.setState({
-        selectedPersona: undefined
-      });
-    }
   }
 
   render() {
+    let name = "Nobody";
+    if (this.props.user.activePersona) {
+      name = this.props.user.activePersona.name;
+    }
     return (
       <div className="chatHeader">
-        <ChatFilters filters={this.props.filters} changeFilter={this.props.changeFilter}/>
-        <UserPanel selectedPersona={this.state.selectedPersona} />
+        <div>{name}</div>
+        <ChatFilters filters={this.props.filters} changeFilter={this.props.changeFilter} />
+        <UserPanel selectedPersona={this.props.user.activePersona} />
       </div>
     );
   }
@@ -39,7 +33,8 @@ class ChatHeader extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    filters: state.filters
+    filters: state.filters,
+    user: state.user
   };
 }
 

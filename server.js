@@ -111,8 +111,6 @@ app.get('*', (req, res) => {
   let markup = '';
   let status = 200;
 
-  console.log("app.get(*) - " + req);
-
   const store = configureStore();
   const context = {};
   markup = renderToString(

@@ -63,8 +63,6 @@ router.get('/latest', async function (req, res, next) {
 });
 
 router.post('/message', async function(req, res) {
-  console.log(req);
-  console.log(req.body);
   const message = await Message.createMessage({
     timestamp: Date(),
     body: req.body.body,

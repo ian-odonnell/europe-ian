@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ChieveChatApi from '../api/chieveChatApi';
 import ChatHeader from './header/chatHeader';
 import ChatFeed from './feed/chatFeed';
 import { connect } from 'react-redux';
@@ -14,11 +15,17 @@ class ChatPage extends React.Component {
   }
 
   async componentDidMount() {
-    this.setState({});
+    var auth = await ChieveChatApi.getAuth();
+    console.log("CDM: " + auth);
+    if (auth && auth.personas) {
+      this.props.switchPersona(auth.personas[0]);
+    } else {
+      this.props.switchPersona(undefined);
+    }
   }
 
   render() {
-    const popup = this.props.message.showPopup ? <PostDialog hidePopup={this.props.hidePopup} postMessage={this.props.postMessage} /> : undefined;
+    const popup = this.props.message.showPopup ? <PostDialog hidePopup={this.props.hidePopup} postMessage={this.props.postMessage} persona={this.props.user.activePersona}/> : undefined;
 
     return (
       <div className="chatPage">
@@ -33,6 +40,7 @@ class ChatPage extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   return {
+    user: state.user,
     message: state.message
   };
 }
@@ -41,7 +49,8 @@ function mapDispatchToProps(dispatch) {
   return {
     showPopup: () => dispatch(chatActions.showPopup()),
     hidePopup: () => dispatch(chatActions.hidePopup()),
-    postMessage: (messageBody, parentMessageId) => dispatch(chatActions.postMessage(messageBody, parentMessageId))
+    postMessage: (persona, messageBody, parentMessageId) => dispatch(chatActions.postMessage(persona, messageBody, parentMessageId)),
+    switchPersona: (newPersona) => dispatch(chatActions.switchPersona(newPersona))
   }
 }
 

@@ -20,10 +20,32 @@ export function hidePopup() {
   };
 }
 
-export function postMessage(messageBody, parentMessageId) {
+export function chatLoaded(latestChat) {
+  return {
+    type: 'CHAT_LOADED',
+    latestChat
+  };
+}
+
+export function switchPersona(newPersona) {
+  return {
+    type: 'SWITCH_PERSONA',
+    persona: newPersona
+  };
+}
+
+export function postMessage(persona, messageBody, parentMessageId) {
   return function(dispatch) {
-    ChieveChatApi.postMessage(messageBody, parentMessageId).then(() => {
+    ChieveChatApi.postMessage(persona.id, messageBody, parentMessageId).then(() => {
       dispatch(hidePopup());
+    });
+  }
+}
+
+export function loadChat() {
+  return function(dispatch) {
+    ChieveChatApi.getChat().then((latestChat) => {
+      dispatch(chatLoaded(latestChat));
     });
   }
 }

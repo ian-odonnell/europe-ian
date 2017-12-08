@@ -10,8 +10,6 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   Achievement.associate = function (models) {
-    console.log("Hello?");
-    console.log(models);
     Achievement.belongsTo(models.game, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
   }
 

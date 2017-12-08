@@ -4,8 +4,6 @@ import rp from 'request-promise';
 /* eslint-disable no-console */
 export class ExternalApi {
   constructor(baseUrl) {
-    console.log(process.env.NODE_ENV);
-    console.log("Constructing ExternalApi with baseUrl of " + baseUrl);
     this.baseUrl = baseUrl;
   }
 
@@ -20,8 +18,6 @@ export class ExternalApi {
     if (queryParams) {
       options.qs = queryParams;
     }
-
-    console.log("Getting: " + options.uri);
 
     return await rp(options);
   }

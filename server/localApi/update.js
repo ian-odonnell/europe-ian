@@ -13,18 +13,13 @@ const router = express.Router();
 router.get('/steam', async function (req, res, next) {
   try {
     let response = {};
-    console.log("A");
     const allKnownGames = await Game.getAllGames();
-    console.log("A");
 
     // Iterate over all of our Steam users
     const steamUsers = await SteamUser.getAllSteamUsers();
-    console.log("A");
     for (const steamUser of steamUsers) {
       // Iterate over the user's recently played games
-      console.log("Getting games for " + steamUser.steamId);
       const recentGames = await steamApi.getRecentGames(steamUser.steamId);
-      console.log("Got 'em - there's " + recentGames.response.games.length);
       for (const recentGame of recentGames.response.games) {
         let gameSchema = undefined;
 

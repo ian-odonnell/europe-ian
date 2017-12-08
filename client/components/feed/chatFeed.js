@@ -3,24 +3,27 @@ import ReactDOM from 'react-dom';
 import ChieveChatApi from '../../api/chieveChatApi';
 import ChatMessage from './chatMessage';
 import {connect} from 'react-redux';
+import * as chatActions from '../../actions/chatActions';
 
 class ChatFeed extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = { chat: [] };
+    this.state = { };
   }
 
   componentDidMount() {
-    this.loadChat();
+    this.props.loadChat();
   }
 
+  /*
   async loadChat() {
     const latestChat = await ChieveChatApi.getChat();
     this.calculateChatGroups(latestChat);
     this.setState({ chat: latestChat });
     setTimeout(this.loadChat.bind(this), 60000);
   }
+  */
 
   calculateChatGroups(chatArray) {
     const lastIndex = chatArray.length - 1;
@@ -49,7 +52,7 @@ class ChatFeed extends React.Component {
   render() {
     let chatRows = [];
 
-    for (const message of this.state.chat) {
+    for (const message of this.props.chat.chatMessages) {
       chatRows.push(
         <ChatMessage key={message.id} message={message} filters={this.props.filters} />
       );
@@ -69,8 +72,16 @@ class ChatFeed extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    filters: state.filters
+    filters: state.filters,
+    chat: state.chat
   };
 }
 
-export default connect(mapStateToProps)(ChatFeed);
+function mapDispatchToProps(dispatch) {
+  return {
+    //loadChat: () => dispatch(chatActions.loadChat())
+    loadChat: () => dispatch(chatActions.loadChat("123123"))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatFeed);

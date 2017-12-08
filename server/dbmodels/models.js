@@ -55,7 +55,6 @@ models.forEach(model => {
 });
 
 toLink.forEach(model => {
-  console.log(model);
   model.associate(sequelize.models);
 });
 
