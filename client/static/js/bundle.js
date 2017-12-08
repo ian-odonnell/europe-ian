@@ -48530,7 +48530,7 @@ var ChatHeader = function (_React$Component) {
         _react2.default.createElement(
           'a',
           { href: '/auth/google' },
-          'Log in with Google'
+          _react2.default.createElement('img', { src: '/images/Google.jpg' })
         )
       );
       return _react2.default.createElement(
@@ -49805,7 +49805,7 @@ exports = module.exports = __webpack_require__(538)(undefined);
 
 
 // module
-exports.push([module.i, "a {\n  text-decoration: none;\n  font-weight: bold;\n  color: #006600;\n}\n\na:hover{\n  color: #00cc00;\n}\n\nbody {\n  background-color: #004400;\n}\n\n.chatHeader {\n  width: 100%;\n}\n\n.headerPersona {\n  float: right;\n}\n\n.headerLogin {\n  float: right;\n}\n\ntable {\n  border-collapse: collapse;\n}\n\ntr.chatMessage td {\n  background-color: #ffff99;\n  background:linear-gradient(#eeffbb, #eeffdd);\n  padding: 6px;\n  border: solid 1px #003300;\n}\n\n.chatMessageBody {\n  vertical-align: top;\n}\n\n.chatMessageTimestamp {\n  font-size: small;\n  text-align: right;\n}\n\n.chatMessagePersona {\n  vertical-align: top;\n  min-width: 100px;\n}\n\n.chatMessagePersona div {\n  padding-bottom: 5px;\n}\n\n.chatMessagePersona img {\n  height: 80px;\n  width: 80px;\n}\n\n.chatMessageGame {\n  vertical-align: top;\n  min-width: 150px;\n}\n\n.chatMessageBody {\n  width: 100%;\n}\n\n.bodyAchievement div {\n  float: left;\n  padding-right: 10px;\n}\n\n.bodyAchievement span.achievementName {\n  font-weight: bold;\n}\n\n.bodyAchievement span.achievementDescription {\n  font-style: italic;\n}\n\ntable.chatMessageReplies {\n  margin: 10px 0 0 100px;\n}\n\ntd.replyPersona {\n  vertical-align: top;\n  min-width: 100px;\n  font-weight: bold;\n  background: linear-gradient(#eeeeee, #dddddd)!important;\n}\n\ntd.replyBody {\n  background: linear-gradient(#ffffff, #eeeeee)!important;\n  min-width: 300px;\n}\n", ""]);
+exports.push([module.i, "a {\n  text-decoration: none;\n  font-weight: bold;\n  color: #006600;\n}\n\na:hover{\n  color: #00cc00;\n}\n\nbody {\n  background-color: #004400;\n}\n\n.chatHeader {\n  width: 100%;\n}\n\n.headerPersona {\n  float: right;\n}\n\n.headerPersona img {\n  width: 80px;\n  height: 80px;\n}\n\n.headerLogin {\n  padding-left: 10px;\n  float: right;\n}\n\n.headerLogin img {\n  width: 80px;\n  height: 80px;\n}\n\ntable {\n  border-collapse: collapse;\n}\n\ntr.chatMessage td {\n  background-color: #ffff99;\n  background:linear-gradient(#eeffbb, #eeffdd);\n  padding: 6px;\n  border: solid 1px #003300;\n}\n\n.chatMessageBody {\n  vertical-align: top;\n}\n\n.chatMessageTimestamp {\n  font-size: small;\n  text-align: right;\n}\n\n.chatMessagePersona {\n  vertical-align: top;\n  min-width: 100px;\n}\n\n.chatMessagePersona div {\n  padding-bottom: 5px;\n}\n\n.chatMessagePersona img {\n  height: 80px;\n  width: 80px;\n}\n\n.chatMessageGame {\n  vertical-align: top;\n  min-width: 150px;\n}\n\n.chatMessageBody {\n  width: 100%;\n}\n\n.bodyAchievement div {\n  float: left;\n  padding-right: 10px;\n}\n\n.bodyAchievement span.achievementName {\n  font-weight: bold;\n}\n\n.bodyAchievement span.achievementDescription {\n  font-style: italic;\n}\n\ntable.chatMessageReplies {\n  margin: 10px 0 0 100px;\n}\n\ntd.replyPersona {\n  vertical-align: top;\n  min-width: 100px;\n  font-weight: bold;\n  background: linear-gradient(#eeeeee, #dddddd)!important;\n}\n\ntd.replyBody {\n  background: linear-gradient(#ffffff, #eeeeee)!important;\n  min-width: 300px;\n}\n", ""]);
 
 // exports
 

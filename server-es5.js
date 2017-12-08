@@ -26498,7 +26498,7 @@ var ChatHeader = function (_React$Component) {
         _react2.default.createElement(
           'a',
           { href: '/auth/google' },
-          'Log in with Google'
+          _react2.default.createElement('img', { src: '/images/Google.jpg' })
         )
       );
       return _react2.default.createElement(

@@ -34,7 +34,7 @@ class ChatHeader extends React.Component {
       );
     } else {
     }
-    login = <div className="headerLogin"><a href='/auth/google'>Log in with Google</a></div>;
+    login = <div className="headerLogin"><a href='/auth/google'><img src='/images/Google.jpg' /></a></div>;
     return (
       <div className="chatHeader">
         {login}
