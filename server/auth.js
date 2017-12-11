@@ -38,6 +38,11 @@ router.route('/google')
     scope: ['profile', 'email']
   }));
 
+router.route('/connect/google')
+  .get(passport.authorize('google', {
+    scope: ['profile', 'email']
+  }));
+
 router.route('/twitter/callback')
   .get(passport.authenticate('twitter', {
     successRedirect: '/',
@@ -46,6 +51,9 @@ router.route('/twitter/callback')
 
 router.route('/twitter')
   .get(passport.authenticate('twitter'));
+
+router.route('/connect/twitter')
+  .get(passport.authorize('twitter'));
 
 router.get('/logout', (req, res) => {
   req.logout();
@@ -56,5 +64,6 @@ router.post('/local/login', passport.authenticate('local-login', {
   successRedirect: '/',
   failureRedirect: '/login'
 }));
+
 
 module.exports = router;

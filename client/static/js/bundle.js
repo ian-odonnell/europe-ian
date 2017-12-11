@@ -50154,6 +50154,9 @@ var UserPanel = function (_React$Component) {
     value: function render() {
       var persona = undefined;
       var login = undefined;
+      var googleUrl = '/auth/google';
+      var twitterUrl = '/auth/twitter';
+
       if (this.props.selectedPersona) {
         persona = _react2.default.createElement(
           'div',
@@ -50164,18 +50167,20 @@ var UserPanel = function (_React$Component) {
             _react2.default.createElement('img', { src: this.props.selectedPersona.avatarUrl })
           )
         );
+        googleUrl = '/auth/connect/google';
+        twitterUrl = '/auth/connect/twitter';
       } else {}
       login = _react2.default.createElement(
         'div',
         { className: 'headerLogin' },
         _react2.default.createElement(
           'a',
-          { href: '/auth/google' },
+          { href: googleUrl },
           _react2.default.createElement('img', { src: '/images/Google.jpg' })
         ),
         _react2.default.createElement(
           'a',
-          { href: '/auth/twitter' },
+          { href: twitterUrl },
           _react2.default.createElement('img', { src: '/images/Twitter.png' })
         )
       );

@@ -19,6 +19,7 @@ import chatApi from './server/localApi/chat';
 import adminApi from './server/localApi/admin';
 import updateApi from './server/localApi/update';
 import auth from './server/auth';
+import bcrypt from 'bcrypt-nodejs';
 import LocalUser from './server/dblib/LocalUser';
 import GoogleUser from './server/dblib/GoogleUser';
 import TwitterUser from './server/dblib/TwitterUser';
@@ -47,7 +48,7 @@ passport.use('local-login', new LocalStrategy({
       return done(null, false);
     }
 
-    if(existingUser[0].password !== password) {
+    if(!bcrypt.compareSync(password, existingUser[0].password)) {
       return done(null, false);
     }
 
@@ -64,7 +65,8 @@ passport.use(
   new GoogleStrategy({
     clientID: config.googleClientId,
     clientSecret: config.googleClientSecret,
-    callbackURL: config.googleCallbackUrl
+    callbackURL: config.googleCallbackUrl,
+    passReqToCallback: true
   },
     async function (req, accessToken, refreshToken, profile, done) {
       let existingUser = await GoogleUser.getGoogleUsers({ googleId: profile.id });
@@ -98,14 +100,15 @@ passport.use(
   new TwitterStrategy({
     consumerKey: config.twitterConsumerKey,
     consumerSecret: config.twiterConsumerSecret,
-    callbackURL: config.twitterCallbackUrl
+    callbackURL: config.twitterCallbackUrl,
+    passReqToCallback: true
   },
-    async function (accessToken, refreshToken, profile, done) {
+    async function (req, accessToken, refreshToken, profile, done) {
       console.log(profile);
       let existingUser = await TwitterUser.getTwitterUsers({ twitterId: profile.id });
       if (existingUser.length == 0) {
         // If we're not logged in already (e.g. with a Steam user) then create a new "parent" user
-        let parentUser = undefined; // req.user;
+        let parentUser = req.user;
         if (!parentUser) {
           parentUser = await User.createUser({});
         }
