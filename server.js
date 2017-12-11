@@ -78,6 +78,7 @@ passport.use(
     callbackURL: config.twitterCallbackUrl
   },
   async function (accessToken, refreshToken, profile, done) {
+    console.log(profile);
     var existingUser = await TwitterUser.getTwitterUsers({ twitterId: profile.id });
     if (existingUser.length == 0) {
       // If we're not logged in already (e.g. with a Steam user) then create a new "parent" user
