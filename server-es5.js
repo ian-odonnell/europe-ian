@@ -26633,14 +26633,15 @@ _passport2.default.use(new TwitterStrategy({
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.next = 2;
+            console.log(profile);
+            _context2.next = 3;
             return _TwitterUser2.default.getTwitterUsers({ twitterId: profile.id });
 
-          case 2:
+          case 3:
             existingUser = _context2.sent;
 
             if (!(existingUser.length == 0)) {
-              _context2.next = 18;
+              _context2.next = 19;
               break;
             }
 
@@ -26648,51 +26649,51 @@ _passport2.default.use(new TwitterStrategy({
             parentUser = req.user;
 
             if (parentUser) {
-              _context2.next = 9;
+              _context2.next = 10;
               break;
             }
 
-            _context2.next = 8;
+            _context2.next = 9;
             return _User2.default.createUser({});
 
-          case 8:
+          case 9:
             parentUser = _context2.sent;
 
-          case 9:
-            _context2.next = 11;
+          case 10:
+            _context2.next = 12;
             return _Persona2.default.createPersona({
               name: profile.displayName,
               avatarUrl: profile._json.image.url,
               userId: parentUser.id
             });
 
-          case 11:
+          case 12:
             twitterPersona = _context2.sent;
-            _context2.next = 14;
+            _context2.next = 15;
             return _TwitterUser2.default.createTwitterUser({ twitterId: profile.id, personaId: twitterPersona.id });
 
-          case 14:
+          case 15:
             twitterUser = _context2.sent;
 
             done(null, parentUser);
-            _context2.next = 25;
+            _context2.next = 26;
             break;
 
-          case 18:
-            _context2.next = 20;
+          case 19:
+            _context2.next = 21;
             return existingUser[0].getPersona();
 
-          case 20:
+          case 21:
             existingPersona = _context2.sent;
-            _context2.next = 23;
+            _context2.next = 24;
             return existingPersona.getUser();
 
-          case 23:
+          case 24:
             existingParent = _context2.sent;
 
             done(null, existingParent);
 
-          case 25:
+          case 26:
           case 'end':
             return _context2.stop();
         }
@@ -29856,9 +29857,14 @@ var models = __webpack_require__(21);
 
 /* eslint-disable no-extra-boolean-cast */
 
-exports.getAllTwitterUsers = function () {
+exports.createTwitterUser = function (twitterUserData, transaction) {
+  var txn = !!transaction ? { transaction: transaction } : {};
+  return models.twitteruser.create(twitterUserData, txn);
+};
+
+exports.getTwitterUsers = function (where) {
   return new Promise(function (resolve) {
-    var allUsers = models.twitteruser.findAll();
+    var allUsers = models.twitteruser.findAll({ where: where });
     resolve(allUsers);
   });
 };
