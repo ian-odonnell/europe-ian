@@ -24,7 +24,7 @@ class PostDialog extends React.Component {
       <div className="postDialogWrapper" onClick={this.props.hidePopup}>
         <div className="postDialog" onClick={(e) => {e.stopPropagation();}}>
           <textarea ref="messageBody" />
-          <button onClick={() => this.props.postMessage(this.props.persona, ReactDOM.findDOMNode(this.refs.messageBody).value, parentMessageId)}>Submit</button>
+          <button type="button" onClick={() => this.props.postMessage(this.props.persona, ReactDOM.findDOMNode(this.refs.messageBody).value, parentMessageId)}>Submit</button>
         </div>
       </div>
     );

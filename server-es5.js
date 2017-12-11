@@ -28277,7 +28277,7 @@ var PostDialog = function (_React$Component) {
           _react2.default.createElement('textarea', { ref: 'messageBody' }),
           _react2.default.createElement(
             'button',
-            { onClick: function onClick() {
+            { type: 'button', onClick: function onClick() {
                 return _this2.props.postMessage(_this2.props.persona, _reactDom2.default.findDOMNode(_this2.refs.messageBody).value, parentMessageId);
               } },
             'Submit'
