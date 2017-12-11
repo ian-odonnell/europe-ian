@@ -1,0 +1,178 @@
+a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #006600;
+}
+
+a:hover{
+  color: #00cc00;
+}
+
+body {
+  background-color: #004400;
+}
+
+.chatHeader {
+  width: 100%;
+}
+
+.chatFilters {
+  float: left;
+  padding-top: 20px;
+}
+
+.chatFilters td {
+  border: 2px;
+  padding: 4px;
+}
+
+.filterButtonShow {
+  background-color: white;
+  color: black;
+}
+
+.filterButtonHide {
+  background-color:#57fa57;
+  color: gray;
+}
+
+.headerPersona {
+  float: right;
+}
+
+.headerPersona img {
+  width: 80px;
+  height: 80px;
+}
+
+.headerLogin {
+  padding-left: 10px;
+  float: right;
+}
+
+.headerLogin img {
+  width: 80px;
+  height: 80px;
+}
+
+.chatFeed table {
+  border-collapse: collapse;
+}
+
+.chatTable {
+  width: 100%;
+}
+
+tr.chatMessageHidden {
+  display:none;
+}
+
+tr.chatMessage td {
+  background-color: #ffff99;
+  background:linear-gradient(#eeffbb, #eeffdd);
+  padding: 6px;
+  border: solid 1px #003300;
+}
+
+.chatMessageBody {
+  vertical-align: top;
+}
+
+.chatMessageBody div:first-child {
+  min-height: 75px;
+}
+
+.chatMessageTimestamp {
+  font-size: small;
+  text-align: right;
+}
+
+.chatMessagePersona {
+  vertical-align: top;
+  min-width: 100px;
+}
+
+.chatMessagePersona div {
+  padding-bottom: 5px;
+}
+
+.chatMessagePersona img {
+  height: 80px;
+  width: 80px;
+}
+
+.chatMessageGame {
+  vertical-align: top;
+  min-width: 150px;
+}
+
+.chatMessageBody {
+  width: 100%;
+}
+
+.bodyAchievement div {
+  float: left;
+  padding-right: 10px;
+}
+
+.bodyAchievement span.achievementName {
+  font-weight: bold;
+}
+
+.bodyAchievement span.achievementDescription {
+  font-style: italic;
+}
+
+table.chatMessageReplies {
+  margin: 10px 0 0 100px;
+}
+
+td.replyPersona {
+  vertical-align: top;
+  min-width: 100px;
+  font-weight: bold;
+  background: linear-gradient(#eeeeee, #dddddd)!important;
+}
+
+td.replyBody {
+  background: linear-gradient(#ffffff, #eeeeee)!important;
+  min-width: 300px;
+}
+
+div.postDialogWrapper {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+div.postDialog {
+  position: absolute;
+  left: 20%;
+  top: 20%;
+  width: 60%;
+  height: 60%;
+  background-color: #ffff99;
+}
+
+div.postDialog textarea {
+  position: absolute;
+  left: 5%;
+  top: 5%;
+  width: 90%;
+  height: 80%;
+  resize: none;
+}
+
+div.postDialog button {
+  position: absolute;
+  top: 90%;
+  left: 5%;
+}
+
+.loginPage table {
+  background-color: #eeffbb;
+  padding: 10px;
+}

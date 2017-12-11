@@ -1,20 +1,23 @@
 import path from 'path';
 import nodeExternals from 'webpack-node-externals';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const client = {
-  watch: true,
+  // watch: true,
   entry: {
-    js: ['babel-polyfill', './client.js'],
+    bundle: ['babel-polyfill', './client.js']
   },
+  plugins: [
+    new ExtractTextPlugin("[name].css")
+  ],
   output: {
-    path: path.join(__dirname, 'client', 'static', 'js'),
-    filename: 'bundle.js',
+    path: path.join(__dirname, 'client', 'static'),
+    filename: '[name].js',
   },
   module: {
     loaders: [
-      { test: /\.css$/, loader: "style-loader!css-loader" },
       { test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader'] },
-      { test: /\.js$/, include: [/whatwg-.*/], loaders: ['babel-loader'] }
+      { test: /\.css$/, loader: ExtractTextPlugin.extract('css-loader?sourceMap') }
     ]
     /*
     rules: [
@@ -38,7 +41,7 @@ const server = {
     modulesFromFile: true,
   })],
   entry: {
-    js: ['babel-polyfill', './server.js'],
+    bundle: ['babel-polyfill', './server.js'],
   },
   output: {
     path: path.join(__dirname, ''),

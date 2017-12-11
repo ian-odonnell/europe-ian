@@ -179,7 +179,7 @@ app.get('*', (req, res) => {
       <Router location={req.url} context={context}>
         <Routes />
       </Router>
-    </Provider>,
+    </Provider>
   );
 
   // context.url will contain the URL to redirect to if a <Redirect> was used
