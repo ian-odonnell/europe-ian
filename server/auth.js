@@ -4,7 +4,7 @@ var router = express.Router();
 
 import User from './dblib/User';
 import Persona from './dblib/Persona';
-import models from './dbmodels/models';
+import models from './dbmodels';
 
 router.get('/', async function (req, res) {
   let lookUpUser = req.user;
@@ -52,5 +52,9 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+router.post('/local/login', passport.authenticate('local-login', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+}));
 
 module.exports = router;

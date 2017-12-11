@@ -16,13 +16,8 @@ class ChatHeader extends React.Component {
   }
 
   render() {
-    let name = "Nobody";
-    if (this.props.user.activePersona) {
-      name = this.props.user.activePersona.name;
-    }
     return (
       <div className="chatHeader">
-        <div>{name}</div>
         <ChatFilters filters={this.props.filters} changeFilter={this.props.changeFilter} />
         <UserPanel selectedPersona={this.props.user.activePersona} />
       </div>

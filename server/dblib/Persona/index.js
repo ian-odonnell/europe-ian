@@ -1,4 +1,4 @@
-let models = require('../../dbmodels/models');
+let models = require('../../dbmodels');
 
 /* eslint-disable no-extra-boolean-cast */
 

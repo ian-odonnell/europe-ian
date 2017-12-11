@@ -42,6 +42,7 @@ var models = [
   require('./message'),
   require('./persona'),
   require('./user'),
+  require('./localuser'),
   require('./steamuser'),
   require('./googleuser'),
   require('./twitteruser')

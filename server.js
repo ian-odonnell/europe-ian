@@ -19,6 +19,7 @@ import chatApi from './server/localApi/chat';
 import adminApi from './server/localApi/admin';
 import updateApi from './server/localApi/update';
 import auth from './server/auth';
+import LocalUser from './server/dblib/LocalUser';
 import GoogleUser from './server/dblib/GoogleUser';
 import TwitterUser from './server/dblib/TwitterUser';
 import Persona from './server/dblib/Persona';
@@ -36,7 +37,29 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const LocalStrategy = require('passport-local').Strategy;
+passport.use('local-login', new LocalStrategy({
+  passReqToCallback: true
+},
+  async function (req, username, password, done) {
+    let existingUser = await LocalUser.getLocalUsers({ username });
+    if(existingUser.length == 0) {
+      return done(null, false);
+    }
+
+    if(existingUser[0].password !== password) {
+      return done(null, false);
+    }
+
+    console.log(existingUser[0]);
+    let existingPersona = await existingUser[0].getPersona();
+    console.log(existingPersona);
+    let existingParent = await existingPersona.getUser();
+    console.log(existingParent);
+    return done(null, existingParent);
+}));
+
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 passport.use(
   new GoogleStrategy({
     clientID: config.googleClientId,
@@ -44,7 +67,7 @@ passport.use(
     callbackURL: config.googleCallbackUrl
   },
     async function (req, accessToken, refreshToken, profile, done) {
-      var existingUser = await GoogleUser.getGoogleUsers({ googleId: profile.id });
+      let existingUser = await GoogleUser.getGoogleUsers({ googleId: profile.id });
       if (existingUser.length == 0) {
         // If we're not logged in already (e.g. with a Steam user) then create a new "parent" user
         let parentUser = req.user;
@@ -61,48 +84,48 @@ passport.use(
 
         // Create the new Google user
         let googleUser = await GoogleUser.createGoogleUser({ googleId: profile.id, personaId: googlePersona.id });
-        done(null, parentUser);
+        return done(null, parentUser);
       } else {
         let existingPersona = await existingUser[0].getPersona();
         let existingParent = await existingPersona.getUser();
-        done(null, existingParent);
+        return done(null, existingParent);
       }
     })
 );
 
-var TwitterStrategy = require('passport-twitter').Strategy;
+const TwitterStrategy = require('passport-twitter').Strategy;
 passport.use(
   new TwitterStrategy({
     consumerKey: config.twitterConsumerKey,
     consumerSecret: config.twiterConsumerSecret,
     callbackURL: config.twitterCallbackUrl
   },
-  async function (accessToken, refreshToken, profile, done) {
-    console.log(profile);
-    var existingUser = await TwitterUser.getTwitterUsers({ twitterId: profile.id });
-    if (existingUser.length == 0) {
-      // If we're not logged in already (e.g. with a Steam user) then create a new "parent" user
-      let parentUser = undefined; // req.user;
-      if (!parentUser) {
-        parentUser = await User.createUser({});
+    async function (accessToken, refreshToken, profile, done) {
+      console.log(profile);
+      let existingUser = await TwitterUser.getTwitterUsers({ twitterId: profile.id });
+      if (existingUser.length == 0) {
+        // If we're not logged in already (e.g. with a Steam user) then create a new "parent" user
+        let parentUser = undefined; // req.user;
+        if (!parentUser) {
+          parentUser = await User.createUser({});
+        }
+
+        // Create a new persona for the new Twitter user
+        let twitterPersona = await Persona.createPersona({
+          name: profile._json.screen_name,
+          avatarUrl: profile._json.profile_image_url.replace('_normal.', '.'),
+          userId: parentUser.id
+        });
+
+        // Create the new Twitter user
+        let twitterUser = await TwitterUser.createTwitterUser({ twitterId: profile.id, personaId: twitterPersona.id });
+        return done(null, parentUser);
+      } else {
+        let existingPersona = await existingUser[0].getPersona();
+        let existingParent = await existingPersona.getUser();
+        return done(null, existingParent);
       }
-
-      // Create a new persona for the new Twitter user
-      let twitterPersona = await Persona.createPersona({
-        name: profile._json.screen_name,
-        avatarUrl: profile._json.profile_image_url.replace('_normal.', '.'),
-        userId: parentUser.id
-      });
-
-      // Create the new Twitter user
-      let twitterUser = await TwitterUser.createTwitterUser({ twitterId: profile.id, personaId: twitterPersona.id });
-      done(null, parentUser);
-    } else {
-      let existingPersona = await existingUser[0].getPersona();
-      let existingParent = await existingPersona.getUser();
-      done(null, existingParent);
-    }
-}));
+    }));
 
 // Use ejs templates
 app.set('view engine', 'ejs');
@@ -112,8 +135,8 @@ app.set('views', path.join(__dirname, './client/views'));
 app.use(Express.static(path.join(__dirname, './client/static')));
 
 // Set up session handling and authentication
-var MSSQLStore = require('connect-mssql')(session);
-var sqlConfig = {
+let MSSQLStore = require('connect-mssql')(session);
+let sqlConfig = {
   user: config.databaseUser,
   password: config.databasePassword,
   server: config.databaseHost,

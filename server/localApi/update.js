@@ -6,7 +6,7 @@ import Message from '../dblib/Message';
 import Persona from '../dblib/Persona';
 import SteamUser from '../dblib/SteamUser';
 
-import models from '../dbmodels/models';
+import models from '../dbmodels';
 
 const router = express.Router();
 

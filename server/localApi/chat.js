@@ -1,6 +1,6 @@
 import express from 'express';
 import Sequelize from 'sequelize';
-import models from '../dbmodels/models';
+import models from '../dbmodels';
 import Message from '../dblib/Message';
 
 const router = express.Router();

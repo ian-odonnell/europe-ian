@@ -78,6 +78,10 @@ tr.chatMessage td {
   vertical-align: top;
 }
 
+.chatMessageBody div:first-child {
+  min-height: 75px;
+}
+
 .chatMessageTimestamp {
   font-size: small;
   text-align: right;
@@ -166,4 +170,9 @@ div.postDialog button {
   position: absolute;
   top: 90%;
   left: 5%;
+}
+
+.loginPage table {
+  background-color: #eeffbb;
+  padding: 10px;
 }

@@ -1,12 +1,12 @@
 import express from 'express';
-import models from '../dbmodels/models';
+import models from '../dbmodels';
 import rp from 'request-promise';
 
 const router = express.Router();
 
 // TODO: Christ, this is insecure.  And on a GET, as well?  Remove it when I have an actual deployment process!
 router.get('/initdb', async function (req, res, next) {
-  await models.sequelize.sync({ force: true });
+  await models.sequelize.sync({ force: false });
   res.json({ done: "Done" });
 });
 

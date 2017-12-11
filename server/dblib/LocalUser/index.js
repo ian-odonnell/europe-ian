@@ -2,20 +2,20 @@ let models = require('../../dbmodels');
 
 /* eslint-disable no-extra-boolean-cast */
 
-exports.createGoogleUser = (googleUserData, transaction) => {
+exports.createLocalUser = (localUserData, transaction) => {
   let txn = (!!transaction ? { transaction } : {});
-  return models.googleuser.create(googleUserData, txn);
+  return models.localuser.create(localUserData, txn);
 };
 
-exports.getGoogleUsers = (where) => {
+exports.getLocalUsers = (where) => {
   return new Promise((resolve) => {
-    var allUsers = models.googleuser.findAll({where});
+    var allUsers = models.localuser.findAll({where});
     resolve(allUsers);
   });
 };
 
 exports.truncate = () => {
-  return models.googleuser.destroy({
+  return models.localuser.destroy({
     where: {}
   });
 }
