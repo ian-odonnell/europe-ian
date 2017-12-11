@@ -38,4 +38,13 @@ router.route('/google')
     scope: ['profile', 'email']
   }));
 
+router.route('/twitter/callback')
+  .get(passport.authenticate('twitter', {
+    successRedirect: '/',
+    failureRedirect: '/'
+  }));
+
+router.route('/twitter')
+  .get(passport.authenticate('twitter'));
+
 module.exports = router;

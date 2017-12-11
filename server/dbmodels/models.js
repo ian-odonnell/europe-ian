@@ -43,7 +43,8 @@ var models = [
   require('./persona'),
   require('./user'),
   require('./steamuser'),
-  require('./googleuser')
+  require('./googleuser'),
+  require('./twitteruser')
 ];
 
 models.forEach(model => {

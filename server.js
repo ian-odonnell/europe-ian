@@ -20,6 +20,7 @@ import adminApi from './server/localApi/admin';
 import updateApi from './server/localApi/update';
 import auth from './server/auth';
 import GoogleUser from './server/dblib/GoogleUser';
+import TwitterUser from './server/dblib/TwitterUser';
 import Persona from './server/dblib/Persona';
 import User from './server/dblib/User';
 
@@ -68,6 +69,39 @@ passport.use(
       }
     })
 );
+
+var TwitterStrategy = require('passport-twitter').Strategy;
+passport.use(
+  new TwitterStrategy({
+    consumerKey: config.twitterConsumerKey,
+    consumerSecret: config.twiterConsumerSecret,
+    callbackURL: config.twitterCallbackUrl
+  },
+  async function (accessToken, refreshToken, profile, done) {
+    var existingUser = await TwitterUser.getTwitterUsers({ twitterId: profile.id });
+    if (existingUser.length == 0) {
+      // If we're not logged in already (e.g. with a Steam user) then create a new "parent" user
+      let parentUser = req.user;
+      if (!parentUser) {
+        parentUser = await User.createUser({});
+      }
+
+      // Create a new persona for the new Twitter user
+      let twitterPersona = await Persona.createPersona({
+        name: profile.displayName,
+        avatarUrl: profile._json.image.url,
+        userId: parentUser.id
+      });
+
+      // Create the new Twitter user
+      let twitterUser = await TwitterUser.createTwitterUser({ twitterId: profile.id, personaId: twitterPersona.id });
+      done(null, parentUser);
+    } else {
+      let existingPersona = await existingUser[0].getPersona();
+      let existingParent = await existingPersona.getUser();
+      done(null, existingParent);
+    }
+}));
 
 // Use ejs templates
 app.set('view engine', 'ejs');

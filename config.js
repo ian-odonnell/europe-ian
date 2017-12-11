@@ -15,7 +15,12 @@ var config = {
   // Google credentials
   googleClientId: process.env.GOOGLE_CLIENT_ID || "322225634533-nt5sdvs6s76agdepgfa5n4i1tg0794js.apps.googleusercontent.com",
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-  googleCallbackUrl: process.env.GOOGLE_CALLBACK_URL || "http://localhost:3000/auth/google/callback"
+  googleCallbackUrl: process.env.GOOGLE_CALLBACK_URL || "http://localhost:3000/auth/google/callback",
+
+  // Twitter credentials
+  twitterConsumerKey: process.env.TWITTER_CONSUMER_KEY || "CE6sOx5Qo7nJ7acExwHGonRds",
+  twiterConsumerSecret: process.env.TWITTER_CONSUMER_SECRET || "",
+  twitterCallbackUrl: process.env.TWITTER_CALLBACK_URL || "http://localhost:3000/auth/twitter.callback"
 }
 
 export default config;

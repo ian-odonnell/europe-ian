@@ -17,7 +17,11 @@ class UserPanel extends React.Component {
       );
     } else {
     }
-    login = <div className="headerLogin"><a href='/auth/google'><img src='/images/Google.jpg' /></a></div>;
+    login =
+      <div className="headerLogin">
+        <a href='/auth/google'><img src='/images/Google.jpg' /></a>
+        <a href='/auth/twitter'><img src='/images/Twitter.png' /></a>
+      </div>;
     return (
       <div className="userPanel">
         {login}

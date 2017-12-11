@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ChieveChatApi from '../../api/chieveChatApi';
 import ChatFilters from './chatFilters';
 import UserPanel from './userPanel';
 import { connect } from 'react-redux';
