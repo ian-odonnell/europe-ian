@@ -31,7 +31,7 @@ class ChatMessage extends React.Component {
       colcount = 2;
     }
 
-    let chatMessageBody = <ChatMessageBody message={this.props.message} colcount={colcount} />;
+    let chatMessageBody = <ChatMessageBody message={this.props.message} colcount={colcount} showPopup={() => this.props.showPopup(this.props.message)} />;
 
     let messageClass = 'chatMessage';
     if (!this.props.filters.showSteam) {

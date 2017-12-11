@@ -16,7 +16,6 @@ class ChatPage extends React.Component {
 
   async componentDidMount() {
     var auth = await ChieveChatApi.getAuth();
-    console.log("CDM: " + auth);
     if (auth && auth.personas) {
       this.props.switchPersona(auth.personas[0]);
     } else {
@@ -25,7 +24,7 @@ class ChatPage extends React.Component {
   }
 
   render() {
-    const popup = this.props.message.showPopup ? <PostDialog hidePopup={this.props.hidePopup} postMessage={this.props.postMessage} persona={this.props.user.activePersona}/> : undefined;
+    const popup = this.props.message.showPopup ? <PostDialog replyToMessage={this.props.message.replyToMessage} hidePopup={this.props.hidePopup} postMessage={this.props.postMessage} persona={this.props.user.activePersona}/> : undefined;
 
     return (
       <div className="chatPage">

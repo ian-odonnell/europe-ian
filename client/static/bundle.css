@@ -87,6 +87,15 @@ tr.chatMessage td {
   text-align: right;
 }
 
+.replyLink {
+  float: right;
+}
+
+.replyLink img {
+  width: 20px;
+  height: 20px;
+}
+
 .chatMessagePersona {
   vertical-align: top;
   min-width: 100px;

@@ -52,11 +52,8 @@ passport.use('local-login', new LocalStrategy({
       return done(null, false);
     }
 
-    console.log(existingUser[0]);
     let existingPersona = await existingUser[0].getPersona();
-    console.log(existingPersona);
     let existingParent = await existingPersona.getUser();
-    console.log(existingParent);
     return done(null, existingParent);
 }));
 
@@ -104,7 +101,6 @@ passport.use(
     passReqToCallback: true
   },
     async function (req, accessToken, refreshToken, profile, done) {
-      console.log(profile);
       let existingUser = await TwitterUser.getTwitterUsers({ twitterId: profile.id });
       if (existingUser.length == 0) {
         // If we're not logged in already (e.g. with a Steam user) then create a new "parent" user

@@ -40,7 +40,7 @@ class ChatMessageBody extends React.Component {
     } else {
       body =
         <div>
-          <span dangerouslySetInnerHTML={{__html: this.props.message.body}}></span>
+          <span dangerouslySetInnerHTML={{ __html: this.props.message.body }}></span>
           <br />
           {replies}
         </div>;
@@ -48,9 +48,14 @@ class ChatMessageBody extends React.Component {
 
     return (
       <td className="chatMessageBody" colSpan={this.props.colcount}>
-        <div>{body}</div>
-        <br/>
-        <div className="chatMessageTimestamp">{moment(this.props.message.timestamp).format('ddd Do MMM, HH:mm')}</div>
+        <div className="replyLink" onClick={() => this.props.showPopup()} >
+          <img src='/images/reply.png' />
+        </div>
+        <div>
+          <div>{body}</div>
+          <br />
+          <div className="chatMessageTimestamp">{moment(this.props.message.timestamp).format('ddd Do MMM, HH:mm')}</div>
+        </div>
       </td>
     );
   }

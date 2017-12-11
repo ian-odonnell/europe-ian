@@ -7619,9 +7619,10 @@ function changeFilter(filterName, showMessages) {
   };
 }
 
-function showPopup() {
+function showPopup(parentMessage) {
   return {
-    type: 'SHOW_POPUP'
+    type: 'SHOW_POPUP',
+    parentMessage: parentMessage
   };
 }
 
@@ -8962,7 +8963,7 @@ var ChatFeed = function (_React$Component) {
         for (var _iterator = this.props.chat.chatMessages[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var message = _step.value;
 
-          chatRows.push(_react2.default.createElement(_chatMessage2.default, { key: message.id, message: message, filters: this.props.filters }));
+          chatRows.push(_react2.default.createElement(_chatMessage2.default, { key: message.id, message: message, filters: this.props.filters, showPopup: this.props.showPopup }));
         }
       } catch (err) {
         _didIteratorError = true;
@@ -9007,9 +9008,11 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    //loadChat: () => dispatch(chatActions.loadChat())
     loadChat: function loadChat() {
-      return dispatch(chatActions.loadChat("123123"));
+      return dispatch(chatActions.loadChat());
+    },
+    showPopup: function showPopup(parentMessage) {
+      return dispatch(chatActions.showPopup(parentMessage));
     }
   };
 }
@@ -26568,25 +26571,19 @@ _passport2.default.use('local-login', new LocalStrategy({
             return _context.abrupt('return', done(null, false));
 
           case 7:
-
-            console.log(existingUser[0]);
-            _context.next = 10;
+            _context.next = 9;
             return existingUser[0].getPersona();
 
-          case 10:
+          case 9:
             existingPersona = _context.sent;
-
-            console.log(existingPersona);
-            _context.next = 14;
+            _context.next = 12;
             return existingPersona.getUser();
 
-          case 14:
+          case 12:
             existingParent = _context.sent;
-
-            console.log(existingParent);
             return _context.abrupt('return', done(null, existingParent));
 
-          case 17:
+          case 14:
           case 'end':
             return _context.stop();
         }
@@ -26693,15 +26690,14 @@ _passport2.default.use(new TwitterStrategy({
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            console.log(profile);
-            _context3.next = 3;
+            _context3.next = 2;
             return _TwitterUser2.default.getTwitterUsers({ twitterId: profile.id });
 
-          case 3:
+          case 2:
             existingUser = _context3.sent;
 
             if (!(existingUser.length == 0)) {
-              _context3.next = 19;
+              _context3.next = 18;
               break;
             }
 
@@ -26709,47 +26705,47 @@ _passport2.default.use(new TwitterStrategy({
             parentUser = req.user;
 
             if (parentUser) {
-              _context3.next = 10;
+              _context3.next = 9;
               break;
             }
 
-            _context3.next = 9;
+            _context3.next = 8;
             return _User2.default.createUser({});
 
-          case 9:
+          case 8:
             parentUser = _context3.sent;
 
-          case 10:
-            _context3.next = 12;
+          case 9:
+            _context3.next = 11;
             return _Persona2.default.createPersona({
               name: profile._json.screen_name,
               avatarUrl: profile._json.profile_image_url.replace('_normal.', '.'),
               userId: parentUser.id
             });
 
-          case 12:
+          case 11:
             twitterPersona = _context3.sent;
-            _context3.next = 15;
+            _context3.next = 14;
             return _TwitterUser2.default.createTwitterUser({ twitterId: profile.id, personaId: twitterPersona.id });
 
-          case 15:
+          case 14:
             twitterUser = _context3.sent;
             return _context3.abrupt('return', done(null, parentUser));
 
-          case 19:
-            _context3.next = 21;
+          case 18:
+            _context3.next = 20;
             return existingUser[0].getPersona();
 
-          case 21:
+          case 20:
             existingPersona = _context3.sent;
-            _context3.next = 24;
+            _context3.next = 23;
             return existingPersona.getUser();
 
-          case 24:
+          case 23:
             existingParent = _context3.sent;
             return _context3.abrupt('return', done(null, existingParent));
 
-          case 26:
+          case 25:
           case 'end':
             return _context3.stop();
         }
@@ -26985,14 +26981,13 @@ var ChatPage = function (_React$Component) {
               case 2:
                 auth = _context.sent;
 
-                console.log("CDM: " + auth);
                 if (auth && auth.personas) {
                   this.props.switchPersona(auth.personas[0]);
                 } else {
                   this.props.switchPersona(undefined);
                 }
 
-              case 5:
+              case 4:
               case 'end':
                 return _context.stop();
             }
@@ -27009,7 +27004,7 @@ var ChatPage = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var popup = this.props.message.showPopup ? _react2.default.createElement(_postDialog2.default, { hidePopup: this.props.hidePopup, postMessage: this.props.postMessage, persona: this.props.user.activePersona }) : undefined;
+      var popup = this.props.message.showPopup ? _react2.default.createElement(_postDialog2.default, { replyToMessage: this.props.message.replyToMessage, hidePopup: this.props.hidePopup, postMessage: this.props.postMessage, persona: this.props.user.activePersona }) : undefined;
 
       return _react2.default.createElement(
         'div',
@@ -27415,6 +27410,8 @@ var ChatMessage = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var chatMessagePersona = undefined;
       if (this.props.message.personaRows) {
         chatMessagePersona = _react2.default.createElement(_chatMessagePersona2.default, { persona: this.props.message.persona, rowcount: this.props.message.personaRows });
@@ -27430,7 +27427,9 @@ var ChatMessage = function (_React$Component) {
         colcount = 2;
       }
 
-      var chatMessageBody = _react2.default.createElement(_chatMessageBody2.default, { message: this.props.message, colcount: colcount });
+      var chatMessageBody = _react2.default.createElement(_chatMessageBody2.default, { message: this.props.message, colcount: colcount, showPopup: function showPopup() {
+          return _this2.props.showPopup(_this2.props.message);
+        } });
 
       var messageClass = 'chatMessage';
       if (!this.props.filters.showSteam) {
@@ -27626,6 +27625,8 @@ var ChatMessageBody = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var replies = undefined;
       if (this.props.message.replies) {
         replies = _react2.default.createElement(_chatMessageReplies2.default, { replies: this.props.message.replies });
@@ -27670,14 +27671,25 @@ var ChatMessageBody = function (_React$Component) {
         { className: 'chatMessageBody', colSpan: this.props.colcount },
         _react2.default.createElement(
           'div',
-          null,
-          body
+          { className: 'replyLink', onClick: function onClick() {
+              return _this2.props.showPopup();
+            } },
+          _react2.default.createElement('img', { src: '/images/reply.png' })
         ),
-        _react2.default.createElement('br', null),
         _react2.default.createElement(
           'div',
-          { className: 'chatMessageTimestamp' },
-          (0, _moment2.default)(this.props.message.timestamp).format('ddd Do MMM, HH:mm')
+          null,
+          _react2.default.createElement(
+            'div',
+            null,
+            body
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'div',
+            { className: 'chatMessageTimestamp' },
+            (0, _moment2.default)(this.props.message.timestamp).format('ddd Do MMM, HH:mm')
+          )
         )
       );
     }
@@ -28249,6 +28261,11 @@ var PostDialog = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
+      var parentMessageId = undefined;
+      if (this.props.replyToMessage) {
+        parentMessageId = this.props.replyToMessage.id;
+      }
+
       return _react2.default.createElement(
         'div',
         { className: 'postDialogWrapper', onClick: this.props.hidePopup },
@@ -28261,7 +28278,7 @@ var PostDialog = function (_React$Component) {
           _react2.default.createElement(
             'button',
             { onClick: function onClick() {
-                return _this2.props.postMessage(_this2.props.persona, _reactDom2.default.findDOMNode(_this2.refs.messageBody).value, undefined);
+                return _this2.props.postMessage(_this2.props.persona, _reactDom2.default.findDOMNode(_this2.refs.messageBody).value, parentMessageId);
               } },
             'Submit'
           )
@@ -28531,12 +28548,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = messageReducer;
 function messageReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { showPopup: false };
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { showPopup: false, replyToMessage: undefined };
   var action = arguments[1];
 
   switch (action.type) {
     case 'SHOW_POPUP':
-      return Object.assign({}, state, { showPopup: true });
+      return Object.assign({}, state, { showPopup: true, replyToMessage: action.parentMessage });
       break;
 
     case 'HIDE_POPUP':
@@ -28774,8 +28791,7 @@ router.post('/message', function () {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            console.log(req.body);
-            _context3.next = 3;
+            _context3.next = 2;
             return _Message2.default.createMessage({
               timestamp: Date(),
               body: req.body.body,
@@ -28783,12 +28799,12 @@ router.post('/message', function () {
               parentMessageId: req.body.parentId
             });
 
-          case 3:
+          case 2:
             message = _context3.sent;
 
             res.json(message);
 
-          case 5:
+          case 4:
           case 'end':
             return _context3.stop();
         }

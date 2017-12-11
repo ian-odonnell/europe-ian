@@ -54,7 +54,7 @@ class ChatFeed extends React.Component {
 
     for (const message of this.props.chat.chatMessages) {
       chatRows.push(
-        <ChatMessage key={message.id} message={message} filters={this.props.filters} />
+        <ChatMessage key={message.id} message={message} filters={this.props.filters} showPopup={this.props.showPopup} />
       );
     }
 
@@ -79,8 +79,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    //loadChat: () => dispatch(chatActions.loadChat())
-    loadChat: () => dispatch(chatActions.loadChat("123123"))
+    loadChat: () => dispatch(chatActions.loadChat()),
+    showPopup: (parentMessage) => dispatch(chatActions.showPopup(parentMessage))
   };
 }
 

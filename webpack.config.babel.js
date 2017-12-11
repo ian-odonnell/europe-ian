@@ -3,7 +3,7 @@ import nodeExternals from 'webpack-node-externals';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const client = {
-  // watch: true,
+  watch: true,
   entry: {
     bundle: ['babel-polyfill', './client.js']
   },

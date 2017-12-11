@@ -8,9 +8,10 @@ export function changeFilter(filterName, showMessages) {
   };
 }
 
-export function showPopup() {
+export function showPopup(parentMessage) {
   return {
-    type: 'SHOW_POPUP'
+    type: 'SHOW_POPUP',
+    parentMessage
   };
 }
 
