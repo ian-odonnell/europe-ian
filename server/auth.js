@@ -47,4 +47,10 @@ router.route('/twitter/callback')
 router.route('/twitter')
   .get(passport.authenticate('twitter'));
 
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
+
 module.exports = router;

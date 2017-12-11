@@ -26646,7 +26646,7 @@ _passport2.default.use(new TwitterStrategy({
             }
 
             // If we're not logged in already (e.g. with a Steam user) then create a new "parent" user
-            parentUser = req.user;
+            parentUser = undefined; // req.user;
 
             if (parentUser) {
               _context2.next = 10;
@@ -26662,8 +26662,8 @@ _passport2.default.use(new TwitterStrategy({
           case 10:
             _context2.next = 12;
             return _Persona2.default.createPersona({
-              name: profile.displayName,
-              avatarUrl: profile._json.image.url,
+              name: profile._json.screen_name,
+              avatarUrl: profile._json.profile_image_url.replace('_normal.', '.'),
               userId: parentUser.id
             });
 
@@ -27232,7 +27232,11 @@ var UserPanel = function (_React$Component) {
         persona = _react2.default.createElement(
           'div',
           { className: 'headerPersona' },
-          _react2.default.createElement('img', { src: this.props.selectedPersona.avatarUrl })
+          _react2.default.createElement(
+            'a',
+            { href: '/auth/logout' },
+            _react2.default.createElement('img', { src: this.props.selectedPersona.avatarUrl })
+          )
         );
       } else {}
       login = _react2.default.createElement(
@@ -29814,6 +29818,11 @@ router.route('/twitter/callback').get(passport.authenticate('twitter', {
 }));
 
 router.route('/twitter').get(passport.authenticate('twitter'));
+
+router.get('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/');
+});
 
 module.exports = router;
 

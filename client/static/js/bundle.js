@@ -50162,7 +50162,11 @@ var UserPanel = function (_React$Component) {
         persona = _react2.default.createElement(
           'div',
           { className: 'headerPersona' },
-          _react2.default.createElement('img', { src: this.props.selectedPersona.avatarUrl })
+          _react2.default.createElement(
+            'a',
+            { href: '/auth/logout' },
+            _react2.default.createElement('img', { src: this.props.selectedPersona.avatarUrl })
+          )
         );
       } else {}
       login = _react2.default.createElement(

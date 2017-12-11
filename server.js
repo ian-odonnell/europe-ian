@@ -82,15 +82,15 @@ passport.use(
     var existingUser = await TwitterUser.getTwitterUsers({ twitterId: profile.id });
     if (existingUser.length == 0) {
       // If we're not logged in already (e.g. with a Steam user) then create a new "parent" user
-      let parentUser = req.user;
+      let parentUser = undefined; // req.user;
       if (!parentUser) {
         parentUser = await User.createUser({});
       }
 
       // Create a new persona for the new Twitter user
       let twitterPersona = await Persona.createPersona({
-        name: profile.displayName,
-        avatarUrl: profile._json.image.url,
+        name: profile._json.screen_name,
+        avatarUrl: profile._json.profile_image_url.replace('_normal.', '.'),
         userId: parentUser.id
       });
 

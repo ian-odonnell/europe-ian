@@ -12,7 +12,7 @@ class UserPanel extends React.Component {
     if (this.props.selectedPersona) {
       persona = (
         <div className="headerPersona">
-          <img src={this.props.selectedPersona.avatarUrl} />
+          <a href='/auth/logout'><img src={this.props.selectedPersona.avatarUrl} /></a>
         </div>
       );
     } else {
