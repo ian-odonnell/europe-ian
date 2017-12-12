@@ -2,14 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ChieveChatApi from '../../api/chieveChatApi';
 import ChatMessage from './chatMessage';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as chatActions from '../../actions/chatActions';
 
 class ChatFeed extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state = { };
+    this.state = {};
   }
 
   componentDidMount() {
@@ -53,8 +53,13 @@ class ChatFeed extends React.Component {
     let chatRows = [];
 
     for (const message of this.props.chat.chatMessages) {
+      let showPopup = undefined;
+      if (this.props.user.activePersona) {
+        showPopup = () => this.props.showPopup(message);
+      }
+
       chatRows.push(
-        <ChatMessage key={message.id} message={message} filters={this.props.filters} showPopup={this.props.showPopup} />
+        <ChatMessage key={message.id} message={message} filters={this.props.filters} showPopup={showPopup} />
       );
     }
 
@@ -73,7 +78,8 @@ class ChatFeed extends React.Component {
 function mapStateToProps(state, ownProps) {
   return {
     filters: state.filters,
-    chat: state.chat
+    chat: state.chat,
+    user: state.user
   };
 }
 

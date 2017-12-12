@@ -11967,7 +11967,20 @@ var ChatFeed = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var chatRows = [];
+
+      var _loop = function _loop(message) {
+        var showPopup = undefined;
+        if (_this2.props.user.activePersona) {
+          showPopup = function showPopup() {
+            return _this2.props.showPopup(message);
+          };
+        }
+
+        chatRows.push(_react2.default.createElement(_chatMessage2.default, { key: message.id, message: message, filters: _this2.props.filters, showPopup: showPopup }));
+      };
 
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
@@ -11977,7 +11990,7 @@ var ChatFeed = function (_React$Component) {
         for (var _iterator = this.props.chat.chatMessages[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var message = _step.value;
 
-          chatRows.push(_react2.default.createElement(_chatMessage2.default, { key: message.id, message: message, filters: this.props.filters, showPopup: this.props.showPopup }));
+          _loop(message);
         }
       } catch (err) {
         _didIteratorError = true;
@@ -12016,7 +12029,8 @@ var ChatFeed = function (_React$Component) {
 function mapStateToProps(state, ownProps) {
   return {
     filters: state.filters,
-    chat: state.chat
+    chat: state.chat,
+    user: state.user
   };
 }
 
@@ -50158,8 +50172,10 @@ var UserPanel = function (_React$Component) {
       var login = undefined;
       var googleUrl = '/auth/google';
       var twitterUrl = '/auth/twitter';
+      var loginMessage = 'Log in with:';
 
       if (this.props.selectedPersona) {
+        loginMessage = 'Connect to:';
         persona = _react2.default.createElement(
           'div',
           { className: 'headerPersona' },
@@ -50176,14 +50192,43 @@ var UserPanel = function (_React$Component) {
         'div',
         { className: 'headerLogin' },
         _react2.default.createElement(
-          'a',
-          { href: googleUrl },
-          _react2.default.createElement('img', { src: '/images/Google.jpg' })
-        ),
-        _react2.default.createElement(
-          'a',
-          { href: twitterUrl },
-          _react2.default.createElement('img', { src: '/images/Twitter.png' })
+          'table',
+          null,
+          _react2.default.createElement(
+            'tbody',
+            null,
+            _react2.default.createElement(
+              'tr',
+              null,
+              _react2.default.createElement(
+                'td',
+                { colspan: 2 },
+                loginMessage
+              )
+            ),
+            _react2.default.createElement(
+              'tr',
+              null,
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: googleUrl },
+                  _react2.default.createElement('img', { src: '/images/Google.jpg' })
+                )
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: twitterUrl },
+                  _react2.default.createElement('img', { src: '/images/Twitter.png' })
+                )
+              )
+            )
+          )
         )
       );
       return _react2.default.createElement(
@@ -51413,8 +51458,6 @@ var ChatMessage = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       var chatMessagePersona = undefined;
       if (this.props.message.personaRows) {
         chatMessagePersona = _react2.default.createElement(_chatMessagePersona2.default, { persona: this.props.message.persona, rowcount: this.props.message.personaRows });
@@ -51430,9 +51473,7 @@ var ChatMessage = function (_React$Component) {
         colcount = 2;
       }
 
-      var chatMessageBody = _react2.default.createElement(_chatMessageBody2.default, { message: this.props.message, colcount: colcount, showPopup: function showPopup() {
-          return _this2.props.showPopup(_this2.props.message);
-        } });
+      var chatMessageBody = _react2.default.createElement(_chatMessageBody2.default, { message: this.props.message, colcount: colcount, showPopup: this.props.showPopup });
 
       var messageClass = 'chatMessage';
       if (!this.props.filters.showSteam) {
@@ -51669,16 +51710,21 @@ var ChatMessageBody = function (_React$Component) {
         );
       }
 
-      return _react2.default.createElement(
-        'td',
-        { className: 'chatMessageBody', colSpan: this.props.colcount },
-        _react2.default.createElement(
+      var replyLink = undefined;
+      if (this.props.showPopup) {
+        replyLink = _react2.default.createElement(
           'div',
           { className: 'replyLink', onClick: function onClick() {
               return _this2.props.showPopup();
             } },
           _react2.default.createElement('img', { src: '/images/reply.png' })
-        ),
+        );
+      }
+
+      return _react2.default.createElement(
+        'td',
+        { className: 'chatMessageBody', colSpan: this.props.colcount },
+        replyLink,
         _react2.default.createElement(
           'div',
           null,
@@ -52280,7 +52326,7 @@ var PostDialog = function (_React$Component) {
           _react2.default.createElement('textarea', { ref: 'messageBody' }),
           _react2.default.createElement(
             'button',
-            { type: 'button', onClick: function onClick() {
+            { onClick: function onClick() {
                 return _this2.props.postMessage(_this2.props.persona, _reactDom2.default.findDOMNode(_this2.refs.messageBody).value, parentMessageId);
               } },
             'Submit'

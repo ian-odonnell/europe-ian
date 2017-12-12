@@ -46,11 +46,16 @@ class ChatMessageBody extends React.Component {
         </div>;
     }
 
+    let replyLink = undefined;
+    if (this.props.showPopup) {
+      replyLink = <div className="replyLink" onClick={() => this.props.showPopup()} >
+        <img src='/images/reply.png' />
+      </div>;
+    }
+
     return (
       <td className="chatMessageBody" colSpan={this.props.colcount}>
-        <div className="replyLink" onClick={() => this.props.showPopup()} >
-          <img src='/images/reply.png' />
-        </div>
+        {replyLink}
         <div>
           <div>{body}</div>
           <br />
