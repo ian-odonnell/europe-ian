@@ -64,7 +64,6 @@ body {
   background-color: #ffff99;
   background:linear-gradient(#ffff99, #ffffbb);
   box-shadow: 0px 8px 16px 0px;
-  min-width: 240px;
   padding: 10px;
   right: 0;
   margin-top: 10px;
@@ -88,6 +87,25 @@ body {
   margin-left:5px;
   width: 32px;
   height: 32px;
+}
+
+.personaSelector {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.personaSelectorName {
+  text-align: center;
+}
+
+.personaSelectorAvatar img {
+  width: 80px;
+  height: 80px;
+}
+
+.personaSelectorArrow img {
+  width: 24px;
+  height: 24px;
 }
 
 .chatFeed table {

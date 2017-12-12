@@ -28,10 +28,22 @@ export function chatLoaded(latestChat) {
   };
 }
 
-export function switchPersona(newPersona) {
+export function switchUser(newUser) {
   return {
-    type: 'SWITCH_PERSONA',
-    persona: newPersona
+    type: 'SWITCH_USER',
+    user: newUser
+  };
+}
+
+export function nextPersona() {
+  return {
+    type: 'NEXT_PERSONA'
+  };
+}
+
+export function previousPersona() {
+  return {
+    type: 'PREVIOUS_PERSONA'
   };
 }
 

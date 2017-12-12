@@ -17,14 +17,14 @@ class ChatPage extends React.Component {
   async componentDidMount() {
     var auth = await ChieveChatApi.getAuth();
     if (auth && auth.personas) {
-      this.props.switchPersona(auth.personas[0]);
+      this.props.switchUser(auth);
     } else {
-      this.props.switchPersona(undefined);
+      this.props.switchUser(undefined);
     }
   }
 
   render() {
-    const popup = this.props.message.showPopup ? <PostDialog replyToMessage={this.props.message.replyToMessage} hidePopup={this.props.hidePopup} postMessage={this.props.postMessage} persona={this.props.user.activePersona}/> : undefined;
+    const popup = this.props.message.showPopup ? <PostDialog replyToMessage={this.props.message.replyToMessage} hidePopup={this.props.hidePopup} postMessage={this.props.postMessage} persona={this.props.user.activePersona} /> : undefined;
 
     return (
       <div className="chatPage">
@@ -49,7 +49,7 @@ function mapDispatchToProps(dispatch) {
     showPopup: () => dispatch(chatActions.showPopup()),
     hidePopup: () => dispatch(chatActions.hidePopup()),
     postMessage: (persona, messageBody, parentMessageId) => dispatch(chatActions.postMessage(persona, messageBody, parentMessageId)),
-    switchPersona: (newPersona) => dispatch(chatActions.switchPersona(newPersona))
+    switchUser: (newUser) => dispatch(chatActions.switchUser(newUser))
   }
 }
 

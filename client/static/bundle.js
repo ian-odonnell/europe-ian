@@ -9013,7 +9013,9 @@ exports.changeFilter = changeFilter;
 exports.showPopup = showPopup;
 exports.hidePopup = hidePopup;
 exports.chatLoaded = chatLoaded;
-exports.switchPersona = switchPersona;
+exports.switchUser = switchUser;
+exports.nextPersona = nextPersona;
+exports.previousPersona = previousPersona;
 exports.postMessage = postMessage;
 exports.loadChat = loadChat;
 
@@ -9051,10 +9053,22 @@ function chatLoaded(latestChat) {
   };
 }
 
-function switchPersona(newPersona) {
+function switchUser(newUser) {
   return {
-    type: 'SWITCH_PERSONA',
-    persona: newPersona
+    type: 'SWITCH_USER',
+    user: newUser
+  };
+}
+
+function nextPersona() {
+  return {
+    type: 'NEXT_PERSONA'
+  };
+}
+
+function previousPersona() {
+  return {
+    type: 'PREVIOUS_PERSONA'
   };
 }
 
@@ -11048,11 +11062,13 @@ var ChatHeader = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var multiplePersonas = this.props.user && this.props.user.parentUser && this.props.user.parentUser.personas.length > 1;
+
       return _react2.default.createElement(
         'div',
         { className: 'chatHeader' },
         _react2.default.createElement(_chatFilters2.default, { filters: this.props.filters, changeFilter: this.props.changeFilter }),
-        _react2.default.createElement(_userPanel2.default, { selectedPersona: this.props.user.activePersona })
+        _react2.default.createElement(_userPanel2.default, { selectedPersona: this.props.user.activePersona, multiplePersonas: multiplePersonas, nextPersona: this.props.nextPersona, previousPersona: this.props.previousPersona })
       );
     }
   }]);
@@ -11071,6 +11087,12 @@ function mapDispatchToProps(dispatch) {
   return {
     changeFilter: function changeFilter(filterName, showMessages) {
       return dispatch(chatActions.changeFilter(filterName, showMessages));
+    },
+    nextPersona: function nextPersona() {
+      return dispatch(chatActions.nextPersona());
+    },
+    previousPersona: function previousPersona() {
+      return dispatch(chatActions.previousPersona());
     }
   };
 }
@@ -28827,7 +28849,7 @@ var AppClient = function AppClient() {
 };
 
 window.onload = function () {
-  (0, _reactDom.render)(_react2.default.createElement(AppClient, null), document.getElementById('app'));
+  (0, _reactDom.hydrate)(_react2.default.createElement(AppClient, null), document.getElementById('app'));
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(54)))
 
@@ -49771,9 +49793,9 @@ var ChatPage = function (_React$Component) {
                 auth = _context.sent;
 
                 if (auth && auth.personas) {
-                  this.props.switchPersona(auth.personas[0]);
+                  this.props.switchUser(auth);
                 } else {
-                  this.props.switchPersona(undefined);
+                  this.props.switchUser(undefined);
                 }
 
               case 4:
@@ -49831,8 +49853,8 @@ function mapDispatchToProps(dispatch) {
     postMessage: function postMessage(persona, messageBody, parentMessageId) {
       return dispatch(chatActions.postMessage(persona, messageBody, parentMessageId));
     },
-    switchPersona: function switchPersona(newPersona) {
-      return dispatch(chatActions.switchPersona(newPersona));
+    switchUser: function switchUser(newUser) {
+      return dispatch(chatActions.switchUser(newUser));
     }
   };
 }
@@ -50168,12 +50190,9 @@ var UserPanel = function (_React$Component) {
   _createClass(UserPanel, [{
     key: 'render',
     value: function render() {
-      var persona = undefined;
-      var login = undefined;
       var googleUrl = '/auth/google';
       var twitterUrl = '/auth/twitter';
       var loginMessage = 'Log in with:';
-
       var dropdownMessage = 'Log in';
       var dropdownIcon = undefined;
       var logoutOption = undefined;
@@ -50194,20 +50213,50 @@ var UserPanel = function (_React$Component) {
           null,
           _react2.default.createElement('img', { src: this.props.selectedPersona.avatarUrl })
         );
-
         loginMessage = 'Connect to:';
-        persona = _react2.default.createElement(
-          'div',
-          { className: 'headerPersona' },
-          _react2.default.createElement(
-            'a',
-            { href: '/auth/logout' },
-            _react2.default.createElement('img', { src: this.props.selectedPersona.avatarUrl })
-          )
-        );
         googleUrl = '/auth/connect/google';
         twitterUrl = '/auth/connect/twitter';
-      } else {}
+      }
+
+      var personaSelector = undefined;
+      if (this.props.multiplePersonas) {
+        personaSelector = _react2.default.createElement(
+          'table',
+          { className: 'personaSelector' },
+          _react2.default.createElement(
+            'tbody',
+            null,
+            _react2.default.createElement(
+              'tr',
+              null,
+              _react2.default.createElement(
+                'td',
+                { className: 'personaSelectorName', colSpan: 3 },
+                this.props.selectedPersona.name
+              )
+            ),
+            _react2.default.createElement(
+              'tr',
+              null,
+              _react2.default.createElement(
+                'td',
+                { className: 'personaSelectorArrow' },
+                _react2.default.createElement('img', { src: '/images/LeftArrow.png', onClick: this.props.previousPersona })
+              ),
+              _react2.default.createElement(
+                'td',
+                { className: 'personaSelectorAvatar' },
+                _react2.default.createElement('img', { src: this.props.selectedPersona.avatarUrl })
+              ),
+              _react2.default.createElement(
+                'td',
+                { className: 'personaSelectorArrow' },
+                _react2.default.createElement('img', { src: '/images/RightArrow.png', onClick: this.props.nextPersona })
+              )
+            )
+          )
+        );
+      }
 
       var loginPanel = _react2.default.createElement(
         'div',
@@ -50236,7 +50285,6 @@ var UserPanel = function (_React$Component) {
           )
         )
       );
-      var personaSelector = undefined;
 
       return _react2.default.createElement(
         'div',
@@ -52734,12 +52782,32 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = chatReducer;
 function chatReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { activePersona: undefined };
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { parentUser: undefined, activePersona: undefined };
   var action = arguments[1];
 
   switch (action.type) {
+    case 'SWITCH_USER':
+      if (action.user) {
+        return Object.assign({}, state, { parentUser: action.user, activePersona: action.user.personas[0] });
+      } else {
+        return Object.assign({}, state, { parentUser: undefined, activePersona: undefined });
+      }
+      break;
+
     case 'SWITCH_PERSONA':
       return Object.assign({}, state, { activePersona: action.persona });
+      break;
+
+    case 'NEXT_PERSONA':
+    case 'PREVIOUS_PERSONA':
+      var personaIndex = state.parentUser.personas.findIndex(function (p) {
+        return p.id === state.activePersona.id;
+      });
+      if (personaIndex !== -1) {
+        personaIndex = (personaIndex + (action.type == 'NEXT_PERSONA' ? 1 : state.parentUser.personas.length - 1)) % state.parentUser.personas.length;
+        return Object.assign({}, state, { activePersona: state.parentUser.personas[personaIndex] });
+      }
+      return state;
       break;
 
     default:

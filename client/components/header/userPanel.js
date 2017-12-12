@@ -7,12 +7,9 @@ class UserPanel extends React.Component {
   }
 
   render() {
-    let persona = undefined;
-    let login = undefined;
     let googleUrl = '/auth/google';
     let twitterUrl = '/auth/twitter';
     let loginMessage = 'Log in with:';
-
     let dropdownMessage = 'Log in';
     let dropdownIcon = undefined;
     let logoutOption = undefined;
@@ -21,16 +18,26 @@ class UserPanel extends React.Component {
       logoutOption = <div><a href='/auth/logout'>Log out</a></div>;
       dropdownMessage = this.props.selectedPersona.name;
       dropdownIcon = <div><img src={this.props.selectedPersona.avatarUrl} /></div>;
-
       loginMessage = 'Connect to:';
-      persona = (
-        <div className="headerPersona">
-          <a href='/auth/logout'><img src={this.props.selectedPersona.avatarUrl} /></a>
-        </div>
-      );
       googleUrl = '/auth/connect/google';
       twitterUrl = '/auth/connect/twitter';
-    } else {
+    }
+
+    let personaSelector = undefined;
+    if (this.props.multiplePersonas) {
+      personaSelector =
+        <table className='personaSelector'>
+          <tbody>
+            <tr>
+              <td className='personaSelectorName' colSpan={3}>{this.props.selectedPersona.name}</td>
+            </tr>
+            <tr>
+              <td className='personaSelectorArrow'><img src='/images/LeftArrow.png' onClick={this.props.previousPersona} /></td>
+              <td className='personaSelectorAvatar'><img src={this.props.selectedPersona.avatarUrl} /></td>
+              <td className='personaSelectorArrow'><img src='/images/RightArrow.png' onClick={this.props.nextPersona} /></td>
+            </tr>
+          </tbody>
+        </table>;
     }
 
     const loginPanel =
@@ -39,7 +46,6 @@ class UserPanel extends React.Component {
         <div><a href={googleUrl}><img src='/images/Google.jpg' /></a></div>
         <div><a href={twitterUrl}><img src='/images/Twitter.png' /></a></div>
       </div>;
-      const personaSelector = undefined;
 
     return (
       <div className="dropdown">
