@@ -4,6 +4,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const client = {
   watch: true,
+  devtool: 'source-map',
   entry: {
     bundle: ['babel-polyfill', './client.js']
   },

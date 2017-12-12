@@ -1,6 +1,7 @@
 import ChieveChatApi from '../api/chieveChatApi';
 
 export function changeFilter(filterName, showMessages) {
+  console.log("changeFilter() - "+ Date());
   return {
     type: 'CHANGE_FILTER',
     filterName,

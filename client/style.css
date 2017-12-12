@@ -44,11 +44,19 @@ body {
   background:linear-gradient(#ffff99, #ffffbb);
   padding: 5px;
   min-height: 32px;
+  border: 1px solid black;
+  margin-bottom: 5px;
 }
 
-.dropdownHeader img {
+.miniAvatar img {
   width: 32px;
   height: 32px;
+}
+
+.downArrow img {
+  margin-top: 8px;
+  width: 16px;
+  height: 16px;
 }
 
 .dropdownHeader div {
@@ -67,7 +75,8 @@ body {
   padding: 10px;
   right: 0;
   margin-top: 10px;
-  margin-right: 8px;
+  margin-right: 20px;
+  z-index: 99;
 }
 
 .visiblePanel {
@@ -116,6 +125,14 @@ body {
   width: 100%;
 }
 
+.personaColumn {
+  width: 100px;
+}
+
+.gameColumn {
+  width: 190px;
+}
+
 tr.chatMessageHidden {
   display:none;
 }
@@ -129,6 +146,7 @@ tr.chatMessage td {
 
 .chatMessageBody {
   vertical-align: top;
+  position: relative;
 }
 
 .chatMessageBody div:first-child {
@@ -137,7 +155,12 @@ tr.chatMessage td {
 
 .chatMessageTimestamp {
   font-size: small;
+  position: absolute;
+  right:0;
+  bottom:0;
   text-align: right;
+  margin-right:5px;
+  margin-bottom: 5px;
 }
 
 .replyLink {
@@ -151,7 +174,6 @@ tr.chatMessage td {
 
 .chatMessagePersona {
   vertical-align: top;
-  min-width: 100px;
 }
 
 .chatMessagePersona div {
@@ -165,7 +187,6 @@ tr.chatMessage td {
 
 .chatMessageGame {
   vertical-align: top;
-  min-width: 150px;
 }
 
 .chatMessageBody {
@@ -186,7 +207,7 @@ tr.chatMessage td {
 }
 
 table.chatMessageReplies {
-  margin: 10px 0 0 100px;
+  margin: 10px 0 0 10px;
 }
 
 td.replyPersona {
@@ -199,6 +220,7 @@ td.replyPersona {
 td.replyBody {
   background: linear-gradient(#ffffff, #eeeeee)!important;
   min-width: 300px;
+  position: relative;
 }
 
 div.postDialogWrapper {

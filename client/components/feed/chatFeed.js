@@ -54,32 +54,45 @@ class ChatFeed extends React.Component {
 
     for (const message of this.props.chat.chatMessages) {
       let showPopup = undefined;
-      if (this.props.user.activePersona) {
+
+      /*
+      if (this.props.loggedIn) {
         showPopup = () => this.props.showPopup(message);
       }
+      */
 
       chatRows.push(
-        <ChatMessage key={message.id} message={message} filters={this.props.filters} showPopup={showPopup} />
+        <ChatMessage key={message.id} message={message} showPopup={showPopup} />
       );
     }
 
-    return (
+    const result = (
       <div className="chatFeed">
         <table className="chatTable">
+          <colgroup>
+            <col className="personaColumn" />
+            <col className="gameColumn" />
+            <col className="messageColumn" />
+          </colgroup>
           <tbody>
             {chatRows}
           </tbody>
         </table>
       </div>
     );
+    return result;
   }
 }
 
 function mapStateToProps(state, ownProps) {
+  let loggedIn = false;
+  if (state.user.activePersona) {
+    loggedIn = true;
+  }
+
   return {
-    filters: state.filters,
     chat: state.chat,
-    user: state.user
+    loggedIn
   };
 }
 

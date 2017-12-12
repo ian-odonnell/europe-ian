@@ -17,7 +17,7 @@ class UserPanel extends React.Component {
     if (this.props.selectedPersona) {
       logoutOption = <div><a href='/auth/logout'>Log out</a></div>;
       dropdownMessage = this.props.selectedPersona.name;
-      dropdownIcon = <div><img src={this.props.selectedPersona.avatarUrl} /></div>;
+      dropdownIcon = <div className='miniAvatar'><img src={this.props.selectedPersona.avatarUrl} /></div>;
       loginMessage = 'Connect to:';
       googleUrl = '/auth/connect/google';
       twitterUrl = '/auth/connect/twitter';
@@ -41,20 +41,20 @@ class UserPanel extends React.Component {
     }
 
     const loginPanel =
-      <div className="loginPanel">
+      <div className='loginPanel'>
         <div>{loginMessage}</div>
         <div><a href={googleUrl}><img src='/images/Google.jpg' /></a></div>
         <div><a href={twitterUrl}><img src='/images/Twitter.png' /></a></div>
       </div>;
 
     return (
-      <div className="dropdown">
-        <div className="dropdownHeader" onClick={() => { document.getElementById('userDropdown').classList.toggle('visiblePanel'); }}>
+      <div className='dropdown'>
+        <div className='dropdownHeader' onClick={() => { document.getElementById('userDropdown').classList.toggle('visiblePanel'); }}>
           {dropdownIcon}
           <div><span>{dropdownMessage}</span></div>
-          <div><img src='/images/DownArrow.png' /></div>
+          <div className='downArrow'><img src='/images/DownArrow.png'/></div>
         </div>
-        <div id="userDropdown" className="dropdownContent">
+        <div id='userDropdown' className='dropdownContent'>
           {personaSelector}
           {loginPanel}
           {logoutOption}
@@ -64,7 +64,7 @@ class UserPanel extends React.Component {
 
     /*
     login =
-      <div className="headerLogin">
+      <div className='headerLogin'>
         <table>
           <tbody>
             <tr><td colspan={2}>{loginMessage}</td></tr>
@@ -76,7 +76,7 @@ class UserPanel extends React.Component {
         </table>
       </div>;
     return (
-      <div className="userPanel">
+      <div className='userPanel'>
         {login}
         {persona}
       </div>

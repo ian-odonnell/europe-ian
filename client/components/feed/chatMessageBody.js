@@ -3,67 +3,55 @@ import ReactDOM from 'react-dom';
 import ChatMessageReplies from './chatMessageReplies';
 import moment from 'moment';
 
-class ChatMessageBody extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-
-    this.state = {};
+export default (props) => {
+  let replies = undefined;
+  if (props.message.replies) {
+    replies = <ChatMessageReplies replies={props.message.replies} />;
   }
+  let body = undefined;
 
-  async componentDidMount() {
-    this.setState({});
-  }
-
-  render() {
-    let replies = undefined;
-    if (this.props.message.replies) {
-      replies = <ChatMessageReplies replies={this.props.message.replies} />;
-    }
-    let body = undefined;
-
-    if (this.props.message.achievement) {
-      body =
-        <div className="bodyAchievement">
-          <div>
-            <img src={this.props.message.achievement.iconUrl} />
-          </div>
-          <span className="achievementName">
-            {this.props.message.achievement.displayName}
-          </span>
-          <br />
-          <span className="achievementDescription">
-            {this.props.message.achievement.description}
-          </span>
-          <br />
-          {replies}
-        </div>;
-    } else {
-      body =
+  if (props.message.achievement) {
+    body =
+      <div className="bodyAchievement">
         <div>
-          <span dangerouslySetInnerHTML={{ __html: this.props.message.body }}></span>
-          <br />
-          {replies}
-        </div>;
-    }
-
-    let replyLink = undefined;
-    if (this.props.showPopup) {
-      replyLink = <div className="replyLink" onClick={() => this.props.showPopup()} >
-        <img src='/images/reply.png' />
-      </div>;
-    }
-
-    return (
-      <td className="chatMessageBody" colSpan={this.props.colcount}>
-        {replyLink}
-        <div>
-          <div>{body}</div>
-          <br />
-          <div className="chatMessageTimestamp">{moment(this.props.message.timestamp).format('ddd Do MMM, HH:mm')}</div>
+          <img src={props.message.achievement.iconUrl} />
         </div>
-      </td>
-    );
+        <span className="achievementName">
+          {props.message.achievement.displayName}
+        </span>
+        <br />
+        <span className="achievementDescription">
+          {props.message.achievement.description}
+        </span>
+        <br />
+        {replies}
+      </div>;
+  } else {
+    body =
+      <div>
+        <span dangerouslySetInnerHTML={{ __html: props.message.body }}></span>
+        <br />
+        {replies}
+      </div>;
   }
-}
 
-export default ChatMessageBody;
+  let replyLink = undefined;
+  console.log('chatMessageBody rendering');
+  if (props.showPopup) {
+    console.log('Show popup defined in chatMessageBody');
+    replyLink = <div className="replyLink" onClick={() => props.showPopup()} >
+      <img src='/images/reply.png' />
+    </div>;
+  }
+
+  return (
+    <td className="chatMessageBody" colSpan={props.colcount}>
+      {replyLink}
+      <div>
+        <div>{body}</div>
+        <br />
+        <div className="chatMessageTimestamp">{moment(props.message.timestamp).format('ddd Do MMM, HH:mm')}</div>
+      </div>
+    </td>
+  );
+}

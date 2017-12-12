@@ -3,16 +3,12 @@ import ReactDOM from 'react-dom';
 import ChatMessagePersona from './chatMessagePersona';
 import ChatMessageBody from './chatMessageBody';
 import ChatMessageGame from './chatMessageGame';
+import { connect } from 'react-redux';
+import * as chatActions from '../../actions/chatActions';
 
 class ChatMessage extends React.Component {
   constructor(props, context) {
     super(props, context);
-
-    this.state = {};
-  }
-
-  async componentDidMount() {
-    this.setState({});
   }
 
   render() {
@@ -31,10 +27,11 @@ class ChatMessage extends React.Component {
       colcount = 2;
     }
 
+    console.log("showPopup: " + this.props.showPopup);
     let chatMessageBody = <ChatMessageBody message={this.props.message} colcount={colcount} showPopup={this.props.showPopup} />;
 
     let messageClass = 'chatMessage';
-    if (!this.props.filters.showSteam) {
+    if (!this.props.visible) {
       messageClass = 'chatMessageHidden';
     }
 
@@ -48,4 +45,21 @@ class ChatMessage extends React.Component {
   }
 }
 
-export default ChatMessage;
+function mapStateToProps(state, ownProps) {
+  let visible = true;
+  if (!state.filters.showSteam && ownProps.message.achievement && ownProps.message.achievement.game.steamId) {
+    visible = false;
+  }
+
+  return {
+    visible
+  };
+}
+
+function mapDispatchToProps(dispatch, ownProps) {
+  return {
+    showPopup: () => dispatch(chatActions.showPopup(ownProps.message))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatMessage);

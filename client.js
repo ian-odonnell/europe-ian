@@ -7,8 +7,8 @@ import Routes from './client/routes';
 import './client/style.css';
 import configureStore from './client/store/configureStore';
 import { Provider } from 'react-redux';
-
 import jquery from "jquery";
+
 global.$ = jquery;
 window.$ = window.jQuery = jquery;
 
