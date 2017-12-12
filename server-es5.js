@@ -27302,7 +27302,27 @@ var UserPanel = function (_React$Component) {
       var twitterUrl = '/auth/twitter';
       var loginMessage = 'Log in with:';
 
+      var dropdownMessage = 'Log in';
+      var dropdownIcon = undefined;
+      var logoutOption = undefined;
+
       if (this.props.selectedPersona) {
+        logoutOption = _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'a',
+            { href: '/auth/logout' },
+            'Log out'
+          )
+        );
+        dropdownMessage = this.props.selectedPersona.name;
+        dropdownIcon = _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('img', { src: this.props.selectedPersona.avatarUrl })
+        );
+
         loginMessage = 'Connect to:';
         persona = _react2.default.createElement(
           'div',
@@ -27316,55 +27336,88 @@ var UserPanel = function (_React$Component) {
         googleUrl = '/auth/connect/google';
         twitterUrl = '/auth/connect/twitter';
       } else {}
-      login = _react2.default.createElement(
+
+      var loginPanel = _react2.default.createElement(
         'div',
-        { className: 'headerLogin' },
+        { className: 'loginPanel' },
         _react2.default.createElement(
-          'table',
+          'div',
+          null,
+          loginMessage
+        ),
+        _react2.default.createElement(
+          'div',
           null,
           _react2.default.createElement(
-            'tbody',
-            null,
-            _react2.default.createElement(
-              'tr',
-              null,
-              _react2.default.createElement(
-                'td',
-                { colspan: 2 },
-                loginMessage
-              )
-            ),
-            _react2.default.createElement(
-              'tr',
-              null,
-              _react2.default.createElement(
-                'td',
-                null,
-                _react2.default.createElement(
-                  'a',
-                  { href: googleUrl },
-                  _react2.default.createElement('img', { src: '/images/Google.jpg' })
-                )
-              ),
-              _react2.default.createElement(
-                'td',
-                null,
-                _react2.default.createElement(
-                  'a',
-                  { href: twitterUrl },
-                  _react2.default.createElement('img', { src: '/images/Twitter.png' })
-                )
-              )
-            )
+            'a',
+            { href: googleUrl },
+            _react2.default.createElement('img', { src: '/images/Google.jpg' })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'a',
+            { href: twitterUrl },
+            _react2.default.createElement('img', { src: '/images/Twitter.png' })
           )
         )
       );
+      var personaSelector = undefined;
+
       return _react2.default.createElement(
         'div',
-        { className: 'userPanel' },
-        login,
-        persona
+        { className: 'dropdown' },
+        _react2.default.createElement(
+          'div',
+          { className: 'dropdownHeader', onClick: function onClick() {
+              document.getElementById('userDropdown').classList.toggle('visiblePanel');
+            } },
+          dropdownIcon,
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'span',
+              null,
+              dropdownMessage
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('img', { src: '/images/DownArrow.png' })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { id: 'userDropdown', className: 'dropdownContent' },
+          personaSelector,
+          loginPanel,
+          logoutOption
+        )
       );
+
+      /*
+      login =
+        <div className="headerLogin">
+          <table>
+            <tbody>
+              <tr><td colspan={2}>{loginMessage}</td></tr>
+              <tr>
+                <td><a href={googleUrl}><img src='/images/Google.jpg' /></a></td>
+                <td><a href={twitterUrl}><img src='/images/Twitter.png' /></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>;
+      return (
+        <div className="userPanel">
+          {login}
+          {persona}
+        </div>
+      );*/
     }
   }]);
 

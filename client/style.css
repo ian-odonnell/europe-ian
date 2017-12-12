@@ -18,7 +18,6 @@ body {
 
 .chatFilters {
   float: left;
-  padding-top: 20px;
 }
 
 .chatFilters td {
@@ -36,27 +35,59 @@ body {
   color: gray;
 }
 
-.headerPersona {
+.dropdown {
   float: right;
 }
 
-.headerPersona img {
-  width: 80px;
-  height: 80px;
+.dropdownHeader {
+  background-color: #ffff99;
+  background:linear-gradient(#ffff99, #ffffbb);
+  padding: 5px;
+  min-height: 32px;
 }
 
-.headerLogin {
-  padding-left: 10px;
-  float: right;
+.dropdownHeader img {
+  width: 32px;
+  height: 32px;
 }
 
-.headerLogin table {
-  font-size: small;
-  background:linear-gradient(#eeffbb, #eeffdd);
+.dropdownHeader div {
+  height: 32px;
+  line-height: 32px;
+  float: left;
+  padding-right: 10px;
 }
-.headerLogin img {
-  width: 40px;
-  height: 40px;
+
+.dropdownContent {
+  display:none;
+  position: absolute;
+  background-color: #ffff99;
+  background:linear-gradient(#ffff99, #ffffbb);
+  box-shadow: 0px 8px 16px 0px;
+  min-width: 240px;
+  padding: 10px;
+  right: 0;
+  margin-top: 10px;
+  margin-right: 8px;
+}
+
+.visiblePanel {
+  display: block;
+}
+
+.loginPanel {
+  height: 32px;
+  line-height: 32px;
+}
+
+.loginPanel div {
+  float: left;
+}
+
+.loginPanel div img {
+  margin-left:5px;
+  width: 32px;
+  height: 32px;
 }
 
 .chatFeed table {
@@ -168,6 +199,7 @@ div.postDialog {
   width: 60%;
   height: 60%;
   background-color: #ffff99;
+  background:linear-gradient(#ffff99, #ffffbb);
 }
 
 div.postDialog textarea {

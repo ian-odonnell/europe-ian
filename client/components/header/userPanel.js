@@ -13,7 +13,15 @@ class UserPanel extends React.Component {
     let twitterUrl = '/auth/twitter';
     let loginMessage = 'Log in with:';
 
+    let dropdownMessage = 'Log in';
+    let dropdownIcon = undefined;
+    let logoutOption = undefined;
+
     if (this.props.selectedPersona) {
+      logoutOption = <div><a href='/auth/logout'>Log out</a></div>;
+      dropdownMessage = this.props.selectedPersona.name;
+      dropdownIcon = <div><img src={this.props.selectedPersona.avatarUrl} /></div>;
+
       loginMessage = 'Connect to:';
       persona = (
         <div className="headerPersona">
@@ -24,6 +32,31 @@ class UserPanel extends React.Component {
       twitterUrl = '/auth/connect/twitter';
     } else {
     }
+
+    const loginPanel =
+      <div className="loginPanel">
+        <div>{loginMessage}</div>
+        <div><a href={googleUrl}><img src='/images/Google.jpg' /></a></div>
+        <div><a href={twitterUrl}><img src='/images/Twitter.png' /></a></div>
+      </div>;
+      const personaSelector = undefined;
+
+    return (
+      <div className="dropdown">
+        <div className="dropdownHeader" onClick={() => { document.getElementById('userDropdown').classList.toggle('visiblePanel'); }}>
+          {dropdownIcon}
+          <div><span>{dropdownMessage}</span></div>
+          <div><img src='/images/DownArrow.png' /></div>
+        </div>
+        <div id="userDropdown" className="dropdownContent">
+          {personaSelector}
+          {loginPanel}
+          {logoutOption}
+        </div>
+      </div>
+    );
+
+    /*
     login =
       <div className="headerLogin">
         <table>
@@ -41,7 +74,7 @@ class UserPanel extends React.Component {
         {login}
         {persona}
       </div>
-    );
+    );*/
   }
 }
 
