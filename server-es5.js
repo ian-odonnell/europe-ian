@@ -26870,7 +26870,7 @@ _passport2.default.use(new SteamStrategy({
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            console.log("id: " + id);
+            console.log("id: " + JSON.stringify(id));
             console.log("profile: " + JSON.stringify(profile));
 
             _context4.next = 4;

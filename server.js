@@ -136,7 +136,7 @@ passport.use(
     passReqToCallback: true
   },
     async function (id, profile, done) {
-      console.log("id: " + id);
+      console.log("id: " + JSON.stringify(id));
       console.log("profile: " + JSON.stringify(profile));
 
       let existingUser = await SteamUser.getSteamUsers({ steamId: profile.id });
