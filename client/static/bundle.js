@@ -7399,6 +7399,7 @@ function previousPersona() {
 function postMessage(persona, messageBody, parentMessageId) {
   return function (dispatch) {
     _chieveChatApi2.default.postMessage(persona.id, messageBody, parentMessageId).then(function () {
+      dispatch(loadChat());
       dispatch(hidePopup());
     });
   };
@@ -11064,12 +11065,21 @@ var ChatHeader = function (_React$Component) {
     key: 'render',
     value: function render() {
       var multiplePersonas = this.props.user && this.props.user.parentUser && this.props.user.parentUser.personas.length > 1;
+      var postMessageButton = undefined;
+      if (this.props.user && this.props.user.activePersona) {
+        postMessageButton = _react2.default.createElement(
+          'button',
+          { className: 'postMessageButton', onClick: this.props.showPopup },
+          'Post Message'
+        );
+      }
 
       return _react2.default.createElement(
         'div',
         { className: 'chatHeader' },
         _react2.default.createElement(_chatFilters2.default, { filters: this.props.filters, changeFilter: this.props.changeFilter }),
-        _react2.default.createElement(_userPanel2.default, { selectedPersona: this.props.user.activePersona, multiplePersonas: multiplePersonas, nextPersona: this.props.nextPersona, previousPersona: this.props.previousPersona })
+        _react2.default.createElement(_userPanel2.default, { selectedPersona: this.props.user.activePersona, multiplePersonas: multiplePersonas, nextPersona: this.props.nextPersona, previousPersona: this.props.previousPersona }),
+        postMessageButton
       );
     }
   }]);
@@ -11086,6 +11096,9 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    showPopup: function showPopup() {
+      return dispatch(chatActions.showPopup());
+    },
     changeFilter: function changeFilter(filterName, showMessages) {
       return dispatch(chatActions.changeFilter(filterName, showMessages));
     },
@@ -49823,7 +49836,6 @@ var ChatPage = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      console.log("Render chatPage - " + Date());
       var popup = this.props.message.showPopup ? _react2.default.createElement(_postDialog2.default, { replyToMessage: this.props.message.replyToMessage, hidePopup: this.props.hidePopup, postMessage: this.props.postMessage, persona: this.props.user.activePersona }) : undefined;
 
       return _react2.default.createElement(
@@ -49831,12 +49843,7 @@ var ChatPage = function (_React$Component) {
         { className: 'chatPage' },
         popup,
         _react2.default.createElement(_chatHeader2.default, null),
-        _react2.default.createElement(_chatFeed2.default, null),
-        _react2.default.createElement(
-          'button',
-          { onClick: this.props.showPopup },
-          'Post Message'
-        )
+        _react2.default.createElement(_chatFeed2.default, null)
       );
     }
   }]);
@@ -49917,8 +49924,9 @@ var ExternalApi = exports.ExternalApi = function () {
                   fullUrl = (0, _urlJoin2.default)(this.baseUrl, relativeUrl);
                 }
 
+                // TODO: Better implementation for cache busting - test server-side headers
                 _context.next = 4;
-                return $.getJSON(fullUrl);
+                return $.getJSON(fullUrl, { _: new Date().getTime() });
 
               case 4:
                 return _context.abrupt('return', _context.sent);
@@ -50052,7 +50060,7 @@ var config = {
   localApiBaseUrl: process.env.LOCAL_API_BASE_URL || "",
 
   // External URLs
-  steamApiBaseUrl: process.env.STEAM_BASE_URL || "http://chievechat-api.azurewebsites.net/steam",
+  steamApiBaseUrl: process.env.STEAM_BASE_URL || "http://api.steampowered.com",
 
   // Database details
   databaseHost: process.env.DATABASE_HOST || "ian-odonnell.database.windows.net",
@@ -50072,7 +50080,10 @@ var config = {
 
   // Battle.Net credentials
   battleNetKey: process.env.BATTLE_NET_KEY || "8h7mk4erpby9kh9bmwzxnhbtrm5yybxw",
-  battleNetSecret: process.env.BATTLE_NET_SECRET || ""
+  battleNetSecret: process.env.BATTLE_NET_SECRET || "",
+
+  // Steam credentials
+  steamApiKey: process.env.STEAM_API_KEY || ""
 };
 
 exports.default = config;
@@ -50105,6 +50116,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (props) {
   var buttons = [];
+  buttons.push(_react2.default.createElement(
+    'td',
+    { key: 0, className: 'filterTitle' },
+    'Show automatic updates from:'
+  ));
   buttons.push(_react2.default.createElement(_chatFilterButton2.default, { key: 1, filterName: 'wow', buttonLabel: 'World of Warcraft', showMessages: props.filters.showWow, changeFilter: props.changeFilter }));
   buttons.push(_react2.default.createElement(_chatFilterButton2.default, { key: 2, filterName: 'diablo', buttonLabel: 'Diablo', showMessages: props.filters.showDiablo, changeFilter: props.changeFilter }));
   buttons.push(_react2.default.createElement(_chatFilterButton2.default, { key: 3, filterName: 'overwatch', buttonLabel: 'Overwatch', showMessages: props.filters.showOverwatch, changeFilter: props.changeFilter }));

@@ -15,8 +15,8 @@ router.get('/version', function (req, res) {
 })
 
 router.get('/steam/*', async function (req, res) {
-  const steamUrl = 'http://api.steampowered.com/' + req.originalUrl.replace('/steam/', '');
-
+  const steamUrl = 'http://api.steampowered.com/' + req.originalUrl.replace('/admin/steam/', '');
+ console.log(steamUrl);
   var options = {
     uri: steamUrl,
     headers: {

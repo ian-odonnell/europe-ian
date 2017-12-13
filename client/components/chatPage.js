@@ -24,7 +24,6 @@ class ChatPage extends React.Component {
   }
 
   render() {
-    console.log("Render chatPage - " + Date());
     const popup = this.props.message.showPopup ? <PostDialog replyToMessage={this.props.message.replyToMessage} hidePopup={this.props.hidePopup} postMessage={this.props.postMessage} persona={this.props.user.activePersona} /> : undefined;
 
     return (
@@ -32,7 +31,6 @@ class ChatPage extends React.Component {
         {popup}
         <ChatHeader />
         <ChatFeed />
-        <button onClick={this.props.showPopup}>Post Message</button>
       </div>
     );
   }

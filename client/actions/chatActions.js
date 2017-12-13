@@ -51,6 +51,7 @@ export function previousPersona() {
 export function postMessage(persona, messageBody, parentMessageId) {
   return function(dispatch) {
     ChieveChatApi.postMessage(persona.id, messageBody, parentMessageId).then(() => {
+      dispatch(loadChat());
       dispatch(hidePopup());
     });
   }

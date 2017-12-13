@@ -12,7 +12,8 @@ export class ExternalApi {
       fullUrl = urljoin(this.baseUrl, relativeUrl);
     }
 
-    return await $.getJSON(fullUrl);
+    // TODO: Better implementation for cache busting - test server-side headers
+    return await $.getJSON(fullUrl, {_:new Date().getTime()});
   }
 
   async post(relativeUrl, body) {

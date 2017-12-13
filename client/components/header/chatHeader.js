@@ -4,6 +4,7 @@ import ChatFilters from './chatFilters';
 import UserPanel from './userPanel';
 import { connect } from 'react-redux';
 import * as chatActions from '../../actions/chatActions';
+import { postMessage } from '../../actions/chatActions';
 
 class ChatHeader extends React.Component {
   constructor(props, context) {
@@ -17,11 +18,16 @@ class ChatHeader extends React.Component {
 
   render() {
     const multiplePersonas = (this.props.user && this.props.user.parentUser && this.props.user.parentUser.personas.length > 1);
+    let postMessageButton = undefined;
+    if(this.props.user && this.props.user.activePersona) {
+      postMessageButton = <button className='postMessageButton' onClick={this.props.showPopup}>Post Message</button>;
+    }
 
     return (
       <div className="chatHeader">
         <ChatFilters filters={this.props.filters} changeFilter={this.props.changeFilter} />
         <UserPanel selectedPersona={this.props.user.activePersona} multiplePersonas={multiplePersonas} nextPersona={this.props.nextPersona} previousPersona={this.props.previousPersona} />
+        {postMessageButton}
       </div>
     );
   }
@@ -36,6 +42,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    showPopup: () => dispatch(chatActions.showPopup()),
     changeFilter: (filterName, showMessages) => dispatch(chatActions.changeFilter(filterName, showMessages)),
     nextPersona: () => dispatch(chatActions.nextPersona()),
     previousPersona: () => dispatch(chatActions.previousPersona())

@@ -4,7 +4,7 @@ var config = {
   localApiBaseUrl: process.env.LOCAL_API_BASE_URL || "",
 
   // External URLs
-  steamApiBaseUrl: process.env.STEAM_BASE_URL || "http://chievechat-api.azurewebsites.net/steam",
+  steamApiBaseUrl: process.env.STEAM_BASE_URL || "http://api.steampowered.com",
 
   // Database details
   databaseHost: process.env.DATABASE_HOST || "ian-odonnell.database.windows.net",
@@ -24,7 +24,10 @@ var config = {
 
   // Battle.Net credentials
   battleNetKey: process.env.BATTLE_NET_KEY || "8h7mk4erpby9kh9bmwzxnhbtrm5yybxw",
-  battleNetSecret: process.env.BATTLE_NET_SECRET || ""
+  battleNetSecret: process.env.BATTLE_NET_SECRET || "",
+
+  // Steam credentials
+  steamApiKey: process.env.STEAM_API_KEY || ""
 }
 
 export default config;

@@ -6525,7 +6525,7 @@ var config = {
   localApiBaseUrl: process.env.LOCAL_API_BASE_URL || "",
 
   // External URLs
-  steamApiBaseUrl: process.env.STEAM_BASE_URL || "http://chievechat-api.azurewebsites.net/steam",
+  steamApiBaseUrl: process.env.STEAM_BASE_URL || "http://api.steampowered.com",
 
   // Database details
   databaseHost: process.env.DATABASE_HOST || "ian-odonnell.database.windows.net",
@@ -6545,7 +6545,10 @@ var config = {
 
   // Battle.Net credentials
   battleNetKey: process.env.BATTLE_NET_KEY || "8h7mk4erpby9kh9bmwzxnhbtrm5yybxw",
-  battleNetSecret: process.env.BATTLE_NET_SECRET || ""
+  battleNetSecret: process.env.BATTLE_NET_SECRET || "",
+
+  // Steam credentials
+  steamApiKey: process.env.STEAM_API_KEY || ""
 };
 
 exports.default = config;
@@ -6627,6 +6630,7 @@ function previousPersona() {
 function postMessage(persona, messageBody, parentMessageId) {
   return function (dispatch) {
     _chieveChatApi2.default.postMessage(persona.id, messageBody, parentMessageId).then(function () {
+      dispatch(loadChat());
       dispatch(hidePopup());
     });
   };
@@ -8846,12 +8850,21 @@ var ChatHeader = function (_React$Component) {
     key: 'render',
     value: function render() {
       var multiplePersonas = this.props.user && this.props.user.parentUser && this.props.user.parentUser.personas.length > 1;
+      var postMessageButton = undefined;
+      if (this.props.user && this.props.user.activePersona) {
+        postMessageButton = _react2.default.createElement(
+          'button',
+          { className: 'postMessageButton', onClick: this.props.showPopup },
+          'Post Message'
+        );
+      }
 
       return _react2.default.createElement(
         'div',
         { className: 'chatHeader' },
         _react2.default.createElement(_chatFilters2.default, { filters: this.props.filters, changeFilter: this.props.changeFilter }),
-        _react2.default.createElement(_userPanel2.default, { selectedPersona: this.props.user.activePersona, multiplePersonas: multiplePersonas, nextPersona: this.props.nextPersona, previousPersona: this.props.previousPersona })
+        _react2.default.createElement(_userPanel2.default, { selectedPersona: this.props.user.activePersona, multiplePersonas: multiplePersonas, nextPersona: this.props.nextPersona, previousPersona: this.props.previousPersona }),
+        postMessageButton
       );
     }
   }]);
@@ -8868,6 +8881,9 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    showPopup: function showPopup() {
+      return dispatch(chatActions.showPopup());
+    },
     changeFilter: function changeFilter(filterName, showMessages) {
       return dispatch(chatActions.changeFilter(filterName, showMessages));
     },
@@ -27052,7 +27068,6 @@ var ChatPage = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      console.log("Render chatPage - " + Date());
       var popup = this.props.message.showPopup ? _react2.default.createElement(_postDialog2.default, { replyToMessage: this.props.message.replyToMessage, hidePopup: this.props.hidePopup, postMessage: this.props.postMessage, persona: this.props.user.activePersona }) : undefined;
 
       return _react2.default.createElement(
@@ -27060,12 +27075,7 @@ var ChatPage = function (_React$Component) {
         { className: 'chatPage' },
         popup,
         _react2.default.createElement(_chatHeader2.default, null),
-        _react2.default.createElement(_chatFeed2.default, null),
-        _react2.default.createElement(
-          'button',
-          { onClick: this.props.showPopup },
-          'Post Message'
-        )
+        _react2.default.createElement(_chatFeed2.default, null)
       );
     }
   }]);
@@ -27146,8 +27156,9 @@ var ExternalApi = exports.ExternalApi = function () {
                   fullUrl = (0, _urlJoin2.default)(this.baseUrl, relativeUrl);
                 }
 
+                // TODO: Better implementation for cache busting - test server-side headers
                 _context.next = 4;
-                return $.getJSON(fullUrl);
+                return $.getJSON(fullUrl, { _: new Date().getTime() });
 
               case 4:
                 return _context.abrupt('return', _context.sent);
@@ -27233,6 +27244,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (props) {
   var buttons = [];
+  buttons.push(_react2.default.createElement(
+    'td',
+    { key: 0, className: 'filterTitle' },
+    'Show automatic updates from:'
+  ));
   buttons.push(_react2.default.createElement(_chatFilterButton2.default, { key: 1, filterName: 'wow', buttonLabel: 'World of Warcraft', showMessages: props.filters.showWow, changeFilter: props.changeFilter }));
   buttons.push(_react2.default.createElement(_chatFilterButton2.default, { key: 2, filterName: 'diablo', buttonLabel: 'Diablo', showMessages: props.filters.showDiablo, changeFilter: props.changeFilter }));
   buttons.push(_react2.default.createElement(_chatFilterButton2.default, { key: 3, filterName: 'overwatch', buttonLabel: 'Overwatch', showMessages: props.filters.showOverwatch, changeFilter: props.changeFilter }));
@@ -29075,7 +29091,9 @@ router.get('/steam/*', function () {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            steamUrl = 'http://api.steampowered.com/' + req.originalUrl.replace('/steam/', '');
+            steamUrl = 'http://api.steampowered.com/' + req.originalUrl.replace('/admin/steam/', '');
+
+            console.log(steamUrl);
             options = {
               uri: steamUrl,
               headers: {
@@ -29084,15 +29102,15 @@ router.get('/steam/*', function () {
               json: true
             };
             _context2.t0 = res;
-            _context2.next = 5;
+            _context2.next = 6;
             return (0, _requestPromise2.default)(options);
 
-          case 5:
+          case 6:
             _context2.t1 = _context2.sent;
 
             _context2.t0.json.call(_context2.t0, _context2.t1);
 
-          case 7:
+          case 8:
           case 'end':
             return _context2.stop();
         }
@@ -29186,16 +29204,21 @@ router.get('/steam', function () {
 
           case 13:
             if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-              _context3.next = 47;
+              _context3.next = 49;
               break;
             }
 
             steamUser = _step.value;
-            _context3.next = 17;
+
+            // Iterate over the user's recently played games
+            console.log("Getting games for " + steamUser.steamId);
+            _context3.next = 18;
             return _steamApi2.default.getRecentGames(steamUser.steamId);
 
-          case 17:
+          case 18:
             recentGames = _context3.sent;
+
+            console.log(JSON.stringify(recentGames));
             _loop = /*#__PURE__*/regeneratorRuntime.mark(function _loop(recentGame) {
               var gameSchema, dbGame, latestAchievements, knownAchievements, existingAchievements, _loop2, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, earnedAchievement;
 
@@ -29373,114 +29396,114 @@ router.get('/steam', function () {
             _iteratorNormalCompletion2 = true;
             _didIteratorError2 = false;
             _iteratorError2 = undefined;
-            _context3.prev = 22;
+            _context3.prev = 24;
             _iterator2 = recentGames.response.games[Symbol.iterator]();
 
-          case 24:
+          case 26:
             if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
-              _context3.next = 30;
+              _context3.next = 32;
               break;
             }
 
             recentGame = _step2.value;
-            return _context3.delegateYield(_loop(recentGame), 't0', 27);
+            return _context3.delegateYield(_loop(recentGame), 't0', 29);
 
-          case 27:
+          case 29:
             _iteratorNormalCompletion2 = true;
-            _context3.next = 24;
-            break;
-
-          case 30:
-            _context3.next = 36;
+            _context3.next = 26;
             break;
 
           case 32:
-            _context3.prev = 32;
-            _context3.t1 = _context3['catch'](22);
+            _context3.next = 38;
+            break;
+
+          case 34:
+            _context3.prev = 34;
+            _context3.t1 = _context3['catch'](24);
             _didIteratorError2 = true;
             _iteratorError2 = _context3.t1;
 
-          case 36:
-            _context3.prev = 36;
-            _context3.prev = 37;
+          case 38:
+            _context3.prev = 38;
+            _context3.prev = 39;
 
             if (!_iteratorNormalCompletion2 && _iterator2.return) {
               _iterator2.return();
             }
 
-          case 39:
-            _context3.prev = 39;
+          case 41:
+            _context3.prev = 41;
 
             if (!_didIteratorError2) {
-              _context3.next = 42;
+              _context3.next = 44;
               break;
             }
 
             throw _iteratorError2;
 
-          case 42:
-            return _context3.finish(39);
-
-          case 43:
-            return _context3.finish(36);
-
           case 44:
+            return _context3.finish(41);
+
+          case 45:
+            return _context3.finish(38);
+
+          case 46:
             _iteratorNormalCompletion = true;
             _context3.next = 13;
             break;
 
-          case 47:
-            _context3.next = 53;
+          case 49:
+            _context3.next = 55;
             break;
 
-          case 49:
-            _context3.prev = 49;
+          case 51:
+            _context3.prev = 51;
             _context3.t2 = _context3['catch'](11);
             _didIteratorError = true;
             _iteratorError = _context3.t2;
 
-          case 53:
-            _context3.prev = 53;
-            _context3.prev = 54;
+          case 55:
+            _context3.prev = 55;
+            _context3.prev = 56;
 
             if (!_iteratorNormalCompletion && _iterator.return) {
               _iterator.return();
             }
 
-          case 56:
-            _context3.prev = 56;
+          case 58:
+            _context3.prev = 58;
 
             if (!_didIteratorError) {
-              _context3.next = 59;
+              _context3.next = 61;
               break;
             }
 
             throw _iteratorError;
 
-          case 59:
-            return _context3.finish(56);
-
-          case 60:
-            return _context3.finish(53);
-
           case 61:
+            return _context3.finish(58);
+
+          case 62:
+            return _context3.finish(55);
+
+          case 63:
 
             res.json(response);
-            _context3.next = 67;
+            _context3.next = 69;
             break;
 
-          case 64:
-            _context3.prev = 64;
+          case 66:
+            _context3.prev = 66;
             _context3.t3 = _context3['catch'](0);
 
             next();
 
-          case 67:
+          case 69:
           case 'end':
             return _context3.stop();
         }
       }
-    }, _callee, this, [[0, 64], [11, 49, 53, 61], [22, 32, 36, 44], [37,, 39, 43], [54,, 56, 60]]);
+    }, _callee, this, [[0, 66], [11, 51, 55, 63], [24, 34, 38, 46], [39,, 41, 45], [56,, 58, 62]]);
   }));
 
   return function (_x, _x2, _x3) {
@@ -29507,6 +29530,10 @@ var _baseUrl = __webpack_require__(509);
 
 var _baseUrl2 = _interopRequireDefault(_baseUrl);
 
+var _config = __webpack_require__(69);
+
+var _config2 = _interopRequireDefault(_config);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -29514,7 +29541,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 var steamApi = new _externalApi.ExternalApi((0, _baseUrl2.default)("steam"));
 
 // TODO: Config file!  Reset it and make sure the final key isn't in source control
-var apiKey = "38D7FF77FDF5AC92FC3E869E0D9E3B1C";
+var apiKey = _config2.default.steamApiKey;
 
 steamApi.getRecentGames = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(steamUserId) {
@@ -29523,7 +29550,7 @@ steamApi.getRecentGames = function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return steamApi.get('/IPlayerService/GetRecentlyPlayedGames/v0001/?key=' + apiKey + '&steamid=' + steamUserId);
+            return steamApi.get('/IPlayerService/GetOwnedGames/v0001/?key=' + apiKey + '&steamid=' + steamUserId);
 
           case 2:
             return _context.abrupt('return', _context.sent);
