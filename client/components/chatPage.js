@@ -15,12 +15,19 @@ class ChatPage extends React.Component {
   }
 
   async componentDidMount() {
+    this.loadChatAutoRefresh();
+
     var auth = await ChieveChatApi.getAuth();
     if (auth && auth.personas) {
       this.props.switchUser(auth);
     } else {
       this.props.switchUser(undefined);
     }
+  }
+
+  loadChatAutoRefresh() {
+    this.props.loadChat();
+    setTimeout(this.loadChatAutoRefresh.bind(this), 6000);
   }
 
   render() {
@@ -36,6 +43,8 @@ class ChatPage extends React.Component {
   }
 }
 
+
+
 function mapStateToProps(state, ownProps) {
   return {
     user: state.user,
@@ -45,6 +54,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    loadChat: () => dispatch(chatActions.loadChat()),
     showPopup: () => dispatch(chatActions.showPopup()),
     hidePopup: () => dispatch(chatActions.hidePopup()),
     postMessage: (persona, messageBody, parentMessageId) => dispatch(chatActions.postMessage(persona, messageBody, parentMessageId)),

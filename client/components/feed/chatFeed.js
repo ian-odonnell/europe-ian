@@ -12,18 +12,6 @@ class ChatFeed extends React.Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    this.props.loadChat();
-  }
-
-  /*
-  async loadChat() {
-    const latestChat = await ChieveChatApi.getChat();
-    this.calculateChatGroups(latestChat);
-    this.setState({ chat: latestChat });
-    setTimeout(this.loadChat.bind(this), 60000);
-  }
-  */
 
   calculateChatGroups(chatArray) {
     const lastIndex = chatArray.length - 1;
@@ -53,16 +41,8 @@ class ChatFeed extends React.Component {
     let chatRows = [];
 
     for (const message of this.props.chat.chatMessages) {
-      let showPopup = undefined;
-
-      /*
-      if (this.props.loggedIn) {
-        showPopup = () => this.props.showPopup(message);
-      }
-      */
-
       chatRows.push(
-        <ChatMessage key={message.id} message={message} showPopup={showPopup} />
+        <ChatMessage key={message.id} message={message} />
       );
     }
 
@@ -96,11 +76,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    loadChat: () => dispatch(chatActions.loadChat()),
-    showPopup: (parentMessage) => dispatch(chatActions.showPopup(parentMessage))
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChatFeed);
+export default connect(mapStateToProps)(ChatFeed);

@@ -8958,21 +8958,6 @@ var ChatFeed = function (_React$Component) {
   }
 
   _createClass(ChatFeed, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.props.loadChat();
-    }
-
-    /*
-    async loadChat() {
-      const latestChat = await ChieveChatApi.getChat();
-      this.calculateChatGroups(latestChat);
-      this.setState({ chat: latestChat });
-      setTimeout(this.loadChat.bind(this), 60000);
-    }
-    */
-
-  }, {
     key: 'calculateChatGroups',
     value: function calculateChatGroups(chatArray) {
       var lastIndex = chatArray.length - 1;
@@ -9008,15 +8993,7 @@ var ChatFeed = function (_React$Component) {
         for (var _iterator = this.props.chat.chatMessages[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var message = _step.value;
 
-          var showPopup = undefined;
-
-          /*
-          if (this.props.loggedIn) {
-            showPopup = () => this.props.showPopup(message);
-          }
-          */
-
-          chatRows.push(_react2.default.createElement(_chatMessage2.default, { key: message.id, message: message, showPopup: showPopup }));
+          chatRows.push(_react2.default.createElement(_chatMessage2.default, { key: message.id, message: message }));
         }
       } catch (err) {
         _didIteratorError = true;
@@ -9072,18 +9049,7 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    loadChat: function loadChat() {
-      return dispatch(chatActions.loadChat());
-    },
-    showPopup: function showPopup(parentMessage) {
-      return dispatch(chatActions.showPopup(parentMessage));
-    }
-  };
-}
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ChatFeed);
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(ChatFeed);
 
 /***/ }),
 /* 140 */
@@ -27155,10 +27121,12 @@ var ChatPage = function (_React$Component) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                this.loadChatAutoRefresh();
+
+                _context.next = 3;
                 return _chieveChatApi2.default.getAuth();
 
-              case 2:
+              case 3:
                 auth = _context.sent;
 
                 if (auth && auth.personas) {
@@ -27167,7 +27135,7 @@ var ChatPage = function (_React$Component) {
                   this.props.switchUser(undefined);
                 }
 
-              case 4:
+              case 5:
               case 'end':
                 return _context.stop();
             }
@@ -27181,6 +27149,12 @@ var ChatPage = function (_React$Component) {
 
       return componentDidMount;
     }()
+  }, {
+    key: 'loadChatAutoRefresh',
+    value: function loadChatAutoRefresh() {
+      this.props.loadChat();
+      setTimeout(this.loadChatAutoRefresh.bind(this), 6000);
+    }
   }, {
     key: 'render',
     value: function render() {
@@ -27208,6 +27182,9 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    loadChat: function loadChat() {
+      return dispatch(chatActions.loadChat());
+    },
     showPopup: function showPopup() {
       return dispatch(chatActions.showPopup());
     },
@@ -27706,7 +27683,6 @@ var ChatMessage = function (_React$Component) {
         colcount = 2;
       }
 
-      console.log("showPopup: " + this.props.showPopup);
       var chatMessageBody = _react2.default.createElement(_chatMessageBody2.default, { message: this.props.message, colcount: colcount, showPopup: this.props.showPopup });
 
       var messageClass = 'chatMessage';
@@ -28846,7 +28822,7 @@ router.get('/latest', function () {
             return _dbmodels2.default.message.findAll({
               where: { parentMessageId: null },
               order: [['timestamp', 'DESC'], [{ model: _dbmodels2.default.message, as: 'replies' }, 'timestamp', 'ASC']],
-              limit: 5000,
+              limit: 50,
               include: [{
                 model: _dbmodels2.default.persona
               }, {
@@ -29369,7 +29345,7 @@ router.get('/steam', function () {
 
                       case 18:
                         _context3.t0 = function (g) {
-                          return g.playtime_forever > 1000;
+                          return g.playtime_forever > 100 && g.playtime_forever <= 1000;
                         };
 
                         recentGames = _context3.sent.response.games.filter(_context3.t0);

@@ -27,7 +27,6 @@ class ChatMessage extends React.Component {
       colcount = 2;
     }
 
-    console.log("showPopup: " + this.props.showPopup);
     let chatMessageBody = <ChatMessageBody message={this.props.message} colcount={colcount} showPopup={this.props.showPopup} />;
 
     let messageClass = 'chatMessage';

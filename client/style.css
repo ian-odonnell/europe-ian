@@ -251,7 +251,7 @@ div.postDialog {
   box-shadow: 0px 8px 16px 0px;
   background-color: #ffff99;
   background:linear-gradient(#ffff99, #ffffbb);
-  padding: 20px 20px 72px 100px;
+  padding: 20px 20px 72px 20px;
 }
 
 div.postDialog textarea {

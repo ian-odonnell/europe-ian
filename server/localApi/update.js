@@ -24,7 +24,7 @@ router.get('/steam', async function (req, res, next) {
       for (const steamUser of steamUsers) {
         // Iterate over the user's recently played games
         console.log("Getting games for " + steamUser.steamId);
-        const recentGames = (await steamApi.getRecentGames(steamUser.steamId)).response.games.filter(g => g.playtime_forever > 1000);
+        const recentGames = (await steamApi.getRecentGames(steamUser.steamId)).response.games.filter(g => g.playtime_forever > 100 && g.playtime_forever <= 1000);
         console.log(JSON.stringify(recentGames));
         for (const recentGame of recentGames) {
           let gameSchema = undefined;
