@@ -136,7 +136,6 @@ passport.use(
     passReqToCallback: true
   },
     async function (id, profile, done) {
-      console.log("id: " + JSON.stringify(id));
       console.log("profile: " + profile);
       const steamId = profile.substring(profile.lastIndexOf('/')+1);
       console.log("steamid: " + steamId);

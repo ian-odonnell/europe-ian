@@ -26870,20 +26870,19 @@ _passport2.default.use(new SteamStrategy({
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            console.log("id: " + JSON.stringify(id));
             console.log("profile: " + profile);
             steamId = profile.substring(profile.lastIndexOf('/') + 1);
 
             console.log("steamid: " + steamId);
 
-            _context4.next = 6;
+            _context4.next = 5;
             return _SteamUser2.default.getSteamUsers({ steamId: steamId });
 
-          case 6:
+          case 5:
             existingUser = _context4.sent;
 
             if (!(existingUser.length == 0)) {
-              _context4.next = 22;
+              _context4.next = 21;
               break;
             }
 
@@ -26891,47 +26890,47 @@ _passport2.default.use(new SteamStrategy({
             parentUser = req.user;
 
             if (parentUser) {
-              _context4.next = 13;
+              _context4.next = 12;
               break;
             }
 
-            _context4.next = 12;
+            _context4.next = 11;
             return _User2.default.createUser({});
 
-          case 12:
+          case 11:
             parentUser = _context4.sent;
 
-          case 13:
-            _context4.next = 15;
+          case 12:
+            _context4.next = 14;
             return _Persona2.default.createPersona({
               name: 'Plundermot',
               avatarUrl: 'http://pbs.twimg.com/profile_images/847021887649714176/TKv6-1g-.jpg',
               userId: parentUser.id
             });
 
-          case 15:
+          case 14:
             steamPersona = _context4.sent;
-            _context4.next = 18;
+            _context4.next = 17;
             return _SteamUser2.default.createSteamUser({ steamId: profile.id, personaId: steamPersona.id });
 
-          case 18:
+          case 17:
             steamUser = _context4.sent;
             return _context4.abrupt('return', done(null, parentUser));
 
-          case 22:
-            _context4.next = 24;
+          case 21:
+            _context4.next = 23;
             return existingUser[0].getPersona();
 
-          case 24:
+          case 23:
             existingPersona = _context4.sent;
-            _context4.next = 27;
+            _context4.next = 26;
             return existingPersona.getUser();
 
-          case 27:
+          case 26:
             existingParent = _context4.sent;
             return _context4.abrupt('return', done(null, existingParent));
 
-          case 29:
+          case 28:
           case 'end':
             return _context4.stop();
         }
