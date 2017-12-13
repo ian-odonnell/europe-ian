@@ -28,10 +28,19 @@ router.get('/steam', async function (req, res, next) {
         // Create the game in the database if it's the first time we've heard of it
         let dbGame = allKnownGames.find((g) => g.steamId == recentGame.appid);
         if (!dbGame) {
+          gameSchema = await steamApi.getGameSchema(recentGame.appid);
+
+          /*
           dbGame = await Game.createGame({
             name: recentGame.name,
             steamId: recentGame.appid,
             logoUrl: `http://cdn.edgecast.steamstatic.com/steamcommunity/public/images/apps/${recentGame.appid}/${recentGame.img_logo_url}.jpg`
+          });
+          */
+          dbGame = await Game.createGame({
+            name: gameSchema.game.gameName,
+            steamId: recentGame.appid,
+            logoUrl: `http://cdn4.steampowered.com/v/gfx/apps/${recentGame.appid}/header.jpg`
           });
         }
 
