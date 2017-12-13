@@ -29111,7 +29111,7 @@ router.get('/steam/*', function () {
 
             _context2.t0.json.call(_context2.t0, _context2.t1);
 
-            _context2.next = 14;
+            _context2.next = 15;
             break;
 
           case 11:
@@ -29119,8 +29119,9 @@ router.get('/steam/*', function () {
             _context2.t2 = _context2['catch'](0);
 
             res.status(500);
+            res.send('Something went wrong: ' + _context2.t2);
 
-          case 14:
+          case 15:
           case 'end':
             return _context2.stop();
         }
@@ -29693,22 +29694,30 @@ var ExternalApi = exports.ExternalApi = function () {
                 }
 
                 console.log("Getting " + (0, _urlJoin2.default)(this.baseUrl, relativeUrl));
-                _context.next = 5;
+                _context.prev = 3;
+                _context.next = 6;
                 return (0, _requestPromise2.default)(options);
 
-              case 5:
+              case 6:
                 result = _context.sent;
 
                 console.log("Got it!");
 
                 return _context.abrupt('return', result);
 
-              case 8:
+              case 11:
+                _context.prev = 11;
+                _context.t0 = _context['catch'](3);
+
+                console.log("Error!");
+                return _context.abrupt('return', undefined);
+
+              case 15:
               case 'end':
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee, this, [[3, 11]]);
       }));
 
       function get(_x, _x2) {

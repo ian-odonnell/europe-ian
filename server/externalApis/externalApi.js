@@ -20,10 +20,16 @@ export class ExternalApi {
     }
 
     console.log("Getting " + urljoin(this.baseUrl, relativeUrl));
-    const result = await rp(options);
-    console.log("Got it!");
+    try {
+      const result = await rp(options);
+      console.log("Got it!");
 
-    return result;
+      return result;
+    }
+    catch (err) {
+      console.log("Error!");
+      return undefined;
+    }
   }
 
   async post(relativeUrl, body) {
