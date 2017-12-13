@@ -26865,22 +26865,25 @@ _passport2.default.use(new SteamStrategy({
   passReqToCallback: true
 }, function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(id, profile, done) {
-    var existingUser, parentUser, steamPersona, steamUser, existingPersona, existingParent;
+    var steamId, existingUser, parentUser, steamPersona, steamUser, existingPersona, existingParent;
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
             console.log("id: " + JSON.stringify(id));
-            console.log("profile: " + JSON.stringify(profile));
+            console.log("profile: " + profile);
+            steamId = profile.substring(profile.lastIndexOf('/') + 1);
 
-            _context4.next = 4;
-            return _SteamUser2.default.getSteamUsers({ steamId: profile.id });
+            console.log("steamid: " + steamId);
 
-          case 4:
+            _context4.next = 6;
+            return _SteamUser2.default.getSteamUsers({ steamId: steamId });
+
+          case 6:
             existingUser = _context4.sent;
 
             if (!(existingUser.length == 0)) {
-              _context4.next = 20;
+              _context4.next = 22;
               break;
             }
 
@@ -26888,47 +26891,47 @@ _passport2.default.use(new SteamStrategy({
             parentUser = req.user;
 
             if (parentUser) {
-              _context4.next = 11;
+              _context4.next = 13;
               break;
             }
 
-            _context4.next = 10;
+            _context4.next = 12;
             return _User2.default.createUser({});
 
-          case 10:
+          case 12:
             parentUser = _context4.sent;
 
-          case 11:
-            _context4.next = 13;
+          case 13:
+            _context4.next = 15;
             return _Persona2.default.createPersona({
-              name: profile._json.screen_name,
-              avatarUrl: profile._json.profile_image_url.replace('_normal.', '.'),
+              name: 'Plundermot',
+              avatarUrl: 'http://pbs.twimg.com/profile_images/847021887649714176/TKv6-1g-.jpg',
               userId: parentUser.id
             });
 
-          case 13:
+          case 15:
             steamPersona = _context4.sent;
-            _context4.next = 16;
+            _context4.next = 18;
             return _SteamUser2.default.createSteamUser({ steamId: profile.id, personaId: steamPersona.id });
 
-          case 16:
+          case 18:
             steamUser = _context4.sent;
             return _context4.abrupt('return', done(null, parentUser));
 
-          case 20:
-            _context4.next = 22;
+          case 22:
+            _context4.next = 24;
             return existingUser[0].getPersona();
 
-          case 22:
+          case 24:
             existingPersona = _context4.sent;
-            _context4.next = 25;
+            _context4.next = 27;
             return existingPersona.getUser();
 
-          case 25:
+          case 27:
             existingParent = _context4.sent;
             return _context4.abrupt('return', done(null, existingParent));
 
-          case 27:
+          case 29:
           case 'end':
             return _context4.stop();
         }

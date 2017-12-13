@@ -137,9 +137,11 @@ passport.use(
   },
     async function (id, profile, done) {
       console.log("id: " + JSON.stringify(id));
-      console.log("profile: " + JSON.stringify(profile));
+      console.log("profile: " + profile);
+      const steamId = profile.substring(profile.lastIndexOf('/')+1);
+      console.log("steamid: " + steamId);
 
-      let existingUser = await SteamUser.getSteamUsers({ steamId: profile.id });
+      let existingUser = await SteamUser.getSteamUsers({ steamId });
       if (existingUser.length == 0) {
         // If we're not logged in already (e.g. with a Twitter user) then create a new "parent" user
         let parentUser = req.user;
@@ -148,9 +150,10 @@ passport.use(
         }
 
         // Create a new persona for the new Steam user
+        // TODO: Read their profile to get their name and avatar URL
         let steamPersona = await Persona.createPersona({
-          name: profile._json.screen_name,
-          avatarUrl: profile._json.profile_image_url.replace('_normal.', '.'),
+          name: 'Plundermot',
+          avatarUrl: 'http://pbs.twimg.com/profile_images/847021887649714176/TKv6-1g-.jpg',
           userId: parentUser.id
         });
 
