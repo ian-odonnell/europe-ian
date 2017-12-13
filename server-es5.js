@@ -26875,7 +26875,7 @@ _passport2.default.use(new SteamStrategy({
             console.log("profile.id: " + profile.id);
             console.log("profile.displayName: " + profile.displayName);
             console.log("profile.photos: " + profile.photos);
-            console.log("profile.photos[2]: " + profile.photos[2]);
+            console.log("profile.photos[2]: " + JSON.stringify(profile.photos[2]));
             console.log("done: " + done);
 
             steamId = profile.id;
