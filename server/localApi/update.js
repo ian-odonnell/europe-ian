@@ -19,13 +19,14 @@ router.get('/steam', async function (req, res, next) {
       const allKnownGames = await Game.getAllGames();
 
       // Iterate over all of our Steam users
-      const steamUsers = await SteamUser.getAllSteamUsers();
+      console.log("Getting steam users");
+      const steamUsers = await SteamUser.getSteamUsers();
       for (const steamUser of steamUsers) {
         // Iterate over the user's recently played games
         console.log("Getting games for " + steamUser.steamId);
-        const recentGames = await steamApi.getRecentGames(steamUser.steamId);
+        const recentGames = (await steamApi.getRecentGames(steamUser.steamId)).response.games.filter(g => g.playtime_forever > 1000);
         console.log(JSON.stringify(recentGames));
-        for (const recentGame of recentGames.response.games) {
+        for (const recentGame of recentGames) {
           let gameSchema = undefined;
 
           // Create the game in the database if it's the first time we've heard of it
@@ -40,7 +41,7 @@ router.get('/steam', async function (req, res, next) {
 
           // Get the user's achievements for the game
           const latestAchievements = await steamApi.getGameAchievements(steamUser.steamId, recentGame.appid);
-          if (latestAchievements) {
+          if (latestAchievements && latestAchievements.playerstats.achievements) {
             const knownAchievements = await Achievement.getAllKnownAchievementsForGame(dbGame.id);
             const existingAchievements = await models.achievementView.findAll({ where: { gameId: dbGame.id, personaId: steamUser.personaId } });
 
@@ -74,13 +75,14 @@ router.get('/steam', async function (req, res, next) {
         }
 
       }
-
       res.json(response);
     }, function (err, ret) {
     });
   }
   catch (err) {
-    next();
+    console.log(err);
+    res.json({argh: 'error'});
+  next();
   }
 });
 

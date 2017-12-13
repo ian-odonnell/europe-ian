@@ -136,14 +136,6 @@ passport.use(
     passReqToCallback: true
   },
     async function (req, id, profile, done) {
-      console.log("req: " + req);
-      console.log("id: " + id);
-      console.log("profile.id: " + profile.id);
-      console.log("profile.displayName: " + profile.displayName);
-      console.log("profile.photos: " + profile.photos);
-      console.log("profile.photos[2]: " + JSON.stringify(profile.photos[2]));
-      console.log("done: " + done);
-
       const steamId = profile.id;
 
       let existingUser = await SteamUser.getSteamUsers({ steamId });
@@ -155,7 +147,6 @@ passport.use(
         }
 
         // Create a new persona for the new Steam user
-        // TODO: Read their profile to get their name and avatar URL
         let steamPersona = await Persona.createPersona({
           name: profile.displayName,
           avatarUrl: profile.photos[2].value,

@@ -5,7 +5,7 @@ module.exports = function (sequelize, DataTypes) {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     apiName: { type: DataTypes.STRING },
     displayName: { type: DataTypes.STRING },
-    description: { type: DataTypes.STRING },
+    description: { type: DataTypes.STRING(1024) },
     iconUrl: { type: DataTypes.STRING }
   });
 

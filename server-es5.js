@@ -26870,23 +26870,15 @@ _passport2.default.use(new SteamStrategy({
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            console.log("req: " + req);
-            console.log("id: " + id);
-            console.log("profile.id: " + profile.id);
-            console.log("profile.displayName: " + profile.displayName);
-            console.log("profile.photos: " + profile.photos);
-            console.log("profile.photos[2]: " + JSON.stringify(profile.photos[2]));
-            console.log("done: " + done);
-
             steamId = profile.id;
-            _context4.next = 10;
+            _context4.next = 3;
             return _SteamUser2.default.getSteamUsers({ steamId: steamId });
 
-          case 10:
+          case 3:
             existingUser = _context4.sent;
 
             if (!(existingUser.length == 0)) {
-              _context4.next = 26;
+              _context4.next = 19;
               break;
             }
 
@@ -26894,47 +26886,47 @@ _passport2.default.use(new SteamStrategy({
             parentUser = req.user;
 
             if (parentUser) {
-              _context4.next = 17;
+              _context4.next = 10;
               break;
             }
 
-            _context4.next = 16;
+            _context4.next = 9;
             return _User2.default.createUser({});
 
-          case 16:
+          case 9:
             parentUser = _context4.sent;
 
-          case 17:
-            _context4.next = 19;
+          case 10:
+            _context4.next = 12;
             return _Persona2.default.createPersona({
               name: profile.displayName,
               avatarUrl: profile.photos[2].value,
               userId: parentUser.id
             });
 
-          case 19:
+          case 12:
             steamPersona = _context4.sent;
-            _context4.next = 22;
+            _context4.next = 15;
             return _SteamUser2.default.createSteamUser({ steamId: profile.id, personaId: steamPersona.id });
 
-          case 22:
+          case 15:
             steamUser = _context4.sent;
             return _context4.abrupt('return', done(null, parentUser));
 
-          case 26:
-            _context4.next = 28;
+          case 19:
+            _context4.next = 21;
             return existingUser[0].getPersona();
 
-          case 28:
+          case 21:
             existingPersona = _context4.sent;
-            _context4.next = 31;
+            _context4.next = 24;
             return existingPersona.getUser();
 
-          case 31:
+          case 24:
             existingParent = _context4.sent;
             return _context4.abrupt('return', done(null, existingParent));
 
-          case 33:
+          case 26:
           case 'end':
             return _context4.stop();
         }
@@ -28854,7 +28846,7 @@ router.get('/latest', function () {
             return _dbmodels2.default.message.findAll({
               where: { parentMessageId: null },
               order: [['timestamp', 'DESC'], [{ model: _dbmodels2.default.message, as: 'replies' }, 'timestamp', 'ASC']],
-              limit: 50,
+              limit: 5000,
               include: [{
                 model: _dbmodels2.default.persona
               }, {
@@ -28956,7 +28948,7 @@ module.exports = function (sequelize, DataTypes) {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     apiName: { type: DataTypes.STRING },
     displayName: { type: DataTypes.STRING },
-    description: { type: DataTypes.STRING },
+    description: { type: DataTypes.STRING(1024) },
     iconUrl: { type: DataTypes.STRING }
   });
 
@@ -29347,20 +29339,24 @@ router.get('/steam', function () {
 
                       case 3:
                         allKnownGames = _context3.sent;
-                        _context3.next = 6;
-                        return _SteamUser2.default.getAllSteamUsers();
 
-                      case 6:
+
+                        // Iterate over all of our Steam users
+                        console.log("Getting steam users");
+                        _context3.next = 7;
+                        return _SteamUser2.default.getSteamUsers();
+
+                      case 7:
                         steamUsers = _context3.sent;
                         _iteratorNormalCompletion = true;
                         _didIteratorError = false;
                         _iteratorError = undefined;
-                        _context3.prev = 10;
+                        _context3.prev = 11;
                         _iterator = steamUsers[Symbol.iterator]();
 
-                      case 12:
+                      case 13:
                         if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-                          _context3.next = 48;
+                          _context3.next = 50;
                           break;
                         }
 
@@ -29368,11 +29364,15 @@ router.get('/steam', function () {
 
                         // Iterate over the user's recently played games
                         console.log("Getting games for " + steamUser.steamId);
-                        _context3.next = 17;
+                        _context3.next = 18;
                         return _steamApi2.default.getRecentGames(steamUser.steamId);
 
-                      case 17:
-                        recentGames = _context3.sent;
+                      case 18:
+                        _context3.t0 = function (g) {
+                          return g.playtime_forever > 1000;
+                        };
+
+                        recentGames = _context3.sent.response.games.filter(_context3.t0);
 
                         console.log(JSON.stringify(recentGames));
                         _loop = /*#__PURE__*/regeneratorRuntime.mark(function _loop(recentGame) {
@@ -29412,7 +29412,7 @@ router.get('/steam', function () {
                                 case 8:
                                   latestAchievements = _context2.sent;
 
-                                  if (!latestAchievements) {
+                                  if (!(latestAchievements && latestAchievements.playerstats.achievements)) {
                                     _context2.next = 43;
                                     break;
                                   }
@@ -29558,108 +29558,109 @@ router.get('/steam', function () {
                         _iteratorNormalCompletion2 = true;
                         _didIteratorError2 = false;
                         _iteratorError2 = undefined;
-                        _context3.prev = 23;
-                        _iterator2 = recentGames.response.games[Symbol.iterator]();
+                        _context3.prev = 25;
+                        _iterator2 = recentGames[Symbol.iterator]();
 
-                      case 25:
+                      case 27:
                         if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
-                          _context3.next = 31;
+                          _context3.next = 33;
                           break;
                         }
 
                         recentGame = _step2.value;
-                        return _context3.delegateYield(_loop(recentGame), 't0', 28);
+                        return _context3.delegateYield(_loop(recentGame), 't1', 30);
 
-                      case 28:
+                      case 30:
                         _iteratorNormalCompletion2 = true;
-                        _context3.next = 25;
-                        break;
-
-                      case 31:
-                        _context3.next = 37;
+                        _context3.next = 27;
                         break;
 
                       case 33:
-                        _context3.prev = 33;
-                        _context3.t1 = _context3['catch'](23);
-                        _didIteratorError2 = true;
-                        _iteratorError2 = _context3.t1;
+                        _context3.next = 39;
+                        break;
 
-                      case 37:
-                        _context3.prev = 37;
-                        _context3.prev = 38;
+                      case 35:
+                        _context3.prev = 35;
+                        _context3.t2 = _context3['catch'](25);
+                        _didIteratorError2 = true;
+                        _iteratorError2 = _context3.t2;
+
+                      case 39:
+                        _context3.prev = 39;
+                        _context3.prev = 40;
 
                         if (!_iteratorNormalCompletion2 && _iterator2.return) {
                           _iterator2.return();
                         }
 
-                      case 40:
-                        _context3.prev = 40;
+                      case 42:
+                        _context3.prev = 42;
 
                         if (!_didIteratorError2) {
-                          _context3.next = 43;
+                          _context3.next = 45;
                           break;
                         }
 
                         throw _iteratorError2;
 
-                      case 43:
-                        return _context3.finish(40);
-
-                      case 44:
-                        return _context3.finish(37);
-
                       case 45:
-                        _iteratorNormalCompletion = true;
-                        _context3.next = 12;
-                        break;
+                        return _context3.finish(42);
 
-                      case 48:
-                        _context3.next = 54;
+                      case 46:
+                        return _context3.finish(39);
+
+                      case 47:
+                        _iteratorNormalCompletion = true;
+                        _context3.next = 13;
                         break;
 
                       case 50:
-                        _context3.prev = 50;
-                        _context3.t2 = _context3['catch'](10);
-                        _didIteratorError = true;
-                        _iteratorError = _context3.t2;
+                        _context3.next = 56;
+                        break;
 
-                      case 54:
-                        _context3.prev = 54;
-                        _context3.prev = 55;
+                      case 52:
+                        _context3.prev = 52;
+                        _context3.t3 = _context3['catch'](11);
+                        _didIteratorError = true;
+                        _iteratorError = _context3.t3;
+
+                      case 56:
+                        _context3.prev = 56;
+                        _context3.prev = 57;
 
                         if (!_iteratorNormalCompletion && _iterator.return) {
                           _iterator.return();
                         }
 
-                      case 57:
-                        _context3.prev = 57;
+                      case 59:
+                        _context3.prev = 59;
 
                         if (!_didIteratorError) {
-                          _context3.next = 60;
+                          _context3.next = 62;
                           break;
                         }
 
                         throw _iteratorError;
 
-                      case 60:
-                        return _context3.finish(57);
-
-                      case 61:
-                        return _context3.finish(54);
-
                       case 62:
-
-                        res.json(response);
+                        return _context3.finish(59);
 
                       case 63:
+                        return _context3.finish(56);
+
+                      case 64:
+                        res.json(response);
+
+                      case 65:
                       case 'end':
                         return _context3.stop();
                     }
                   }
-                }, _callee, _this, [[10, 50, 54, 62], [23, 33, 37, 45], [38,, 40, 44], [55,, 57, 61]]);
+                }, _callee, _this, [[11, 52, 56, 64], [25, 35, 39, 47], [40,, 42, 46], [57,, 59, 63]]);
               })), function (err, ret) {});
             } catch (err) {
+              console.log(err);
+              res.json({ argh: 'error' });
               next();
             }
 
