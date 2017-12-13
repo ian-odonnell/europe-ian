@@ -29091,6 +29091,7 @@ router.get('/steam/*', function () {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
+            _context2.prev = 0;
             steamUrl = 'http://api.steampowered.com/' + req.originalUrl.replace('/admin/steam/', '');
 
             console.log(steamUrl);
@@ -29102,20 +29103,29 @@ router.get('/steam/*', function () {
               json: true
             };
             _context2.t0 = res;
-            _context2.next = 6;
+            _context2.next = 7;
             return (0, _requestPromise2.default)(options);
 
-          case 6:
+          case 7:
             _context2.t1 = _context2.sent;
 
             _context2.t0.json.call(_context2.t0, _context2.t1);
 
-          case 8:
+            _context2.next = 14;
+            break;
+
+          case 11:
+            _context2.prev = 11;
+            _context2.t2 = _context2['catch'](0);
+
+            res.status(500);
+
+          case 14:
           case 'end':
             return _context2.stop();
         }
       }
-    }, _callee2, this);
+    }, _callee2, this, [[0, 11]]);
   }));
 
   return function (_x4, _x5) {
@@ -29665,7 +29675,7 @@ var ExternalApi = exports.ExternalApi = function () {
     key: 'get',
     value: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(relativeUrl, queryParams) {
-        var options;
+        var options, result;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -29682,13 +29692,18 @@ var ExternalApi = exports.ExternalApi = function () {
                   options.qs = queryParams;
                 }
 
-                _context.next = 4;
+                console.log("Getting " + (0, _urlJoin2.default)(this.baseUrl, relativeUrl));
+                _context.next = 5;
                 return (0, _requestPromise2.default)(options);
 
-              case 4:
-                return _context.abrupt('return', _context.sent);
-
               case 5:
+                result = _context.sent;
+
+                console.log("Got it!");
+
+                return _context.abrupt('return', result);
+
+              case 8:
               case 'end':
                 return _context.stop();
             }

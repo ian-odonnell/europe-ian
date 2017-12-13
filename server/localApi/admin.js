@@ -15,16 +15,21 @@ router.get('/version', function (req, res) {
 })
 
 router.get('/steam/*', async function (req, res) {
-  const steamUrl = 'http://api.steampowered.com/' + req.originalUrl.replace('/admin/steam/', '');
- console.log(steamUrl);
-  var options = {
-    uri: steamUrl,
-    headers: {
-      'User-Agent': 'Request-Promise'
-    },
-    json: true
+  try {
+    const steamUrl = 'http://api.steampowered.com/' + req.originalUrl.replace('/admin/steam/', '');
+    console.log(steamUrl);
+    var options = {
+      uri: steamUrl,
+      headers: {
+        'User-Agent': 'Request-Promise'
+      },
+      json: true
+    }
+    res.json(await rp(options));
   }
-  res.json(await rp(options));
+  catch (err) {
+    res.status(500);
+  }
 });
 
 export default router;
