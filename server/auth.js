@@ -43,7 +43,7 @@ router.route('/connect/google')
     scope: ['profile', 'email']
   }));
 
-router.route('/twitter/callback')
+  router.route('/twitter/callback')
   .get(passport.authenticate('twitter', {
     successRedirect: '/',
     failureRedirect: '/'
@@ -54,6 +54,18 @@ router.route('/twitter')
 
 router.route('/connect/twitter')
   .get(passport.authorize('twitter'));
+
+  router.route('/steam/callback')
+  .get(passport.authenticate('steam', {
+    successRedirect: '/',
+    failureRedirect: '/'
+  }));
+
+router.route('/steam')
+  .get(passport.authenticate('steam'));
+
+router.route('/connect/steam')
+  .get(passport.authorize('steam'));
 
 router.get('/logout', (req, res) => {
   req.logout();

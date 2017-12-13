@@ -23,6 +23,7 @@ import bcrypt from 'bcrypt-nodejs';
 import LocalUser from './server/dblib/LocalUser';
 import GoogleUser from './server/dblib/GoogleUser';
 import TwitterUser from './server/dblib/TwitterUser';
+import SteamUser from './server/dblib/SteamUser';
 import Persona from './server/dblib/Persona';
 import User from './server/dblib/User';
 
@@ -44,18 +45,18 @@ passport.use('local-login', new LocalStrategy({
 },
   async function (req, username, password, done) {
     let existingUser = await LocalUser.getLocalUsers({ username });
-    if(existingUser.length == 0) {
+    if (existingUser.length == 0) {
       return done(null, false);
     }
 
-    if(!bcrypt.compareSync(password, existingUser[0].password)) {
+    if (!bcrypt.compareSync(password, existingUser[0].password)) {
       return done(null, false);
     }
 
     let existingPersona = await existingUser[0].getPersona();
     let existingParent = await existingPersona.getUser();
     return done(null, existingParent);
-}));
+  }));
 
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 passport.use(
@@ -126,6 +127,42 @@ passport.use(
       }
     }));
 
+const SteamStrategy = require('passport-steam').Strategy;
+passport.use(
+  new SteamStrategy({
+    returnURL: config.steamCallbackUrl,
+    realm: config.steamRealm,
+    apiKey: config.steamApiKey,
+    passReqToCallback: true
+  },
+    async function (id, profile, done) {
+      console.log("id: " + id);
+      console.log("profile: " + JSON.stringify(profile));
+
+      let existingUser = await SteamUser.getSteamUsers({ steamId: profile.id });
+      if (existingUser.length == 0) {
+        // If we're not logged in already (e.g. with a Twitter user) then create a new "parent" user
+        let parentUser = req.user;
+        if (!parentUser) {
+          parentUser = await User.createUser({});
+        }
+
+        // Create a new persona for the new Steam user
+        let steamPersona = await Persona.createPersona({
+          name: profile._json.screen_name,
+          avatarUrl: profile._json.profile_image_url.replace('_normal.', '.'),
+          userId: parentUser.id
+        });
+
+        // Create the new Steam user
+        let steamUser = await SteamUser.createSteamUser({ steamId: profile.id, personaId: steamPersona.id });
+        return done(null, parentUser);
+      } else {
+        let existingPersona = await existingUser[0].getPersona();
+        let existingParent = await existingPersona.getUser();
+        return done(null, existingParent);
+      }
+    }));
 // Use ejs templates
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './client/views'));

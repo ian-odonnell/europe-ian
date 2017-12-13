@@ -9,7 +9,7 @@ var apiKey = config.steamApiKey;
 
 steamApi.getRecentGames = async (steamUserId) => {
   // return await steamApi.get(`/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${apiKey}&steamid=${steamUserId}`);
-  return await steamApi.get(`/IPlayerService/GetOwnedGames/v0001/?key=${apiKey}&steamid=${steamUserId}`);
+  return await steamApi.get(`/IPlayerService/GetOwnedGames/v0001/?key=${apiKey}&steamid=${steamUserId}&include_appinfo=1`);
 };
 
 steamApi.getGameAchievements = async (steamUserId, steamAppId) => {

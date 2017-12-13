@@ -21,6 +21,7 @@
   },
   "homepage": "https://gitlab.com/ian-odonnell/fullstack-seed#README",
   "dependencies": {
+    "async-lock": "^1.1.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "connect-mssql": "^1.5.0",
@@ -32,6 +33,7 @@
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
+    "passport-steam": "^1.0.8",
     "passport-twitter": "^1.0.4",
     "path": "^0.12.7",
     "react": "^16.2.0",

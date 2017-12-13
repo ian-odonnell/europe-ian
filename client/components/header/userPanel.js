@@ -9,6 +9,7 @@ class UserPanel extends React.Component {
   render() {
     let googleUrl = '/auth/google';
     let twitterUrl = '/auth/twitter';
+    let steamUrl = '/auth/steam';
     let loginMessage = 'Log in with:';
     let dropdownMessage = 'Log in';
     let dropdownIcon = undefined;
@@ -21,6 +22,7 @@ class UserPanel extends React.Component {
       loginMessage = 'Connect to:';
       googleUrl = '/auth/connect/google';
       twitterUrl = '/auth/connect/twitter';
+      steamUrl = '/auth/connect/steam';
     }
 
     let personaSelector = undefined;
@@ -45,6 +47,7 @@ class UserPanel extends React.Component {
         <div>{loginMessage}</div>
         <div><a href={googleUrl}><img src='/images/Google.jpg' /></a></div>
         <div><a href={twitterUrl}><img src='/images/Twitter.png' /></a></div>
+        <div><a href={steamUrl}><img src='/images/Steam.png' /></a></div>
       </div>;
 
     return (

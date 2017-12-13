@@ -2,9 +2,14 @@ let models = require('../../dbmodels');
 
 /* eslint-disable no-extra-boolean-cast */
 
-exports.getAllSteamUsers = () => {
+exports.createSteamUser = (steamUserData, transaction) => {
+  let txn = (!!transaction ? { transaction } : {});
+  return models.steamuser.create(steamUserData, txn);
+};
+
+exports.getSteamUsers = (where) => {
   return new Promise((resolve) => {
-    var allUsers = models.steamuser.findAll();
+    var allUsers = models.steamuser.findAll({where});
     resolve(allUsers);
   });
 };

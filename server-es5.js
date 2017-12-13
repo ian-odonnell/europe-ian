@@ -61,7 +61,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 263);
+/******/ 	return __webpack_require__(__webpack_require__.s = 264);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1907,7 +1907,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(481)("./" + name);
+                __webpack_require__(482)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4796,7 +4796,7 @@ module.exports = require("react-dom");
 "use strict";
 
 
-var _fs = __webpack_require__(494);
+var _fs = __webpack_require__(495);
 
 var _fs2 = _interopRequireDefault(_fs);
 
@@ -4844,7 +4844,7 @@ var toLink = [];
 
 // TODO: Maybe file scan the current directory (and children?) - Sequelize's import functionality was struggling once deployed to Azure,
 // so dropped back to this hard-coded list of models for now
-var models = [__webpack_require__(495), __webpack_require__(496), __webpack_require__(497), __webpack_require__(498), __webpack_require__(499), __webpack_require__(500), __webpack_require__(501), __webpack_require__(502), __webpack_require__(503), __webpack_require__(504)];
+var models = [__webpack_require__(496), __webpack_require__(497), __webpack_require__(498), __webpack_require__(499), __webpack_require__(500), __webpack_require__(501), __webpack_require__(502), __webpack_require__(503), __webpack_require__(504), __webpack_require__(505)];
 
 models.forEach(function (model) {
   var sequelizeModel = model(sequelize, _sequelize2.default);
@@ -6132,14 +6132,16 @@ var config = {
   // Twitter credentials
   twitterConsumerKey: process.env.TWITTER_CONSUMER_KEY || "CE6sOx5Qo7nJ7acExwHGonRds",
   twiterConsumerSecret: process.env.TWITTER_CONSUMER_SECRET || "",
-  twitterCallbackUrl: process.env.TWITTER_CALLBACK_URL || "http://localhost:3000/auth/twitter.callback",
+  twitterCallbackUrl: process.env.TWITTER_CALLBACK_URL || "http://localhost:3000/auth/twitter/callback",
 
   // Battle.Net credentials
   battleNetKey: process.env.BATTLE_NET_KEY || "8h7mk4erpby9kh9bmwzxnhbtrm5yybxw",
   battleNetSecret: process.env.BATTLE_NET_SECRET || "",
 
   // Steam credentials
-  steamApiKey: process.env.STEAM_API_KEY || ""
+  steamApiKey: process.env.STEAM_API_KEY || "",
+  steamCallbackUrl: process.env.STEAM_CALLBACK_URL || "http://localhost:3000/auth/steam/callback",
+  steamRealm: process.env.STEAM_REALM || "http://localhost:3000/"
 };
 
 exports.default = config;
@@ -7041,7 +7043,7 @@ module.exports = __webpack_require__(25).getIteratorMethod = function (it) {
 
 
 // 9.4.2.3 ArraySpeciesCreate(originalArray, length)
-var speciesConstructor = __webpack_require__(356);
+var speciesConstructor = __webpack_require__(357);
 
 module.exports = function (original, length) {
   return new (speciesConstructor(original))(length);
@@ -7608,7 +7610,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _externalApi = __webpack_require__(473);
+var _externalApi = __webpack_require__(474);
 
 var _config = __webpack_require__(54);
 
@@ -8787,11 +8789,11 @@ var _reactDom = __webpack_require__(17);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _chatFilters = __webpack_require__(474);
+var _chatFilters = __webpack_require__(475);
 
 var _chatFilters2 = _interopRequireDefault(_chatFilters);
 
-var _userPanel = __webpack_require__(476);
+var _userPanel = __webpack_require__(477);
 
 var _userPanel2 = _interopRequireDefault(_userPanel);
 
@@ -8923,7 +8925,7 @@ var _chieveChatApi = __webpack_require__(98);
 
 var _chieveChatApi2 = _interopRequireDefault(_chieveChatApi);
 
-var _chatMessage = __webpack_require__(477);
+var _chatMessage = __webpack_require__(478);
 
 var _chatMessage2 = _interopRequireDefault(_chatMessage);
 
@@ -20904,6 +20906,35 @@ var models = __webpack_require__(18);
 
 /* eslint-disable no-extra-boolean-cast */
 
+exports.createSteamUser = function (steamUserData, transaction) {
+  var txn = !!transaction ? { transaction: transaction } : {};
+  return models.steamuser.create(steamUserData, txn);
+};
+
+exports.getSteamUsers = function (where) {
+  return new Promise(function (resolve) {
+    var allUsers = models.steamuser.findAll({ where: where });
+    resolve(allUsers);
+  });
+};
+
+exports.truncate = function () {
+  return models.steamuser.destroy({
+    where: {}
+  });
+};
+
+/***/ }),
+/* 263 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var models = __webpack_require__(18);
+
+/* eslint-disable no-extra-boolean-cast */
+
 exports.createUser = function (userData, transaction) {
   var txn = !!transaction ? { transaction: transaction } : {};
   return models.user.create(userData, txn);
@@ -20923,25 +20954,25 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 263 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(264);
-module.exports = __webpack_require__(466);
+__webpack_require__(265);
+module.exports = __webpack_require__(467);
 
 
 /***/ }),
-/* 264 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(265);
-
-__webpack_require__(462);
+__webpack_require__(266);
 
 __webpack_require__(463);
+
+__webpack_require__(464);
 
 if (global._babelPolyfill) {
   throw new Error("only one instance of babel-polyfill is allowed");
@@ -20965,14 +20996,13 @@ define(String.prototype, "padRight", "".padEnd);
 });
 
 /***/ }),
-/* 265 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(266);
-__webpack_require__(268);
+__webpack_require__(267);
 __webpack_require__(269);
 __webpack_require__(270);
 __webpack_require__(271);
@@ -20987,7 +21017,7 @@ __webpack_require__(279);
 __webpack_require__(280);
 __webpack_require__(281);
 __webpack_require__(282);
-__webpack_require__(284);
+__webpack_require__(283);
 __webpack_require__(285);
 __webpack_require__(286);
 __webpack_require__(287);
@@ -21048,16 +21078,16 @@ __webpack_require__(341);
 __webpack_require__(342);
 __webpack_require__(343);
 __webpack_require__(344);
-__webpack_require__(346);
+__webpack_require__(345);
 __webpack_require__(347);
-__webpack_require__(349);
+__webpack_require__(348);
 __webpack_require__(350);
 __webpack_require__(351);
 __webpack_require__(352);
 __webpack_require__(353);
 __webpack_require__(354);
 __webpack_require__(355);
-__webpack_require__(357);
+__webpack_require__(356);
 __webpack_require__(358);
 __webpack_require__(359);
 __webpack_require__(360);
@@ -21070,19 +21100,19 @@ __webpack_require__(366);
 __webpack_require__(367);
 __webpack_require__(368);
 __webpack_require__(369);
-__webpack_require__(92);
 __webpack_require__(370);
+__webpack_require__(92);
 __webpack_require__(371);
-__webpack_require__(118);
 __webpack_require__(372);
+__webpack_require__(118);
 __webpack_require__(373);
 __webpack_require__(374);
 __webpack_require__(375);
 __webpack_require__(376);
+__webpack_require__(377);
 __webpack_require__(121);
 __webpack_require__(123);
 __webpack_require__(124);
-__webpack_require__(377);
 __webpack_require__(378);
 __webpack_require__(379);
 __webpack_require__(380);
@@ -21167,10 +21197,11 @@ __webpack_require__(458);
 __webpack_require__(459);
 __webpack_require__(460);
 __webpack_require__(461);
+__webpack_require__(462);
 module.exports = __webpack_require__(25);
 
 /***/ }),
-/* 266 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21192,7 +21223,7 @@ var uid = __webpack_require__(36);
 var wks = __webpack_require__(6);
 var wksExt = __webpack_require__(101);
 var wksDefine = __webpack_require__(72);
-var enumKeys = __webpack_require__(267);
+var enumKeys = __webpack_require__(268);
 var isArray = __webpack_require__(59);
 var anObject = __webpack_require__(2);
 var toIObject = __webpack_require__(19);
@@ -21420,7 +21451,7 @@ setToStringTag(Math, 'Math', true);
 setToStringTag(global.JSON, 'JSON', true);
 
 /***/ }),
-/* 267 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21445,7 +21476,7 @@ module.exports = function (it) {
 };
 
 /***/ }),
-/* 268 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21456,7 +21487,7 @@ var $export = __webpack_require__(1);
 $export($export.S, 'Object', { create: __webpack_require__(40) });
 
 /***/ }),
-/* 269 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21467,7 +21498,7 @@ var $export = __webpack_require__(1);
 $export($export.S + $export.F * !__webpack_require__(7), 'Object', { defineProperty: __webpack_require__(8).f });
 
 /***/ }),
-/* 270 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21478,7 +21509,7 @@ var $export = __webpack_require__(1);
 $export($export.S + $export.F * !__webpack_require__(7), 'Object', { defineProperties: __webpack_require__(103) });
 
 /***/ }),
-/* 271 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21495,7 +21526,7 @@ __webpack_require__(29)('getOwnPropertyDescriptor', function () {
 });
 
 /***/ }),
-/* 272 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21512,7 +21543,7 @@ __webpack_require__(29)('getPrototypeOf', function () {
 });
 
 /***/ }),
-/* 273 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21529,7 +21560,7 @@ __webpack_require__(29)('keys', function () {
 });
 
 /***/ }),
-/* 274 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21541,7 +21572,7 @@ __webpack_require__(29)('getOwnPropertyNames', function () {
 });
 
 /***/ }),
-/* 275 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21558,7 +21589,7 @@ __webpack_require__(29)('freeze', function ($freeze) {
 });
 
 /***/ }),
-/* 276 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21575,7 +21606,7 @@ __webpack_require__(29)('seal', function ($seal) {
 });
 
 /***/ }),
-/* 277 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21592,7 +21623,7 @@ __webpack_require__(29)('preventExtensions', function ($preventExtensions) {
 });
 
 /***/ }),
-/* 278 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21608,7 +21639,7 @@ __webpack_require__(29)('isFrozen', function ($isFrozen) {
 });
 
 /***/ }),
-/* 279 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21624,7 +21655,7 @@ __webpack_require__(29)('isSealed', function ($isSealed) {
 });
 
 /***/ }),
-/* 280 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21640,7 +21671,7 @@ __webpack_require__(29)('isExtensible', function ($isExtensible) {
 });
 
 /***/ }),
-/* 281 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21652,7 +21683,7 @@ var $export = __webpack_require__(1);
 $export($export.S + $export.F, 'Object', { assign: __webpack_require__(105) });
 
 /***/ }),
-/* 282 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21660,10 +21691,10 @@ $export($export.S + $export.F, 'Object', { assign: __webpack_require__(105) });
 
 // 19.1.3.10 Object.is(value1, value2)
 var $export = __webpack_require__(1);
-$export($export.S, 'Object', { is: __webpack_require__(283) });
+$export($export.S, 'Object', { is: __webpack_require__(284) });
 
 /***/ }),
-/* 283 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21676,7 +21707,7 @@ module.exports = Object.is || function is(x, y) {
 };
 
 /***/ }),
-/* 284 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21687,7 +21718,7 @@ var $export = __webpack_require__(1);
 $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(76).set });
 
 /***/ }),
-/* 285 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21704,7 +21735,7 @@ if (test + '' != '[object z]') {
 }
 
 /***/ }),
-/* 286 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21716,7 +21747,7 @@ var $export = __webpack_require__(1);
 $export($export.P, 'Function', { bind: __webpack_require__(106) });
 
 /***/ }),
-/* 287 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21740,7 +21771,7 @@ NAME in FProto || __webpack_require__(7) && dP(FProto, NAME, {
 });
 
 /***/ }),
-/* 288 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21761,7 +21792,7 @@ if (!(HAS_INSTANCE in FunctionProto)) __webpack_require__(8).f(FunctionProto, HA
   } });
 
 /***/ }),
-/* 289 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21773,7 +21804,7 @@ var $parseInt = __webpack_require__(108);
 $export($export.G + $export.F * (parseInt != $parseInt), { parseInt: $parseInt });
 
 /***/ }),
-/* 290 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21785,7 +21816,7 @@ var $parseFloat = __webpack_require__(109);
 $export($export.G + $export.F * (parseFloat != $parseFloat), { parseFloat: $parseFloat });
 
 /***/ }),
-/* 291 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21863,7 +21894,7 @@ if (!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')) {
 }
 
 /***/ }),
-/* 292 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21979,7 +22010,7 @@ $export($export.P + $export.F * (!!$toFixed && (0.00008.toFixed(3) !== '0.000' |
 });
 
 /***/ }),
-/* 293 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22004,7 +22035,7 @@ $export($export.P + $export.F * ($fails(function () {
 });
 
 /***/ }),
-/* 294 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22016,7 +22047,7 @@ var $export = __webpack_require__(1);
 $export($export.S, 'Number', { EPSILON: Math.pow(2, -52) });
 
 /***/ }),
-/* 295 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22033,7 +22064,7 @@ $export($export.S, 'Number', {
 });
 
 /***/ }),
-/* 296 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22045,7 +22076,7 @@ var $export = __webpack_require__(1);
 $export($export.S, 'Number', { isInteger: __webpack_require__(111) });
 
 /***/ }),
-/* 297 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22062,7 +22093,7 @@ $export($export.S, 'Number', {
 });
 
 /***/ }),
-/* 298 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22080,7 +22111,7 @@ $export($export.S, 'Number', {
 });
 
 /***/ }),
-/* 299 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22092,7 +22123,7 @@ var $export = __webpack_require__(1);
 $export($export.S, 'Number', { MAX_SAFE_INTEGER: 0x1fffffffffffff });
 
 /***/ }),
-/* 300 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22104,7 +22135,7 @@ var $export = __webpack_require__(1);
 $export($export.S, 'Number', { MIN_SAFE_INTEGER: -0x1fffffffffffff });
 
 /***/ }),
-/* 301 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22116,7 +22147,7 @@ var $parseFloat = __webpack_require__(109);
 $export($export.S + $export.F * (Number.parseFloat != $parseFloat), 'Number', { parseFloat: $parseFloat });
 
 /***/ }),
-/* 302 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22128,7 +22159,7 @@ var $parseInt = __webpack_require__(108);
 $export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', { parseInt: $parseInt });
 
 /***/ }),
-/* 303 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22151,7 +22182,7 @@ $export($export.S + $export.F * !($acosh
 });
 
 /***/ }),
-/* 304 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22169,7 +22200,7 @@ function asinh(x) {
 $export($export.S + $export.F * !($asinh && 1 / $asinh(0) > 0), 'Math', { asinh: asinh });
 
 /***/ }),
-/* 305 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22187,7 +22218,7 @@ $export($export.S + $export.F * !($atanh && 1 / $atanh(-0) < 0), 'Math', {
 });
 
 /***/ }),
-/* 306 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22204,7 +22235,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 307 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22220,7 +22251,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 308 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22237,7 +22268,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 309 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22250,7 +22281,7 @@ var $expm1 = __webpack_require__(81);
 $export($export.S + $export.F * ($expm1 != Math.expm1), 'Math', { expm1: $expm1 });
 
 /***/ }),
-/* 310 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22262,7 +22293,7 @@ var $export = __webpack_require__(1);
 $export($export.S, 'Math', { fround: __webpack_require__(113) });
 
 /***/ }),
-/* 311 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22296,7 +22327,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 312 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22321,7 +22352,7 @@ $export($export.S + $export.F * __webpack_require__(4)(function () {
 });
 
 /***/ }),
-/* 313 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22337,7 +22368,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 314 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22349,7 +22380,7 @@ var $export = __webpack_require__(1);
 $export($export.S, 'Math', { log1p: __webpack_require__(112) });
 
 /***/ }),
-/* 315 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22365,7 +22396,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 316 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22377,7 +22408,7 @@ var $export = __webpack_require__(1);
 $export($export.S, 'Math', { sign: __webpack_require__(80) });
 
 /***/ }),
-/* 317 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22398,7 +22429,7 @@ $export($export.S + $export.F * __webpack_require__(4)(function () {
 });
 
 /***/ }),
-/* 318 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22418,7 +22449,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 319 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22434,7 +22465,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 320 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22463,7 +22494,7 @@ $export($export.S + $export.F * (!!$fromCodePoint && $fromCodePoint.length != 1)
 });
 
 /***/ }),
-/* 321 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22489,7 +22520,7 @@ $export($export.S, 'String', {
 });
 
 /***/ }),
-/* 322 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22503,7 +22534,7 @@ __webpack_require__(47)('trim', function ($trim) {
 });
 
 /***/ }),
-/* 323 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22527,7 +22558,7 @@ __webpack_require__(83)(String, 'String', function (iterated) {
 });
 
 /***/ }),
-/* 324 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22543,7 +22574,7 @@ $export($export.P, 'String', {
 });
 
 /***/ }),
-/* 325 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22568,7 +22599,7 @@ $export($export.P + $export.F * __webpack_require__(86)(ENDS_WITH), 'String', {
 });
 
 /***/ }),
-/* 326 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22586,7 +22617,7 @@ $export($export.P + $export.F * __webpack_require__(86)(INCLUDES), 'String', {
 });
 
 /***/ }),
-/* 327 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22600,7 +22631,7 @@ $export($export.P, 'String', {
 });
 
 /***/ }),
-/* 328 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22623,7 +22654,7 @@ $export($export.P + $export.F * __webpack_require__(86)(STARTS_WITH), 'String', 
 });
 
 /***/ }),
-/* 329 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22637,7 +22668,7 @@ __webpack_require__(16)('anchor', function (createHTML) {
 });
 
 /***/ }),
-/* 330 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22651,7 +22682,7 @@ __webpack_require__(16)('big', function (createHTML) {
 });
 
 /***/ }),
-/* 331 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22665,7 +22696,7 @@ __webpack_require__(16)('blink', function (createHTML) {
 });
 
 /***/ }),
-/* 332 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22679,7 +22710,7 @@ __webpack_require__(16)('bold', function (createHTML) {
 });
 
 /***/ }),
-/* 333 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22693,7 +22724,7 @@ __webpack_require__(16)('fixed', function (createHTML) {
 });
 
 /***/ }),
-/* 334 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22707,7 +22738,7 @@ __webpack_require__(16)('fontcolor', function (createHTML) {
 });
 
 /***/ }),
-/* 335 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22721,7 +22752,7 @@ __webpack_require__(16)('fontsize', function (createHTML) {
 });
 
 /***/ }),
-/* 336 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22735,7 +22766,7 @@ __webpack_require__(16)('italics', function (createHTML) {
 });
 
 /***/ }),
-/* 337 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22749,7 +22780,7 @@ __webpack_require__(16)('link', function (createHTML) {
 });
 
 /***/ }),
-/* 338 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22763,7 +22794,7 @@ __webpack_require__(16)('small', function (createHTML) {
 });
 
 /***/ }),
-/* 339 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22777,7 +22808,7 @@ __webpack_require__(16)('strike', function (createHTML) {
 });
 
 /***/ }),
-/* 340 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22791,7 +22822,7 @@ __webpack_require__(16)('sub', function (createHTML) {
 });
 
 /***/ }),
-/* 341 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22805,7 +22836,7 @@ __webpack_require__(16)('sup', function (createHTML) {
 });
 
 /***/ }),
-/* 342 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22819,7 +22850,7 @@ $export($export.S, 'Date', { now: function now() {
   } });
 
 /***/ }),
-/* 343 */
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22843,7 +22874,7 @@ $export($export.P + $export.F * __webpack_require__(4)(function () {
 });
 
 /***/ }),
-/* 344 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22851,7 +22882,7 @@ $export($export.P + $export.F * __webpack_require__(4)(function () {
 
 // 20.3.4.36 / 15.9.5.43 Date.prototype.toISOString()
 var $export = __webpack_require__(1);
-var toISOString = __webpack_require__(345);
+var toISOString = __webpack_require__(346);
 
 // PhantomJS / old WebKit has a broken implementations
 $export($export.P + $export.F * (Date.prototype.toISOString !== toISOString), 'Date', {
@@ -22859,7 +22890,7 @@ $export($export.P + $export.F * (Date.prototype.toISOString !== toISOString), 'D
 });
 
 /***/ }),
-/* 345 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22889,7 +22920,7 @@ module.exports = fails(function () {
 } : $toISOString;
 
 /***/ }),
-/* 346 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22909,7 +22940,7 @@ if (new Date(NaN) + '' != INVALID_DATE) {
 }
 
 /***/ }),
-/* 347 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22918,10 +22949,10 @@ if (new Date(NaN) + '' != INVALID_DATE) {
 var TO_PRIMITIVE = __webpack_require__(6)('toPrimitive');
 var proto = Date.prototype;
 
-if (!(TO_PRIMITIVE in proto)) __webpack_require__(14)(proto, TO_PRIMITIVE, __webpack_require__(348));
+if (!(TO_PRIMITIVE in proto)) __webpack_require__(14)(proto, TO_PRIMITIVE, __webpack_require__(349));
 
 /***/ }),
-/* 348 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22937,7 +22968,7 @@ module.exports = function (hint) {
 };
 
 /***/ }),
-/* 349 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22949,7 +22980,7 @@ var $export = __webpack_require__(1);
 $export($export.S, 'Array', { isArray: __webpack_require__(59) });
 
 /***/ }),
-/* 350 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22995,7 +23026,7 @@ $export($export.S + $export.F * !__webpack_require__(61)(function (iter) {
 });
 
 /***/ }),
-/* 351 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23022,7 +23053,7 @@ $export($export.S + $export.F * __webpack_require__(4)(function () {
 });
 
 /***/ }),
-/* 352 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23041,7 +23072,7 @@ $export($export.P + $export.F * (__webpack_require__(50) != Object || !__webpack
 });
 
 /***/ }),
-/* 353 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23075,7 +23106,7 @@ $export($export.P + $export.F * __webpack_require__(4)(function () {
 });
 
 /***/ }),
-/* 354 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23103,7 +23134,7 @@ $export($export.P + $export.F * (fails(function () {
 });
 
 /***/ }),
-/* 355 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23121,7 +23152,7 @@ $export($export.P + $export.F * !STRICT, 'Array', {
 });
 
 /***/ }),
-/* 356 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23145,7 +23176,7 @@ module.exports = function (original) {
 };
 
 /***/ }),
-/* 357 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23162,7 +23193,7 @@ $export($export.P + $export.F * !__webpack_require__(24)([].map, true), 'Array',
 });
 
 /***/ }),
-/* 358 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23179,7 +23210,7 @@ $export($export.P + $export.F * !__webpack_require__(24)([].filter, true), 'Arra
 });
 
 /***/ }),
-/* 359 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23196,7 +23227,7 @@ $export($export.P + $export.F * !__webpack_require__(24)([].some, true), 'Array'
 });
 
 /***/ }),
-/* 360 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23213,7 +23244,7 @@ $export($export.P + $export.F * !__webpack_require__(24)([].every, true), 'Array
 });
 
 /***/ }),
-/* 361 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23230,7 +23261,7 @@ $export($export.P + $export.F * !__webpack_require__(24)([].reduce, true), 'Arra
 });
 
 /***/ }),
-/* 362 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23247,7 +23278,7 @@ $export($export.P + $export.F * !__webpack_require__(24)([].reduceRight, true), 
 });
 
 /***/ }),
-/* 363 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23268,7 +23299,7 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(24)($nati
 });
 
 /***/ }),
-/* 364 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23298,7 +23329,7 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(24)($nati
 });
 
 /***/ }),
-/* 365 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23312,7 +23343,7 @@ $export($export.P, 'Array', { copyWithin: __webpack_require__(116) });
 __webpack_require__(34)('copyWithin');
 
 /***/ }),
-/* 366 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23326,7 +23357,7 @@ $export($export.P, 'Array', { fill: __webpack_require__(91) });
 __webpack_require__(34)('fill');
 
 /***/ }),
-/* 367 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23349,7 +23380,7 @@ $export($export.P + $export.F * forced, 'Array', {
 __webpack_require__(34)(KEY);
 
 /***/ }),
-/* 368 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23372,7 +23403,7 @@ $export($export.P + $export.F * forced, 'Array', {
 __webpack_require__(34)(KEY);
 
 /***/ }),
-/* 369 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23381,7 +23412,7 @@ __webpack_require__(34)(KEY);
 __webpack_require__(42)('Array');
 
 /***/ }),
-/* 370 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23433,7 +23464,7 @@ if (__webpack_require__(7) && (!CORRECT_NEW || __webpack_require__(4)(function (
 __webpack_require__(42)('RegExp');
 
 /***/ }),
-/* 371 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23466,7 +23497,7 @@ if (__webpack_require__(4)(function () {
 }
 
 /***/ }),
-/* 372 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23485,7 +23516,7 @@ __webpack_require__(63)('match', 1, function (defined, MATCH, $match) {
 });
 
 /***/ }),
-/* 373 */
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23504,7 +23535,7 @@ __webpack_require__(63)('replace', 2, function (defined, REPLACE, $replace) {
 });
 
 /***/ }),
-/* 374 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23523,7 +23554,7 @@ __webpack_require__(63)('search', 1, function (defined, SEARCH, $search) {
 });
 
 /***/ }),
-/* 375 */
+/* 376 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23595,7 +23626,7 @@ __webpack_require__(63)('split', 2, function (defined, SPLIT, $split) {
 });
 
 /***/ }),
-/* 376 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23881,7 +23912,7 @@ $export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(61)(function
 });
 
 /***/ }),
-/* 377 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23904,7 +23935,7 @@ __webpack_require__(65)(WEAK_SET, function (get) {
 }, weak, false, true);
 
 /***/ }),
-/* 378 */
+/* 379 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23957,7 +23988,7 @@ $export($export.P + $export.U + $export.F * __webpack_require__(4)(function () {
 __webpack_require__(42)(ARRAY_BUFFER);
 
 /***/ }),
-/* 379 */
+/* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23969,7 +24000,7 @@ $export($export.G + $export.W + $export.F * !__webpack_require__(66).ABV, {
 });
 
 /***/ }),
-/* 380 */
+/* 381 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23982,7 +24013,7 @@ __webpack_require__(31)('Int8', 1, function (init) {
 });
 
 /***/ }),
-/* 381 */
+/* 382 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23995,7 +24026,7 @@ __webpack_require__(31)('Uint8', 1, function (init) {
 });
 
 /***/ }),
-/* 382 */
+/* 383 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24008,7 +24039,7 @@ __webpack_require__(31)('Uint8', 1, function (init) {
 }, true);
 
 /***/ }),
-/* 383 */
+/* 384 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24021,7 +24052,7 @@ __webpack_require__(31)('Int16', 2, function (init) {
 });
 
 /***/ }),
-/* 384 */
+/* 385 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24034,7 +24065,7 @@ __webpack_require__(31)('Uint16', 2, function (init) {
 });
 
 /***/ }),
-/* 385 */
+/* 386 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24047,7 +24078,7 @@ __webpack_require__(31)('Int32', 4, function (init) {
 });
 
 /***/ }),
-/* 386 */
+/* 387 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24060,7 +24091,7 @@ __webpack_require__(31)('Uint32', 4, function (init) {
 });
 
 /***/ }),
-/* 387 */
+/* 388 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24073,7 +24104,7 @@ __webpack_require__(31)('Float32', 4, function (init) {
 });
 
 /***/ }),
-/* 388 */
+/* 389 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24086,7 +24117,7 @@ __webpack_require__(31)('Float64', 8, function (init) {
 });
 
 /***/ }),
-/* 389 */
+/* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24110,7 +24141,7 @@ $export($export.S + $export.F * !__webpack_require__(4)(function () {
 });
 
 /***/ }),
-/* 390 */
+/* 391 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24170,7 +24201,7 @@ $export($export.S + $export.F * (NEW_TARGET_BUG || ARGS_BUG), 'Reflect', {
 });
 
 /***/ }),
-/* 391 */
+/* 392 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24201,7 +24232,7 @@ $export($export.S + $export.F * __webpack_require__(4)(function () {
 });
 
 /***/ }),
-/* 392 */
+/* 393 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24220,7 +24251,7 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-/* 393 */
+/* 394 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24255,7 +24286,7 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-/* 394 */
+/* 395 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24280,7 +24311,7 @@ function get(target, propertyKey /* , receiver */) {
 $export($export.S, 'Reflect', { get: get });
 
 /***/ }),
-/* 395 */
+/* 396 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24298,7 +24329,7 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-/* 396 */
+/* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24316,7 +24347,7 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-/* 397 */
+/* 398 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24332,7 +24363,7 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-/* 398 */
+/* 399 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24351,7 +24382,7 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-/* 399 */
+/* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24363,7 +24394,7 @@ var $export = __webpack_require__(1);
 $export($export.S, 'Reflect', { ownKeys: __webpack_require__(127) });
 
 /***/ }),
-/* 400 */
+/* 401 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24387,7 +24418,7 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-/* 401 */
+/* 402 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24426,7 +24457,7 @@ function set(target, propertyKey, V /* , receiver */) {
 $export($export.S, 'Reflect', { set: set });
 
 /***/ }),
-/* 402 */
+/* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24449,7 +24480,7 @@ if (setProto) $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-/* 403 */
+/* 404 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24468,7 +24499,7 @@ $export($export.P, 'Array', {
 __webpack_require__(34)('includes');
 
 /***/ }),
-/* 404 */
+/* 405 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24497,7 +24528,7 @@ $export($export.P, 'Array', {
 __webpack_require__(34)('flatMap');
 
 /***/ }),
-/* 405 */
+/* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24525,7 +24556,7 @@ $export($export.P, 'Array', {
 __webpack_require__(34)('flatten');
 
 /***/ }),
-/* 406 */
+/* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24542,7 +24573,7 @@ $export($export.P, 'String', {
 });
 
 /***/ }),
-/* 407 */
+/* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24559,7 +24590,7 @@ $export($export.P, 'String', {
 });
 
 /***/ }),
-/* 408 */
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24576,7 +24607,7 @@ $export($export.P, 'String', {
 });
 
 /***/ }),
-/* 409 */
+/* 410 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24590,7 +24621,7 @@ __webpack_require__(47)('trimLeft', function ($trim) {
 }, 'trimStart');
 
 /***/ }),
-/* 410 */
+/* 411 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24604,7 +24635,7 @@ __webpack_require__(47)('trimRight', function ($trim) {
 }, 'trimEnd');
 
 /***/ }),
-/* 411 */
+/* 412 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24641,7 +24672,7 @@ $export($export.P, 'String', {
 });
 
 /***/ }),
-/* 412 */
+/* 413 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24650,7 +24681,7 @@ $export($export.P, 'String', {
 __webpack_require__(72)('asyncIterator');
 
 /***/ }),
-/* 413 */
+/* 414 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24659,7 +24690,7 @@ __webpack_require__(72)('asyncIterator');
 __webpack_require__(72)('observable');
 
 /***/ }),
-/* 414 */
+/* 415 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24689,7 +24720,7 @@ $export($export.S, 'Object', {
 });
 
 /***/ }),
-/* 415 */
+/* 416 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24706,7 +24737,7 @@ $export($export.S, 'Object', {
 });
 
 /***/ }),
-/* 416 */
+/* 417 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24723,7 +24754,7 @@ $export($export.S, 'Object', {
 });
 
 /***/ }),
-/* 417 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24742,7 +24773,7 @@ __webpack_require__(7) && $export($export.P + __webpack_require__(67), 'Object',
 });
 
 /***/ }),
-/* 418 */
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24761,7 +24792,7 @@ __webpack_require__(7) && $export($export.P + __webpack_require__(67), 'Object',
 });
 
 /***/ }),
-/* 419 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24786,7 +24817,7 @@ __webpack_require__(7) && $export($export.P + __webpack_require__(67), 'Object',
 });
 
 /***/ }),
-/* 420 */
+/* 421 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24811,7 +24842,7 @@ __webpack_require__(7) && $export($export.P + __webpack_require__(67), 'Object',
 });
 
 /***/ }),
-/* 421 */
+/* 422 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24823,7 +24854,7 @@ var $export = __webpack_require__(1);
 $export($export.P + $export.R, 'Map', { toJSON: __webpack_require__(131)('Map') });
 
 /***/ }),
-/* 422 */
+/* 423 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24835,7 +24866,7 @@ var $export = __webpack_require__(1);
 $export($export.P + $export.R, 'Set', { toJSON: __webpack_require__(131)('Set') });
 
 /***/ }),
-/* 423 */
+/* 424 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24845,7 +24876,7 @@ $export($export.P + $export.R, 'Set', { toJSON: __webpack_require__(131)('Set') 
 __webpack_require__(68)('Map');
 
 /***/ }),
-/* 424 */
+/* 425 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24855,7 +24886,7 @@ __webpack_require__(68)('Map');
 __webpack_require__(68)('Set');
 
 /***/ }),
-/* 425 */
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24865,7 +24896,7 @@ __webpack_require__(68)('Set');
 __webpack_require__(68)('WeakMap');
 
 /***/ }),
-/* 426 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24875,7 +24906,7 @@ __webpack_require__(68)('WeakMap');
 __webpack_require__(68)('WeakSet');
 
 /***/ }),
-/* 427 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24885,7 +24916,7 @@ __webpack_require__(68)('WeakSet');
 __webpack_require__(69)('Map');
 
 /***/ }),
-/* 428 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24895,7 +24926,7 @@ __webpack_require__(69)('Map');
 __webpack_require__(69)('Set');
 
 /***/ }),
-/* 429 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24905,7 +24936,7 @@ __webpack_require__(69)('Set');
 __webpack_require__(69)('WeakMap');
 
 /***/ }),
-/* 430 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24913,18 +24944,6 @@ __webpack_require__(69)('WeakMap');
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-weakset.from
 __webpack_require__(69)('WeakSet');
-
-/***/ }),
-/* 431 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// https://github.com/tc39/proposal-global
-var $export = __webpack_require__(1);
-
-$export($export.G, { global: __webpack_require__(3) });
 
 /***/ }),
 /* 432 */
@@ -24936,10 +24955,22 @@ $export($export.G, { global: __webpack_require__(3) });
 // https://github.com/tc39/proposal-global
 var $export = __webpack_require__(1);
 
-$export($export.S, 'System', { global: __webpack_require__(3) });
+$export($export.G, { global: __webpack_require__(3) });
 
 /***/ }),
 /* 433 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// https://github.com/tc39/proposal-global
+var $export = __webpack_require__(1);
+
+$export($export.S, 'System', { global: __webpack_require__(3) });
+
+/***/ }),
+/* 434 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24956,7 +24987,7 @@ $export($export.S, 'Error', {
 });
 
 /***/ }),
-/* 434 */
+/* 435 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24972,7 +25003,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 435 */
+/* 436 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24984,7 +25015,7 @@ var $export = __webpack_require__(1);
 $export($export.S, 'Math', { DEG_PER_RAD: Math.PI / 180 });
 
 /***/ }),
-/* 436 */
+/* 437 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25001,7 +25032,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 437 */
+/* 438 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25019,7 +25050,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 438 */
+/* 439 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25038,7 +25069,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 439 */
+/* 440 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25057,7 +25088,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 440 */
+/* 441 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25081,7 +25112,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 441 */
+/* 442 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25093,7 +25124,7 @@ var $export = __webpack_require__(1);
 $export($export.S, 'Math', { RAD_PER_DEG: 180 / Math.PI });
 
 /***/ }),
-/* 442 */
+/* 443 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25110,7 +25141,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 443 */
+/* 444 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25122,7 +25153,7 @@ var $export = __webpack_require__(1);
 $export($export.S, 'Math', { scale: __webpack_require__(133) });
 
 /***/ }),
-/* 444 */
+/* 445 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25146,7 +25177,7 @@ $export($export.S, 'Math', {
 });
 
 /***/ }),
-/* 445 */
+/* 446 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25161,7 +25192,7 @@ $export($export.S, 'Math', { signbit: function signbit(x) {
   } });
 
 /***/ }),
-/* 446 */
+/* 447 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25189,7 +25220,7 @@ $export($export.P + $export.R, 'Promise', { 'finally': function _finally(onFinal
   } });
 
 /***/ }),
-/* 447 */
+/* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25208,7 +25239,7 @@ $export($export.S, 'Promise', { 'try': function _try(callbackfn) {
   } });
 
 /***/ }),
-/* 448 */
+/* 449 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25224,7 +25255,7 @@ metadata.exp({ defineMetadata: function defineMetadata(metadataKey, metadataValu
   } });
 
 /***/ }),
-/* 449 */
+/* 450 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25247,7 +25278,7 @@ metadata.exp({ deleteMetadata: function deleteMetadata(metadataKey, target /* , 
   } });
 
 /***/ }),
-/* 450 */
+/* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25272,7 +25303,7 @@ metadata.exp({ getMetadata: function getMetadata(metadataKey, target /* , target
   } });
 
 /***/ }),
-/* 451 */
+/* 452 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25299,7 +25330,7 @@ metadata.exp({ getMetadataKeys: function getMetadataKeys(target /* , targetKey *
   } });
 
 /***/ }),
-/* 452 */
+/* 453 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25315,7 +25346,7 @@ metadata.exp({ getOwnMetadata: function getOwnMetadata(metadataKey, target /* , 
   } });
 
 /***/ }),
-/* 453 */
+/* 454 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25331,7 +25362,7 @@ metadata.exp({ getOwnMetadataKeys: function getOwnMetadataKeys(target /* , targe
   } });
 
 /***/ }),
-/* 454 */
+/* 455 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25355,7 +25386,7 @@ metadata.exp({ hasMetadata: function hasMetadata(metadataKey, target /* , target
   } });
 
 /***/ }),
-/* 455 */
+/* 456 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25371,7 +25402,7 @@ metadata.exp({ hasOwnMetadata: function hasOwnMetadata(metadataKey, target /* , 
   } });
 
 /***/ }),
-/* 456 */
+/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25390,7 +25421,7 @@ $metadata.exp({ metadata: function metadata(metadataKey, metadataValue) {
   } });
 
 /***/ }),
-/* 457 */
+/* 458 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25410,7 +25441,7 @@ $export($export.G, {
 });
 
 /***/ }),
-/* 458 */
+/* 459 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25626,7 +25657,7 @@ $export($export.G, { Observable: $Observable });
 __webpack_require__(42)('Observable');
 
 /***/ }),
-/* 459 */
+/* 460 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25654,7 +25685,7 @@ $export($export.G + $export.B + $export.F * MSIE, {
 });
 
 /***/ }),
-/* 460 */
+/* 461 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25668,7 +25699,7 @@ $export($export.G + $export.B, {
 });
 
 /***/ }),
-/* 461 */
+/* 462 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25736,7 +25767,7 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
 }
 
 /***/ }),
-/* 462 */
+/* 463 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26449,17 +26480,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(134)(module)))
 
 /***/ }),
-/* 463 */
+/* 464 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(464);
+__webpack_require__(465);
 module.exports = __webpack_require__(25).RegExp.escape;
 
 /***/ }),
-/* 464 */
+/* 465 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26467,14 +26498,14 @@ module.exports = __webpack_require__(25).RegExp.escape;
 
 // https://github.com/benjamingr/RexExp.escape
 var $export = __webpack_require__(1);
-var $re = __webpack_require__(465)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
+var $re = __webpack_require__(466)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
 
 $export($export.S, 'RegExp', { escape: function escape(it) {
     return $re(it);
   } });
 
 /***/ }),
-/* 465 */
+/* 466 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26490,7 +26521,7 @@ module.exports = function (regExp, replace) {
 };
 
 /***/ }),
-/* 466 */
+/* 467 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26500,7 +26531,7 @@ var _path = __webpack_require__(97);
 
 var _path2 = _interopRequireDefault(_path);
 
-var _http = __webpack_require__(467);
+var _http = __webpack_require__(468);
 
 var _express = __webpack_require__(53);
 
@@ -26510,7 +26541,7 @@ var _react = __webpack_require__(12);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _server = __webpack_require__(468);
+var _server = __webpack_require__(469);
 
 var _reactRouterDom = __webpack_require__(135);
 
@@ -26518,61 +26549,65 @@ var _passport = __webpack_require__(136);
 
 var _passport2 = _interopRequireDefault(_passport);
 
-var _expressSession = __webpack_require__(469);
+var _expressSession = __webpack_require__(470);
 
 var _expressSession2 = _interopRequireDefault(_expressSession);
 
-var _bodyParser = __webpack_require__(470);
+var _bodyParser = __webpack_require__(471);
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _routes = __webpack_require__(471);
+var _routes = __webpack_require__(472);
 
 var _routes2 = _interopRequireDefault(_routes);
 
-var _configureStore = __webpack_require__(485);
+var _configureStore = __webpack_require__(486);
 
 var _configureStore2 = _interopRequireDefault(_configureStore);
 
 var _reactRedux = __webpack_require__(55);
 
-var _chat = __webpack_require__(493);
+var _chat = __webpack_require__(494);
 
 var _chat2 = _interopRequireDefault(_chat);
 
-var _admin = __webpack_require__(505);
+var _admin = __webpack_require__(506);
 
 var _admin2 = _interopRequireDefault(_admin);
 
-var _update = __webpack_require__(506);
+var _update = __webpack_require__(507);
 
 var _update2 = _interopRequireDefault(_update);
 
-var _auth = __webpack_require__(513);
+var _auth = __webpack_require__(514);
 
 var _auth2 = _interopRequireDefault(_auth);
 
-var _bcryptNodejs = __webpack_require__(514);
+var _bcryptNodejs = __webpack_require__(515);
 
 var _bcryptNodejs2 = _interopRequireDefault(_bcryptNodejs);
 
-var _LocalUser = __webpack_require__(515);
+var _LocalUser = __webpack_require__(516);
 
 var _LocalUser2 = _interopRequireDefault(_LocalUser);
 
-var _GoogleUser = __webpack_require__(516);
+var _GoogleUser = __webpack_require__(517);
 
 var _GoogleUser2 = _interopRequireDefault(_GoogleUser);
 
-var _TwitterUser = __webpack_require__(517);
+var _TwitterUser = __webpack_require__(518);
 
 var _TwitterUser2 = _interopRequireDefault(_TwitterUser);
+
+var _SteamUser = __webpack_require__(262);
+
+var _SteamUser2 = _interopRequireDefault(_SteamUser);
 
 var _Persona = __webpack_require__(99);
 
 var _Persona2 = _interopRequireDefault(_Persona);
 
-var _User = __webpack_require__(262);
+var _User = __webpack_require__(263);
 
 var _User2 = _interopRequireDefault(_User);
 
@@ -26603,7 +26638,7 @@ app.use(_bodyParser2.default.urlencoded({ extended: false }));
 // parse application/json
 app.use(_bodyParser2.default.json());
 
-var LocalStrategy = __webpack_require__(518).Strategy;
+var LocalStrategy = __webpack_require__(519).Strategy;
 _passport2.default.use('local-login', new LocalStrategy({
   passReqToCallback: true
 }, function () {
@@ -26660,7 +26695,7 @@ _passport2.default.use('local-login', new LocalStrategy({
   };
 }()));
 
-var GoogleStrategy = __webpack_require__(519).OAuth2Strategy;
+var GoogleStrategy = __webpack_require__(520).OAuth2Strategy;
 _passport2.default.use(new GoogleStrategy({
   clientID: _config2.default.googleClientId,
   clientSecret: _config2.default.googleClientSecret,
@@ -26741,7 +26776,7 @@ _passport2.default.use(new GoogleStrategy({
   };
 }()));
 
-var TwitterStrategy = __webpack_require__(520).Strategy;
+var TwitterStrategy = __webpack_require__(521).Strategy;
 _passport2.default.use(new TwitterStrategy({
   consumerKey: _config2.default.twitterConsumerKey,
   consumerSecret: _config2.default.twiterConsumerSecret,
@@ -26822,6 +26857,89 @@ _passport2.default.use(new TwitterStrategy({
   };
 }()));
 
+var SteamStrategy = __webpack_require__(522).Strategy;
+_passport2.default.use(new SteamStrategy({
+  returnURL: _config2.default.steamCallbackUrl,
+  realm: _config2.default.steamRealm,
+  apiKey: _config2.default.steamApiKey,
+  passReqToCallback: true
+}, function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(id, profile, done) {
+    var existingUser, parentUser, steamPersona, steamUser, existingPersona, existingParent;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            console.log("id: " + id);
+            console.log("profile: " + JSON.stringify(profile));
+
+            _context4.next = 4;
+            return _SteamUser2.default.getSteamUsers({ steamId: profile.id });
+
+          case 4:
+            existingUser = _context4.sent;
+
+            if (!(existingUser.length == 0)) {
+              _context4.next = 20;
+              break;
+            }
+
+            // If we're not logged in already (e.g. with a Twitter user) then create a new "parent" user
+            parentUser = req.user;
+
+            if (parentUser) {
+              _context4.next = 11;
+              break;
+            }
+
+            _context4.next = 10;
+            return _User2.default.createUser({});
+
+          case 10:
+            parentUser = _context4.sent;
+
+          case 11:
+            _context4.next = 13;
+            return _Persona2.default.createPersona({
+              name: profile._json.screen_name,
+              avatarUrl: profile._json.profile_image_url.replace('_normal.', '.'),
+              userId: parentUser.id
+            });
+
+          case 13:
+            steamPersona = _context4.sent;
+            _context4.next = 16;
+            return _SteamUser2.default.createSteamUser({ steamId: profile.id, personaId: steamPersona.id });
+
+          case 16:
+            steamUser = _context4.sent;
+            return _context4.abrupt('return', done(null, parentUser));
+
+          case 20:
+            _context4.next = 22;
+            return existingUser[0].getPersona();
+
+          case 22:
+            existingPersona = _context4.sent;
+            _context4.next = 25;
+            return existingPersona.getUser();
+
+          case 25:
+            existingParent = _context4.sent;
+            return _context4.abrupt('return', done(null, existingParent));
+
+          case 27:
+          case 'end':
+            return _context4.stop();
+        }
+      }
+    }, _callee4, this);
+  }));
+
+  return function (_x15, _x16, _x17) {
+    return _ref4.apply(this, arguments);
+  };
+}()));
 // Use ejs templates
 app.set('view engine', 'ejs');
 app.set('views', _path2.default.join(__dirname, './client/views'));
@@ -26830,7 +26948,7 @@ app.set('views', _path2.default.join(__dirname, './client/views'));
 app.use(_express2.default.static(_path2.default.join(__dirname, './client/static')));
 
 // Set up session handling and authentication
-var MSSQLStore = __webpack_require__(521)(_expressSession2.default);
+var MSSQLStore = __webpack_require__(523)(_expressSession2.default);
 var sqlConfig = {
   user: _config2.default.databaseUser,
   password: _config2.default.databasePassword,
@@ -26900,31 +27018,31 @@ server.listen(port, function (err) {
 });
 
 /***/ }),
-/* 467 */
+/* 468 */
 /***/ (function(module, exports) {
 
 module.exports = require("http");
 
 /***/ }),
-/* 468 */
+/* 469 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-dom/server");
 
 /***/ }),
-/* 469 */
+/* 470 */
 /***/ (function(module, exports) {
 
 module.exports = require("express-session");
 
 /***/ }),
-/* 470 */
+/* 471 */
 /***/ (function(module, exports) {
 
 module.exports = require("body-parser");
 
 /***/ }),
-/* 471 */
+/* 472 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26940,11 +27058,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(135);
 
-var _chatPage = __webpack_require__(472);
+var _chatPage = __webpack_require__(473);
 
 var _chatPage2 = _interopRequireDefault(_chatPage);
 
-var _login = __webpack_require__(484);
+var _login = __webpack_require__(485);
 
 var _login2 = _interopRequireDefault(_login);
 
@@ -26964,7 +27082,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 472 */
+/* 473 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27002,7 +27120,7 @@ var _chatActions = __webpack_require__(70);
 
 var chatActions = _interopRequireWildcard(_chatActions);
 
-var _postDialog = __webpack_require__(483);
+var _postDialog = __webpack_require__(484);
 
 var _postDialog2 = _interopRequireDefault(_postDialog);
 
@@ -27110,7 +27228,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ChatPage);
 
 /***/ }),
-/* 473 */
+/* 474 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27218,7 +27336,7 @@ var ExternalApi = exports.ExternalApi = function () {
 }();
 
 /***/ }),
-/* 474 */
+/* 475 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27236,7 +27354,7 @@ var _reactDom = __webpack_require__(17);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _chatFilterButton = __webpack_require__(475);
+var _chatFilterButton = __webpack_require__(476);
 
 var _chatFilterButton2 = _interopRequireDefault(_chatFilterButton);
 
@@ -27274,7 +27392,7 @@ exports.default = function (props) {
 };
 
 /***/ }),
-/* 475 */
+/* 476 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27307,7 +27425,7 @@ exports.default = function (props) {
 };
 
 /***/ }),
-/* 476 */
+/* 477 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27349,6 +27467,7 @@ var UserPanel = function (_React$Component) {
     value: function render() {
       var googleUrl = '/auth/google';
       var twitterUrl = '/auth/twitter';
+      var steamUrl = '/auth/steam';
       var loginMessage = 'Log in with:';
       var dropdownMessage = 'Log in';
       var dropdownIcon = undefined;
@@ -27373,6 +27492,7 @@ var UserPanel = function (_React$Component) {
         loginMessage = 'Connect to:';
         googleUrl = '/auth/connect/google';
         twitterUrl = '/auth/connect/twitter';
+        steamUrl = '/auth/connect/steam';
       }
 
       var personaSelector = undefined;
@@ -27440,6 +27560,15 @@ var UserPanel = function (_React$Component) {
             { href: twitterUrl },
             _react2.default.createElement('img', { src: '/images/Twitter.png' })
           )
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'a',
+            { href: steamUrl },
+            _react2.default.createElement('img', { src: '/images/Steam.png' })
+          )
         )
       );
 
@@ -27504,7 +27633,7 @@ var UserPanel = function (_React$Component) {
 exports.default = UserPanel;
 
 /***/ }),
-/* 477 */
+/* 478 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27524,15 +27653,15 @@ var _reactDom = __webpack_require__(17);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _chatMessagePersona = __webpack_require__(478);
+var _chatMessagePersona = __webpack_require__(479);
 
 var _chatMessagePersona2 = _interopRequireDefault(_chatMessagePersona);
 
-var _chatMessageBody = __webpack_require__(479);
+var _chatMessageBody = __webpack_require__(480);
 
 var _chatMessageBody2 = _interopRequireDefault(_chatMessageBody);
 
-var _chatMessageGame = __webpack_require__(482);
+var _chatMessageGame = __webpack_require__(483);
 
 var _chatMessageGame2 = _interopRequireDefault(_chatMessageGame);
 
@@ -27622,7 +27751,7 @@ function mapDispatchToProps(dispatch, ownProps) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ChatMessage);
 
 /***/ }),
-/* 478 */
+/* 479 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27664,7 +27793,7 @@ exports.default = function (props) {
 };
 
 /***/ }),
-/* 479 */
+/* 480 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27682,7 +27811,7 @@ var _reactDom = __webpack_require__(17);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _chatMessageReplies = __webpack_require__(480);
+var _chatMessageReplies = __webpack_require__(481);
 
 var _chatMessageReplies2 = _interopRequireDefault(_chatMessageReplies);
 
@@ -27768,7 +27897,7 @@ exports.default = function (props) {
 };
 
 /***/ }),
-/* 480 */
+/* 481 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27855,7 +27984,7 @@ exports.default = function (props) {
 };
 
 /***/ }),
-/* 481 */
+/* 482 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -28110,10 +28239,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 481;
+webpackContext.id = 482;
 
 /***/ }),
-/* 482 */
+/* 483 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28142,7 +28271,7 @@ exports.default = function (props) {
 };
 
 /***/ }),
-/* 483 */
+/* 484 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28234,7 +28363,7 @@ var PostDialog = function (_React$Component) {
           { className: 'postDialog', onClick: function onClick(e) {
               e.stopPropagation();
             } },
-          _react2.default.createElement('textarea', { ref: 'messageBody' }),
+          _react2.default.createElement('textarea', { autoFocus: true, ref: 'messageBody' }),
           _react2.default.createElement(
             'button',
             { onClick: function onClick() {
@@ -28253,7 +28382,7 @@ var PostDialog = function (_React$Component) {
 exports.default = PostDialog;
 
 /***/ }),
-/* 484 */
+/* 485 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28385,7 +28514,7 @@ var ChatPage = function (_React$Component) {
 exports.default = ChatPage;
 
 /***/ }),
-/* 485 */
+/* 486 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28398,15 +28527,15 @@ exports.default = configureStore;
 
 var _redux = __webpack_require__(258);
 
-var _reducers = __webpack_require__(486);
+var _reducers = __webpack_require__(487);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
-var _reduxImmutableStateInvariant = __webpack_require__(491);
+var _reduxImmutableStateInvariant = __webpack_require__(492);
 
 var _reduxImmutableStateInvariant2 = _interopRequireDefault(_reduxImmutableStateInvariant);
 
-var _reduxThunk = __webpack_require__(492);
+var _reduxThunk = __webpack_require__(493);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
@@ -28417,7 +28546,7 @@ function configureStore(initialState) {
 }
 
 /***/ }),
-/* 486 */
+/* 487 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28429,19 +28558,19 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(258);
 
-var _filterReducer = __webpack_require__(487);
+var _filterReducer = __webpack_require__(488);
 
 var _filterReducer2 = _interopRequireDefault(_filterReducer);
 
-var _messageReducer = __webpack_require__(488);
+var _messageReducer = __webpack_require__(489);
 
 var _messageReducer2 = _interopRequireDefault(_messageReducer);
 
-var _chatReducer = __webpack_require__(489);
+var _chatReducer = __webpack_require__(490);
 
 var _chatReducer2 = _interopRequireDefault(_chatReducer);
 
-var _userReducer = __webpack_require__(490);
+var _userReducer = __webpack_require__(491);
 
 var _userReducer2 = _interopRequireDefault(_userReducer);
 
@@ -28457,7 +28586,7 @@ var rootReducer = (0, _redux.combineReducers)({
 exports.default = rootReducer;
 
 /***/ }),
-/* 487 */
+/* 488 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28497,7 +28626,7 @@ function filterReducer() {
 }
 
 /***/ }),
-/* 488 */
+/* 489 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28526,7 +28655,7 @@ function messageReducer() {
 }
 
 /***/ }),
-/* 489 */
+/* 490 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28575,7 +28704,7 @@ function calculateChatGroups(chatArray) {
 }
 
 /***/ }),
-/* 490 */
+/* 491 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28620,19 +28749,19 @@ function chatReducer() {
 }
 
 /***/ }),
-/* 491 */
+/* 492 */
 /***/ (function(module, exports) {
 
 module.exports = require("redux-immutable-state-invariant");
 
 /***/ }),
-/* 492 */
+/* 493 */
 /***/ (function(module, exports) {
 
 module.exports = require("redux-thunk");
 
 /***/ }),
-/* 493 */
+/* 494 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28804,13 +28933,13 @@ router.use(function (req, res, next) {
 exports.default = router;
 
 /***/ }),
-/* 494 */
+/* 495 */
 /***/ (function(module, exports) {
 
 module.exports = require("fs");
 
 /***/ }),
-/* 495 */
+/* 496 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28833,7 +28962,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 496 */
+/* 497 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28861,7 +28990,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 497 */
+/* 498 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28881,7 +29010,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 498 */
+/* 499 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28904,7 +29033,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 499 */
+/* 500 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28926,7 +29055,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 500 */
+/* 501 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28945,7 +29074,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 501 */
+/* 502 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28966,7 +29095,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 502 */
+/* 503 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28986,7 +29115,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 503 */
+/* 504 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29006,7 +29135,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 504 */
+/* 505 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29026,7 +29155,7 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 505 */
+/* 506 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29137,7 +29266,7 @@ router.get('/steam/*', function () {
 exports.default = router;
 
 /***/ }),
-/* 506 */
+/* 507 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29151,15 +29280,19 @@ var _express = __webpack_require__(53);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _steamApi = __webpack_require__(507);
+var _asyncLock = __webpack_require__(508);
+
+var _asyncLock2 = _interopRequireDefault(_asyncLock);
+
+var _steamApi = __webpack_require__(509);
 
 var _steamApi2 = _interopRequireDefault(_steamApi);
 
-var _Achievement = __webpack_require__(510);
+var _Achievement = __webpack_require__(512);
 
 var _Achievement2 = _interopRequireDefault(_Achievement);
 
-var _Game = __webpack_require__(511);
+var _Game = __webpack_require__(513);
 
 var _Game2 = _interopRequireDefault(_Game);
 
@@ -29171,7 +29304,7 @@ var _Persona = __webpack_require__(99);
 
 var _Persona2 = _interopRequireDefault(_Persona);
 
-var _SteamUser = __webpack_require__(512);
+var _SteamUser = __webpack_require__(262);
 
 var _SteamUser2 = _interopRequireDefault(_SteamUser);
 
@@ -29184,342 +29317,352 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var router = _express2.default.Router();
+var lock = new _asyncLock2.default();
 
 router.get('/steam', function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res, next) {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res, next) {
     var _this = this;
 
-    var response, allKnownGames, steamUsers, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, steamUser, recentGames, _loop, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, recentGame;
-
-    return regeneratorRuntime.wrap(function _callee$(_context3) {
+    return regeneratorRuntime.wrap(function _callee2$(_context4) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
-            _context3.prev = 0;
-            response = {};
-            _context3.next = 4;
-            return _Game2.default.getAllGames();
+            try {
+              lock.acquire('steam-update', _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                var response, allKnownGames, steamUsers, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, steamUser, recentGames, _loop, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, recentGame;
 
-          case 4:
-            allKnownGames = _context3.sent;
-            _context3.next = 7;
-            return _SteamUser2.default.getAllSteamUsers();
+                return regeneratorRuntime.wrap(function _callee$(_context3) {
+                  while (1) {
+                    switch (_context3.prev = _context3.next) {
+                      case 0:
+                        response = {};
+                        _context3.next = 3;
+                        return _Game2.default.getAllGames();
 
-          case 7:
-            steamUsers = _context3.sent;
-            _iteratorNormalCompletion = true;
-            _didIteratorError = false;
-            _iteratorError = undefined;
-            _context3.prev = 11;
-            _iterator = steamUsers[Symbol.iterator]();
+                      case 3:
+                        allKnownGames = _context3.sent;
+                        _context3.next = 6;
+                        return _SteamUser2.default.getAllSteamUsers();
 
-          case 13:
-            if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-              _context3.next = 49;
-              break;
-            }
+                      case 6:
+                        steamUsers = _context3.sent;
+                        _iteratorNormalCompletion = true;
+                        _didIteratorError = false;
+                        _iteratorError = undefined;
+                        _context3.prev = 10;
+                        _iterator = steamUsers[Symbol.iterator]();
 
-            steamUser = _step.value;
+                      case 12:
+                        if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+                          _context3.next = 48;
+                          break;
+                        }
 
-            // Iterate over the user's recently played games
-            console.log("Getting games for " + steamUser.steamId);
-            _context3.next = 18;
-            return _steamApi2.default.getRecentGames(steamUser.steamId);
+                        steamUser = _step.value;
 
-          case 18:
-            recentGames = _context3.sent;
+                        // Iterate over the user's recently played games
+                        console.log("Getting games for " + steamUser.steamId);
+                        _context3.next = 17;
+                        return _steamApi2.default.getRecentGames(steamUser.steamId);
 
-            console.log(JSON.stringify(recentGames));
-            _loop = /*#__PURE__*/regeneratorRuntime.mark(function _loop(recentGame) {
-              var gameSchema, dbGame, latestAchievements, knownAchievements, existingAchievements, _loop2, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, earnedAchievement;
+                      case 17:
+                        recentGames = _context3.sent;
 
-              return regeneratorRuntime.wrap(function _loop$(_context2) {
-                while (1) {
-                  switch (_context2.prev = _context2.next) {
-                    case 0:
-                      gameSchema = undefined;
+                        console.log(JSON.stringify(recentGames));
+                        _loop = /*#__PURE__*/regeneratorRuntime.mark(function _loop(recentGame) {
+                          var gameSchema, dbGame, latestAchievements, knownAchievements, existingAchievements, _loop2, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, earnedAchievement;
 
-                      // Create the game in the database if it's the first time we've heard of it
+                          return regeneratorRuntime.wrap(function _loop$(_context2) {
+                            while (1) {
+                              switch (_context2.prev = _context2.next) {
+                                case 0:
+                                  gameSchema = undefined;
 
-                      dbGame = allKnownGames.find(function (g) {
-                        return g.steamId == recentGame.appid;
-                      });
+                                  // Create the game in the database if it's the first time we've heard of it
 
-                      if (dbGame) {
-                        _context2.next = 9;
-                        break;
-                      }
+                                  dbGame = allKnownGames.find(function (g) {
+                                    return g.steamId == recentGame.appid;
+                                  });
 
-                      _context2.next = 5;
-                      return _steamApi2.default.getGameSchema(recentGame.appid);
+                                  if (dbGame) {
+                                    _context2.next = 6;
+                                    break;
+                                  }
 
-                    case 5:
-                      gameSchema = _context2.sent;
-                      _context2.next = 8;
-                      return _Game2.default.createGame({
-                        name: gameSchema.game.gameName,
-                        steamId: recentGame.appid,
-                        logoUrl: 'http://cdn4.steampowered.com/v/gfx/apps/' + recentGame.appid + '/header.jpg'
-                      });
+                                  _context2.next = 5;
+                                  return _Game2.default.createGame({
+                                    name: recentGame.name,
+                                    steamId: recentGame.appid,
+                                    logoUrl: 'http://cdn.edgecast.steamstatic.com/steamcommunity/public/images/apps/' + recentGame.appid + '/' + recentGame.img_logo_url + '.jpg'
+                                  });
 
-                    case 8:
-                      dbGame = _context2.sent;
+                                case 5:
+                                  dbGame = _context2.sent;
 
-                    case 9:
-                      _context2.next = 11;
-                      return _steamApi2.default.getGameAchievements(steamUser.steamId, recentGame.appid);
+                                case 6:
+                                  _context2.next = 8;
+                                  return _steamApi2.default.getGameAchievements(steamUser.steamId, recentGame.appid);
 
-                    case 11:
-                      latestAchievements = _context2.sent;
-                      _context2.next = 14;
-                      return _Achievement2.default.getAllKnownAchievementsForGame(dbGame.id);
+                                case 8:
+                                  latestAchievements = _context2.sent;
 
-                    case 14:
-                      knownAchievements = _context2.sent;
-                      _context2.next = 17;
-                      return _dbmodels2.default.achievementView.findAll({ where: { gameId: dbGame.id, personaId: steamUser.personaId } });
+                                  if (!latestAchievements) {
+                                    _context2.next = 43;
+                                    break;
+                                  }
 
-                    case 17:
-                      existingAchievements = _context2.sent;
-                      _loop2 = /*#__PURE__*/regeneratorRuntime.mark(function _loop2(earnedAchievement) {
-                        var dbAchievement, schemaAchievement;
-                        return regeneratorRuntime.wrap(function _loop2$(_context) {
-                          while (1) {
-                            switch (_context.prev = _context.next) {
-                              case 0:
-                                dbAchievement = knownAchievements.find(function (a) {
-                                  return a.apiName == earnedAchievement.apiname;
-                                });
+                                  _context2.next = 12;
+                                  return _Achievement2.default.getAllKnownAchievementsForGame(dbGame.id);
 
-                                if (dbAchievement) {
-                                  _context.next = 10;
+                                case 12:
+                                  knownAchievements = _context2.sent;
+                                  _context2.next = 15;
+                                  return _dbmodels2.default.achievementView.findAll({ where: { gameId: dbGame.id, personaId: steamUser.personaId } });
+
+                                case 15:
+                                  existingAchievements = _context2.sent;
+                                  _loop2 = /*#__PURE__*/regeneratorRuntime.mark(function _loop2(earnedAchievement) {
+                                    var dbAchievement, schemaAchievement;
+                                    return regeneratorRuntime.wrap(function _loop2$(_context) {
+                                      while (1) {
+                                        switch (_context.prev = _context.next) {
+                                          case 0:
+                                            dbAchievement = knownAchievements.find(function (a) {
+                                              return a.apiName == earnedAchievement.apiname;
+                                            });
+
+                                            if (dbAchievement) {
+                                              _context.next = 10;
+                                              break;
+                                            }
+
+                                            if (gameSchema) {
+                                              _context.next = 6;
+                                              break;
+                                            }
+
+                                            _context.next = 5;
+                                            return _steamApi2.default.getGameSchema(recentGame.appid);
+
+                                          case 5:
+                                            gameSchema = _context.sent;
+
+                                          case 6:
+                                            schemaAchievement = gameSchema.game.availableGameStats.achievements[earnedAchievement.apiname];
+                                            _context.next = 9;
+                                            return _Achievement2.default.createAchievement({
+                                              apiName: earnedAchievement.apiname,
+                                              displayName: schemaAchievement.displayName,
+                                              description: schemaAchievement.description,
+                                              iconUrl: schemaAchievement.icon,
+                                              gameId: dbGame.id
+                                            });
+
+                                          case 9:
+                                            dbAchievement = _context.sent;
+
+                                          case 10:
+                                            if (existingAchievements.some(function (a) {
+                                              return a.achievementId == dbAchievement.id;
+                                            })) {
+                                              _context.next = 13;
+                                              break;
+                                            }
+
+                                            _context.next = 13;
+                                            return _Message2.default.createMessage({
+                                              personaId: steamUser.personaId,
+                                              achievementId: dbAchievement.id,
+                                              timestamp: new Date(earnedAchievement.unlocktime * 1000)
+                                            });
+
+                                          case 13:
+                                          case 'end':
+                                            return _context.stop();
+                                        }
+                                      }
+                                    }, _loop2, _this);
+                                  });
+                                  _iteratorNormalCompletion3 = true;
+                                  _didIteratorError3 = false;
+                                  _iteratorError3 = undefined;
+                                  _context2.prev = 20;
+                                  _iterator3 = latestAchievements.playerstats.achievements.filter(function (a) {
+                                    return a.achieved === 1;
+                                  })[Symbol.iterator]();
+
+                                case 22:
+                                  if (_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done) {
+                                    _context2.next = 28;
+                                    break;
+                                  }
+
+                                  earnedAchievement = _step3.value;
+                                  return _context2.delegateYield(_loop2(earnedAchievement), 't0', 25);
+
+                                case 25:
+                                  _iteratorNormalCompletion3 = true;
+                                  _context2.next = 22;
                                   break;
-                                }
 
-                                if (gameSchema) {
-                                  _context.next = 6;
+                                case 28:
+                                  _context2.next = 34;
                                   break;
-                                }
 
-                                _context.next = 5;
-                                return _steamApi2.default.getGameSchema(recentGame.appid);
+                                case 30:
+                                  _context2.prev = 30;
+                                  _context2.t1 = _context2['catch'](20);
+                                  _didIteratorError3 = true;
+                                  _iteratorError3 = _context2.t1;
 
-                              case 5:
-                                gameSchema = _context.sent;
+                                case 34:
+                                  _context2.prev = 34;
+                                  _context2.prev = 35;
 
-                              case 6:
-                                schemaAchievement = gameSchema.game.availableGameStats.achievements[earnedAchievement.apiname];
-                                _context.next = 9;
-                                return _Achievement2.default.createAchievement({
-                                  apiName: earnedAchievement.apiname,
-                                  displayName: schemaAchievement.displayName,
-                                  description: schemaAchievement.description,
-                                  iconUrl: schemaAchievement.icon,
-                                  gameId: dbGame.id
-                                });
+                                  if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                                    _iterator3.return();
+                                  }
 
-                              case 9:
-                                dbAchievement = _context.sent;
+                                case 37:
+                                  _context2.prev = 37;
 
-                              case 10:
-                                if (existingAchievements.some(function (a) {
-                                  return a.achievementId == dbAchievement.id;
-                                })) {
-                                  _context.next = 13;
-                                  break;
-                                }
+                                  if (!_didIteratorError3) {
+                                    _context2.next = 40;
+                                    break;
+                                  }
 
-                                _context.next = 13;
-                                return _Message2.default.createMessage({
-                                  personaId: steamUser.personaId,
-                                  achievementId: dbAchievement.id,
-                                  timestamp: new Date(earnedAchievement.unlocktime * 1000)
-                                });
+                                  throw _iteratorError3;
 
-                              case 13:
-                              case 'end':
-                                return _context.stop();
+                                case 40:
+                                  return _context2.finish(37);
+
+                                case 41:
+                                  return _context2.finish(34);
+
+                                case 42:
+                                  response = latestAchievements;
+
+                                case 43:
+                                case 'end':
+                                  return _context2.stop();
+                              }
                             }
-                          }
-                        }, _loop2, _this);
-                      });
-                      _iteratorNormalCompletion3 = true;
-                      _didIteratorError3 = false;
-                      _iteratorError3 = undefined;
-                      _context2.prev = 22;
-                      _iterator3 = latestAchievements.playerstats.achievements.filter(function (a) {
-                        return a.achieved === 1;
-                      })[Symbol.iterator]();
+                          }, _loop, _this, [[20, 30, 34, 42], [35,, 37, 41]]);
+                        });
+                        _iteratorNormalCompletion2 = true;
+                        _didIteratorError2 = false;
+                        _iteratorError2 = undefined;
+                        _context3.prev = 23;
+                        _iterator2 = recentGames.response.games[Symbol.iterator]();
 
-                    case 24:
-                      if (_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done) {
-                        _context2.next = 30;
+                      case 25:
+                        if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
+                          _context3.next = 31;
+                          break;
+                        }
+
+                        recentGame = _step2.value;
+                        return _context3.delegateYield(_loop(recentGame), 't0', 28);
+
+                      case 28:
+                        _iteratorNormalCompletion2 = true;
+                        _context3.next = 25;
                         break;
-                      }
 
-                      earnedAchievement = _step3.value;
-                      return _context2.delegateYield(_loop2(earnedAchievement), 't0', 27);
-
-                    case 27:
-                      _iteratorNormalCompletion3 = true;
-                      _context2.next = 24;
-                      break;
-
-                    case 30:
-                      _context2.next = 36;
-                      break;
-
-                    case 32:
-                      _context2.prev = 32;
-                      _context2.t1 = _context2['catch'](22);
-                      _didIteratorError3 = true;
-                      _iteratorError3 = _context2.t1;
-
-                    case 36:
-                      _context2.prev = 36;
-                      _context2.prev = 37;
-
-                      if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                        _iterator3.return();
-                      }
-
-                    case 39:
-                      _context2.prev = 39;
-
-                      if (!_didIteratorError3) {
-                        _context2.next = 42;
+                      case 31:
+                        _context3.next = 37;
                         break;
-                      }
 
-                      throw _iteratorError3;
+                      case 33:
+                        _context3.prev = 33;
+                        _context3.t1 = _context3['catch'](23);
+                        _didIteratorError2 = true;
+                        _iteratorError2 = _context3.t1;
 
-                    case 42:
-                      return _context2.finish(39);
+                      case 37:
+                        _context3.prev = 37;
+                        _context3.prev = 38;
 
-                    case 43:
-                      return _context2.finish(36);
+                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                          _iterator2.return();
+                        }
 
-                    case 44:
-                      response = latestAchievements;
+                      case 40:
+                        _context3.prev = 40;
 
-                    case 45:
-                    case 'end':
-                      return _context2.stop();
+                        if (!_didIteratorError2) {
+                          _context3.next = 43;
+                          break;
+                        }
+
+                        throw _iteratorError2;
+
+                      case 43:
+                        return _context3.finish(40);
+
+                      case 44:
+                        return _context3.finish(37);
+
+                      case 45:
+                        _iteratorNormalCompletion = true;
+                        _context3.next = 12;
+                        break;
+
+                      case 48:
+                        _context3.next = 54;
+                        break;
+
+                      case 50:
+                        _context3.prev = 50;
+                        _context3.t2 = _context3['catch'](10);
+                        _didIteratorError = true;
+                        _iteratorError = _context3.t2;
+
+                      case 54:
+                        _context3.prev = 54;
+                        _context3.prev = 55;
+
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                          _iterator.return();
+                        }
+
+                      case 57:
+                        _context3.prev = 57;
+
+                        if (!_didIteratorError) {
+                          _context3.next = 60;
+                          break;
+                        }
+
+                        throw _iteratorError;
+
+                      case 60:
+                        return _context3.finish(57);
+
+                      case 61:
+                        return _context3.finish(54);
+
+                      case 62:
+
+                        res.json(response);
+
+                      case 63:
+                      case 'end':
+                        return _context3.stop();
+                    }
                   }
-                }
-              }, _loop, _this, [[22, 32, 36, 44], [37,, 39, 43]]);
-            });
-            _iteratorNormalCompletion2 = true;
-            _didIteratorError2 = false;
-            _iteratorError2 = undefined;
-            _context3.prev = 24;
-            _iterator2 = recentGames.response.games[Symbol.iterator]();
-
-          case 26:
-            if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
-              _context3.next = 32;
-              break;
+                }, _callee, _this, [[10, 50, 54, 62], [23, 33, 37, 45], [38,, 40, 44], [55,, 57, 61]]);
+              })), function (err, ret) {});
+            } catch (err) {
+              next();
             }
 
-            recentGame = _step2.value;
-            return _context3.delegateYield(_loop(recentGame), 't0', 29);
-
-          case 29:
-            _iteratorNormalCompletion2 = true;
-            _context3.next = 26;
-            break;
-
-          case 32:
-            _context3.next = 38;
-            break;
-
-          case 34:
-            _context3.prev = 34;
-            _context3.t1 = _context3['catch'](24);
-            _didIteratorError2 = true;
-            _iteratorError2 = _context3.t1;
-
-          case 38:
-            _context3.prev = 38;
-            _context3.prev = 39;
-
-            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-              _iterator2.return();
-            }
-
-          case 41:
-            _context3.prev = 41;
-
-            if (!_didIteratorError2) {
-              _context3.next = 44;
-              break;
-            }
-
-            throw _iteratorError2;
-
-          case 44:
-            return _context3.finish(41);
-
-          case 45:
-            return _context3.finish(38);
-
-          case 46:
-            _iteratorNormalCompletion = true;
-            _context3.next = 13;
-            break;
-
-          case 49:
-            _context3.next = 55;
-            break;
-
-          case 51:
-            _context3.prev = 51;
-            _context3.t2 = _context3['catch'](11);
-            _didIteratorError = true;
-            _iteratorError = _context3.t2;
-
-          case 55:
-            _context3.prev = 55;
-            _context3.prev = 56;
-
-            if (!_iteratorNormalCompletion && _iterator.return) {
-              _iterator.return();
-            }
-
-          case 58:
-            _context3.prev = 58;
-
-            if (!_didIteratorError) {
-              _context3.next = 61;
-              break;
-            }
-
-            throw _iteratorError;
-
-          case 61:
-            return _context3.finish(58);
-
-          case 62:
-            return _context3.finish(55);
-
-          case 63:
-
-            res.json(response);
-            _context3.next = 69;
-            break;
-
-          case 66:
-            _context3.prev = 66;
-            _context3.t3 = _context3['catch'](0);
-
-            next();
-
-          case 69:
+          case 1:
           case 'end':
-            return _context3.stop();
+            return _context4.stop();
         }
       }
-    }, _callee, this, [[0, 66], [11, 51, 55, 63], [24, 34, 38, 46], [39,, 41, 45], [56,, 58, 62]]);
+    }, _callee2, this);
   }));
 
   return function (_x, _x2, _x3) {
@@ -29530,7 +29673,13 @@ router.get('/steam', function () {
 exports.default = router;
 
 /***/ }),
-/* 507 */
+/* 508 */
+/***/ (function(module, exports) {
+
+module.exports = require("async-lock");
+
+/***/ }),
+/* 509 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29540,9 +29689,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _externalApi = __webpack_require__(508);
+var _externalApi = __webpack_require__(510);
 
-var _baseUrl = __webpack_require__(509);
+var _baseUrl = __webpack_require__(511);
 
 var _baseUrl2 = _interopRequireDefault(_baseUrl);
 
@@ -29566,7 +29715,7 @@ steamApi.getRecentGames = function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return steamApi.get('/IPlayerService/GetOwnedGames/v0001/?key=' + apiKey + '&steamid=' + steamUserId);
+            return steamApi.get('/IPlayerService/GetOwnedGames/v0001/?key=' + apiKey + '&steamid=' + steamUserId + '&include_appinfo=1');
 
           case 2:
             return _context.abrupt('return', _context.sent);
@@ -29637,7 +29786,7 @@ steamApi.getGameSchema = function () {
 exports.default = steamApi;
 
 /***/ }),
-/* 508 */
+/* 510 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29845,7 +29994,7 @@ var ExternalApi = exports.ExternalApi = function () {
 }();
 
 /***/ }),
-/* 509 */
+/* 511 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29888,7 +30037,7 @@ function getBaseUrl(externalApiName) {
 }
 
 /***/ }),
-/* 510 */
+/* 512 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29917,7 +30066,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 511 */
+/* 513 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29946,37 +30095,13 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 512 */
+/* 514 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var models = __webpack_require__(18);
-
-/* eslint-disable no-extra-boolean-cast */
-
-exports.getAllSteamUsers = function () {
-  return new Promise(function (resolve) {
-    var allUsers = models.steamuser.findAll();
-    resolve(allUsers);
-  });
-};
-
-exports.truncate = function () {
-  return models.steamuser.destroy({
-    where: {}
-  });
-};
-
-/***/ }),
-/* 513 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _User = __webpack_require__(262);
+var _User = __webpack_require__(263);
 
 var _User2 = _interopRequireDefault(_User);
 
@@ -30080,6 +30205,15 @@ router.route('/twitter').get(passport.authenticate('twitter'));
 
 router.route('/connect/twitter').get(passport.authorize('twitter'));
 
+router.route('/steam/callback').get(passport.authenticate('steam', {
+  successRedirect: '/',
+  failureRedirect: '/'
+}));
+
+router.route('/steam').get(passport.authenticate('steam'));
+
+router.route('/connect/steam').get(passport.authorize('steam'));
+
 router.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/');
@@ -30093,13 +30227,13 @@ router.post('/local/login', passport.authenticate('local-login', {
 module.exports = router;
 
 /***/ }),
-/* 514 */
+/* 515 */
 /***/ (function(module, exports) {
 
 module.exports = require("bcrypt-nodejs");
 
 /***/ }),
-/* 515 */
+/* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30128,7 +30262,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 516 */
+/* 517 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30157,7 +30291,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 517 */
+/* 518 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30186,25 +30320,31 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 518 */
+/* 519 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-local");
 
 /***/ }),
-/* 519 */
+/* 520 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-google-oauth");
 
 /***/ }),
-/* 520 */
+/* 521 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-twitter");
 
 /***/ }),
-/* 521 */
+/* 522 */
+/***/ (function(module, exports) {
+
+module.exports = require("passport-steam");
+
+/***/ }),
+/* 523 */
 /***/ (function(module, exports) {
 
 module.exports = require("connect-mssql");
