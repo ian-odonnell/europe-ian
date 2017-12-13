@@ -135,10 +135,12 @@ passport.use(
     apiKey: config.steamApiKey,
     passReqToCallback: true
   },
-    async function (id, profile, done) {
+    async function (req, id, profile, done) {
+      console.log("req: " + req);
+      console.log("id: " + id);
       console.log("profile: " + profile);
+      console.log("done: " + done);
       const steamId = profile.substring(profile.lastIndexOf('/')+1);
-      console.log("steamid: " + steamId);
 
       let existingUser = await SteamUser.getSteamUsers({ steamId });
       if (existingUser.length == 0) {
