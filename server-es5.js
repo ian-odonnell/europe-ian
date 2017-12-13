@@ -26864,7 +26864,7 @@ _passport2.default.use(new SteamStrategy({
   apiKey: _config2.default.steamApiKey,
   passReqToCallback: true
 }, function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, id, profile, done) {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(id, profile, done) {
     var steamId, existingUser, parentUser, steamPersona, steamUser, existingPersona, existingParent;
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
@@ -26938,7 +26938,7 @@ _passport2.default.use(new SteamStrategy({
     }, _callee4, this);
   }));
 
-  return function (_x15, _x16, _x17, _x18) {
+  return function (_x15, _x16, _x17) {
     return _ref4.apply(this, arguments);
   };
 }()));
