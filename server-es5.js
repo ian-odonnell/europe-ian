@@ -26908,7 +26908,7 @@ _passport2.default.use(new SteamStrategy({
             _context4.next = 19;
             return _Persona2.default.createPersona({
               name: profile.displayName,
-              avatarUrl: profile.photos[2],
+              avatarUrl: profile.photos[2].value,
               userId: parentUser.id
             });
 

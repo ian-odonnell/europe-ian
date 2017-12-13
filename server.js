@@ -158,7 +158,7 @@ passport.use(
         // TODO: Read their profile to get their name and avatar URL
         let steamPersona = await Persona.createPersona({
           name: profile.displayName,
-          avatarUrl: profile.photos[2],
+          avatarUrl: profile.photos[2].value,
           userId: parentUser.id
         });
 
