@@ -27118,8 +27118,8 @@ var ChatHeader = function (_React$Component) {
         'div',
         { className: 'chatHeader' },
         _react2.default.createElement(_chatFilters2.default, { filters: this.props.filters, changeFilter: this.props.changeFilter }),
-        _react2.default.createElement(_userPanel2.default, { selectedPersona: this.props.user.activePersona, multiplePersonas: multiplePersonas, nextPersona: this.props.nextPersona, previousPersona: this.props.previousPersona }),
-        postMessageButton
+        postMessageButton,
+        _react2.default.createElement(_userPanel2.default, { selectedPersona: this.props.user.activePersona, multiplePersonas: multiplePersonas, nextPersona: this.props.nextPersona, previousPersona: this.props.previousPersona })
       );
     }
   }]);
@@ -27471,21 +27471,11 @@ var _reactDom = __webpack_require__(17);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _chieveChatApi = __webpack_require__(98);
-
-var _chieveChatApi2 = _interopRequireDefault(_chieveChatApi);
-
 var _chatMessage = __webpack_require__(477);
 
 var _chatMessage2 = _interopRequireDefault(_chatMessage);
 
 var _reactRedux = __webpack_require__(55);
-
-var _chatActions = __webpack_require__(70);
-
-var chatActions = _interopRequireWildcard(_chatActions);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27587,7 +27577,7 @@ var ChatFeed = function (_React$Component) {
   return ChatFeed;
 }(_react2.default.Component);
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   var loggedIn = false;
   if (state.user.activePersona) {
     loggedIn = true;

@@ -9,23 +9,31 @@ a:hover{
 }
 
 body {
+  margin: 0;
   background-color: #004400;
 }
 
 .chatHeader {
-  height: 44px;
-  width: 100%;
+  display:flex;
+  height: 10vh;
+  min-height: 44px;
+  max-height: 100px;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1vw;
+  padding-right: 1vw;
 }
 
 .chatFilters {
-  margin-top: 6px;
+  margin-top: auto;
+  margin-bottom: auto;
   float: left;
 }
 
 .chatFilters td {
   border: 2px;
   padding: 4px;
-  height: 28px;
+  height: 6vh;
 }
 
 .filterTitle {
@@ -43,35 +51,50 @@ body {
   color: black;
 }
 
+@media only screen and (max-width: 850px) {
+  .chatFilters {
+    display: none;
+  }
+}
+
+.postMessageButton {
+  height: 4vh;
+  min-height: 32px;
+  max-height: 48px;
+  min-width: 135px;
+  background-color: #eeffbb;
+  color: black;
+}
+
 .dropdown {
-  float: right;
 }
 
 .dropdownHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #ffff99;
   background:linear-gradient(#ffff99, #ffffbb);
-  padding: 5px;
+  height: 5vh;
+  width: 15vw;
+  padding: 0.5vh;
   min-height: 32px;
+  max-height: 64px;
   border: 1px solid black;
-  margin-bottom: 5px;
 }
 
 .miniAvatar img {
-  width: 32px;
-  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  width: 5vh;
+  height: 5vh;
 }
 
 .downArrow img {
+  padding-left: 1vw;
   margin-top: 8px;
   width: 16px;
   height: 16px;
-}
-
-.dropdownHeader div {
-  height: 32px;
-  line-height: 32px;
-  float: left;
-  padding-right: 10px;
 }
 
 .dropdownContent {
@@ -125,12 +148,15 @@ body {
   height: 24px;
 }
 
+.chatFeed {
+  padding: 0 1vw 1vw 1vw;
+}
+
 .chatFeed table {
   border-collapse: collapse;
 }
 
 .chatTable {
-  width: 100%;
 }
 
 .personaColumn {
@@ -195,6 +221,12 @@ tr.chatMessage td {
 
 .chatMessageGame {
   vertical-align: top;
+}
+
+@media only screen and (max-width: 800px) {
+  .chatMessageGame {
+    display: none;
+  }
 }
 
 .chatMessageBody {
@@ -282,11 +314,3 @@ button {
   border-radius: 4px;
 }
 
-.postMessageButton {
-  height: 32px;
-  margin-top: 6px;
-  float: right;
-  margin-right: 20px;
-  background-color: #eeffbb;
-  color: black;
-}

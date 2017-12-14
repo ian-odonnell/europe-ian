@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ChieveChatApi from '../../api/chieveChatApi';
 import ChatMessage from './chatMessage';
 import { connect } from 'react-redux';
-import * as chatActions from '../../actions/chatActions';
 
 class ChatFeed extends React.Component {
   constructor(props, context) {
@@ -64,7 +62,7 @@ class ChatFeed extends React.Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   let loggedIn = false;
   if (state.user.activePersona) {
     loggedIn = true;

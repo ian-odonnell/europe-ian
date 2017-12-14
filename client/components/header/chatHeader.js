@@ -25,8 +25,8 @@ class ChatHeader extends React.Component {
     return (
       <div className="chatHeader">
         <ChatFilters filters={this.props.filters} changeFilter={this.props.changeFilter} />
-        <UserPanel selectedPersona={this.props.user.activePersona} multiplePersonas={multiplePersonas} nextPersona={this.props.nextPersona} previousPersona={this.props.previousPersona} />
         {postMessageButton}
+        <UserPanel selectedPersona={this.props.user.activePersona} multiplePersonas={multiplePersonas} nextPersona={this.props.nextPersona} previousPersona={this.props.previousPersona} />
       </div>
     );
   }
