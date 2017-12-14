@@ -5,7 +5,6 @@ import steamApi from '../externalApis/steamApi';
 import Achievement from '../dblib/Achievement';
 import Game from '../dblib/Game';
 import Message from '../dblib/Message';
-import Persona from '../dblib/Persona';
 import SteamUser from '../dblib/SteamUser';
 import models from '../dbmodels';
 
@@ -19,13 +18,10 @@ router.get('/steam', async function (req, res, next) {
       const allKnownGames = await Game.getAllGames();
 
       // Iterate over all of our Steam users
-      console.log("Getting steam users");
       const steamUsers = await SteamUser.getSteamUsers();
       for (const steamUser of steamUsers) {
         // Iterate over the user's recently played games
-        console.log("Getting games for " + steamUser.steamId);
         const recentGames = (await steamApi.getRecentGames(steamUser.steamId)).response.games.filter(g => g.playtime_forever > 100 && g.playtime_forever <= 1000);
-        console.log(JSON.stringify(recentGames));
         for (const recentGame of recentGames) {
           let gameSchema = undefined;
 
@@ -76,7 +72,7 @@ router.get('/steam', async function (req, res, next) {
 
       }
       res.json(response);
-    }, function (err, ret) {
+    }, function (/*err, ret*/) {
     });
   }
   catch (err) {

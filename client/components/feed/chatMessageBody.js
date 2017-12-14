@@ -36,9 +36,7 @@ export default (props) => {
   }
 
   let replyLink = undefined;
-  console.log('chatMessageBody rendering');
   if (props.showPopup) {
-    console.log('Show popup defined in chatMessageBody');
     replyLink = <div className="replyLink" onClick={() => props.showPopup()} >
       <img src='/images/reply.png' />
     </div>;

@@ -4,7 +4,6 @@ import ChatFilters from './chatFilters';
 import UserPanel from './userPanel';
 import { connect } from 'react-redux';
 import * as chatActions from '../../actions/chatActions';
-import { postMessage } from '../../actions/chatActions';
 
 class ChatHeader extends React.Component {
   constructor(props, context) {
@@ -33,7 +32,7 @@ class ChatHeader extends React.Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
     filters: state.filters,
     user: state.user

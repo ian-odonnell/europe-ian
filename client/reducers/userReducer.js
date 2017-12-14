@@ -6,11 +6,9 @@ export default function chatReducer(state = { parentUser: undefined, activePerso
       } else {
         return Object.assign({}, state, { parentUser: undefined, activePersona: undefined });
       }
-      break;
 
     case 'SWITCH_PERSONA':
       return Object.assign({}, state, { activePersona: action.persona });
-      break;
 
     case 'NEXT_PERSONA':
     case 'PREVIOUS_PERSONA':
@@ -20,7 +18,6 @@ export default function chatReducer(state = { parentUser: undefined, activePerso
         return Object.assign({}, state, { activePersona: state.parentUser.personas[personaIndex] });
       }
       return state;
-      break;
 
     default:
       return state;

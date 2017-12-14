@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ChatHeader from './header/chatHeader';
-import ChatFeed from './feed/chatFeed';
 
 class PostDialog extends React.Component {
   constructor(props, context) {

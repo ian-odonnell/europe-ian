@@ -3,7 +3,6 @@ export default function chatReducer(state = {chatMessages: []}, action) {
     case 'CHAT_LOADED':
       calculateChatGroups(action.latestChat);
       return Object.assign({}, state, {chatMessages: action.latestChat});
-      break;
 
     default:
       return state;

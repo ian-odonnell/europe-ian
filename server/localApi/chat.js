@@ -1,5 +1,4 @@
 import express from 'express';
-import Sequelize from 'sequelize';
 import models from '../dbmodels';
 import Message from '../dblib/Message';
 
@@ -19,7 +18,7 @@ router.get('/game', async (req, res) => {
   }
 });
 
-router.get('/latest', async function (req, res, next) {
+router.get('/latest', async function (req, res) {
   try {
     let response = {};
 
@@ -72,7 +71,7 @@ router.post('/message', async function(req, res) {
   res.json(message);
 });
 
-router.use((req, res, next) => {
+router.use((req, res) => {
   res.status(404).send('Not found');
 });
 
