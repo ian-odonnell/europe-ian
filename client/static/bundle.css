@@ -220,17 +220,40 @@ td.replyBody {
   height: 6vh;
 }
 
-.filterTitle {
-  background-color: #eeffdd;
-  color: black;
+.filterHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #eeffbb;
+  background:linear-gradient(#eeffbb, #eeffdd);
+  height: 5vh;
+  padding: 0.5vh;
+  min-height: 32px;
+  max-height: 64px;
+  border: 1px solid black;
+  text-overflow: ellipsis;
+}
+
+.filterDropdown {
+  display:none;
+  border: 1px solid black;
+  position: absolute;
+  background-color: black;
+  box-shadow: 0px 8px 16px 0px;
+  left: 0;
+  margin-top: 0px;
+  margin-left: 0px;
+  z-index: 98;
 }
 
 .filterButtonShow {
+  padding: 5px;
   background-color: white;
   color: black;
 }
 
 .filterButtonHide {
+  padding: 5px;
   background-color: gray;
   color: black;
 }
@@ -252,6 +275,7 @@ td.replyBody {
 }
 
 .dropdown {
+  position: relative;
 }
 
 .dropdownHeader {
@@ -261,7 +285,7 @@ td.replyBody {
   background-color: #ffff99;
   background:linear-gradient(#ffff99, #ffffbb);
   height: 5vh;
-  width: 15vw;
+  max-width: 20vw;
   padding: 0.5vh;
   min-height: 32px;
   max-height: 64px;
@@ -274,7 +298,9 @@ td.replyBody {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 8vw;
+  max-width: 15vw;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .miniAvatar img {
@@ -285,7 +311,6 @@ td.replyBody {
 }
 
 .downArrow img {
-  padding-left: 1vw;
   width: 16px;
   height: 16px;
 }
@@ -299,12 +324,12 @@ td.replyBody {
   padding: 10px;
   right: 0;
   margin-top: 10px;
-  margin-right: 20px;
+  margin-right: 10px;
   z-index: 98;
 }
 
 .visiblePanel {
-  display: block;
+  display: inline-block;
 }
 
 .loginPanel {
@@ -312,12 +337,11 @@ td.replyBody {
   line-height: 32px;
 }
 
-.loginPanel div {
-  float: left;
+.loginPanel tbody tr td {
+  white-space: nowrap;
 }
 
-.loginPanel div img {
-  margin-left:5px;
+.loginPanel tbody tr td img {
   width: 32px;
   height: 32px;
 }

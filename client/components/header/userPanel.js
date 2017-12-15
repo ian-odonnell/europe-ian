@@ -42,19 +42,23 @@ class UserPanel extends React.Component {
     }
 
     const loginPanel =
-      <div className='loginPanel'>
-        <div>{loginMessage}</div>
-        <div><a href={googleUrl}><img src='/images/Google.jpg' /></a></div>
-        <div><a href={twitterUrl}><img src='/images/Twitter.png' /></a></div>
-        <div><a href={steamUrl}><img src='/images/Steam.png' /></a></div>
-      </div>;
+      <table className='loginPanel'>
+        <tbody>
+          <tr>
+            <td>{loginMessage}</td>
+            <td><a href={googleUrl}><img src='/images/Google.jpg' /></a></td>
+            <td><a href={twitterUrl}><img src='/images/Twitter.png' /></a></td>
+            <td><a href={steamUrl}><img src='/images/Steam.png' /></a></td>
+          </tr>
+        </tbody>
+      </table>;
 
     return (
       <div className='dropdown'>
         <div className='dropdownHeader' onClick={() => { document.getElementById('userDropdown').classList.toggle('visiblePanel'); }}>
           {dropdownIcon}
           <div><span>{dropdownMessage}</span></div>
-          <div className='downArrow'><img src='/images/DownArrow.png'/></div>
+          <div className='downArrow'><img src='/images/DownArrow.png' /></div>
         </div>
         <div id='userDropdown' className='dropdownContent'>
           {personaSelector}

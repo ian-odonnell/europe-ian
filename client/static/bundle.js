@@ -28518,21 +28518,21 @@ var _routes = __webpack_require__(536);
 
 var _routes2 = _interopRequireDefault(_routes);
 
-var _configureStore = __webpack_require__(578);
+var _configureStore = __webpack_require__(577);
 
 var _configureStore2 = _interopRequireDefault(_configureStore);
 
 var _reactRedux = __webpack_require__(61);
 
-var _jquery = __webpack_require__(589);
+var _jquery = __webpack_require__(588);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+__webpack_require__(589);
+
+__webpack_require__(590);
+
 __webpack_require__(591);
-
-__webpack_require__(592);
-
-__webpack_require__(593);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49935,11 +49935,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (props) {
   var buttons = [];
-  buttons.push(_react2.default.createElement(
-    'td',
-    { key: 0, className: 'filterTitle' },
-    'Show automatic updates from:'
-  ));
   buttons.push(_react2.default.createElement(_chatFilterButton2.default, { key: 1, filterName: 'wow', buttonLabel: 'World of Warcraft', showMessages: props.filters.showWow, changeFilter: props.changeFilter }));
   buttons.push(_react2.default.createElement(_chatFilterButton2.default, { key: 2, filterName: 'diablo', buttonLabel: 'Diablo', showMessages: props.filters.showDiablo, changeFilter: props.changeFilter }));
   buttons.push(_react2.default.createElement(_chatFilterButton2.default, { key: 3, filterName: 'overwatch', buttonLabel: 'Overwatch', showMessages: props.filters.showOverwatch, changeFilter: props.changeFilter }));
@@ -49947,21 +49942,61 @@ exports.default = function (props) {
 
   return _react2.default.createElement(
     'div',
-    { className: 'chatFilters' },
+    { className: 'dropdown' },
     _react2.default.createElement(
-      'table',
-      null,
+      'div',
+      { className: 'filterHeader', onClick: function onClick() {
+          document.getElementById('filterDropdown').classList.toggle('visiblePanel');
+        } },
       _react2.default.createElement(
-        'tbody',
+        'div',
+        { className: 'downArrow' },
+        _react2.default.createElement('img', { src: '/images/DownArrow.png' })
+      ),
+      _react2.default.createElement(
+        'div',
         null,
         _react2.default.createElement(
-          'tr',
+          'span',
           null,
-          buttons
+          'Achievement Filters'
+        )
+      )
+    ),
+    _react2.default.createElement(
+      'div',
+      { id: 'filterDropdown', className: 'filterDropdown' },
+      _react2.default.createElement(
+        'table',
+        null,
+        _react2.default.createElement(
+          'tbody',
+          null,
+          buttons.map(function (b) {
+            return _react2.default.createElement(
+              'tr',
+              null,
+              b
+            );
+          })
         )
       )
     )
   );
+
+  /*
+   return (
+    <div className="chatFilters">
+      <table>
+        <tbody>
+          <tr>
+            {buttons}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+  */
 };
 
 /***/ }),
@@ -50101,38 +50136,46 @@ var UserPanel = function (_React$Component) {
       }
 
       var loginPanel = _react2.default.createElement(
-        'div',
+        'table',
         { className: 'loginPanel' },
         _react2.default.createElement(
-          'div',
-          null,
-          loginMessage
-        ),
-        _react2.default.createElement(
-          'div',
+          'tbody',
           null,
           _react2.default.createElement(
-            'a',
-            { href: googleUrl },
-            _react2.default.createElement('img', { src: '/images/Google.jpg' })
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'a',
-            { href: twitterUrl },
-            _react2.default.createElement('img', { src: '/images/Twitter.png' })
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'a',
-            { href: steamUrl },
-            _react2.default.createElement('img', { src: '/images/Steam.png' })
+            'tr',
+            null,
+            _react2.default.createElement(
+              'td',
+              null,
+              loginMessage
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              _react2.default.createElement(
+                'a',
+                { href: googleUrl },
+                _react2.default.createElement('img', { src: '/images/Google.jpg' })
+              )
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              _react2.default.createElement(
+                'a',
+                { href: twitterUrl },
+                _react2.default.createElement('img', { src: '/images/Twitter.png' })
+              )
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              _react2.default.createElement(
+                'a',
+                { href: steamUrl },
+                _react2.default.createElement('img', { src: '/images/Steam.png' })
+              )
+            )
           )
         )
       );
@@ -52292,8 +52335,7 @@ var ChatPage = function (_React$Component) {
 exports.default = ChatPage;
 
 /***/ }),
-/* 577 */,
-/* 578 */
+/* 577 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52306,15 +52348,15 @@ exports.default = configureStore;
 
 var _redux = __webpack_require__(114);
 
-var _reducers = __webpack_require__(579);
+var _reducers = __webpack_require__(578);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
-var _reduxImmutableStateInvariant = __webpack_require__(584);
+var _reduxImmutableStateInvariant = __webpack_require__(583);
 
 var _reduxImmutableStateInvariant2 = _interopRequireDefault(_reduxImmutableStateInvariant);
 
-var _reduxThunk = __webpack_require__(588);
+var _reduxThunk = __webpack_require__(587);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
@@ -52325,7 +52367,7 @@ function configureStore(initialState) {
 }
 
 /***/ }),
-/* 579 */
+/* 578 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52337,19 +52379,19 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(114);
 
-var _filterReducer = __webpack_require__(580);
+var _filterReducer = __webpack_require__(579);
 
 var _filterReducer2 = _interopRequireDefault(_filterReducer);
 
-var _messageReducer = __webpack_require__(581);
+var _messageReducer = __webpack_require__(580);
 
 var _messageReducer2 = _interopRequireDefault(_messageReducer);
 
-var _chatReducer = __webpack_require__(582);
+var _chatReducer = __webpack_require__(581);
 
 var _chatReducer2 = _interopRequireDefault(_chatReducer);
 
-var _userReducer = __webpack_require__(583);
+var _userReducer = __webpack_require__(582);
 
 var _userReducer2 = _interopRequireDefault(_userReducer);
 
@@ -52365,7 +52407,7 @@ var rootReducer = (0, _redux.combineReducers)({
 exports.default = rootReducer;
 
 /***/ }),
-/* 580 */
+/* 579 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52406,7 +52448,7 @@ function filterReducer() {
 }
 
 /***/ }),
-/* 581 */
+/* 580 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52433,7 +52475,7 @@ function messageReducer() {
 }
 
 /***/ }),
-/* 582 */
+/* 581 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52481,7 +52523,7 @@ function calculateChatGroups(chatArray) {
 }
 
 /***/ }),
-/* 583 */
+/* 582 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52525,7 +52567,7 @@ function chatReducer() {
 }
 
 /***/ }),
-/* 584 */
+/* 583 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52540,15 +52582,15 @@ var _invariant = __webpack_require__(20);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _jsonStringifySafe = __webpack_require__(585);
+var _jsonStringifySafe = __webpack_require__(584);
 
 var _jsonStringifySafe2 = _interopRequireDefault(_jsonStringifySafe);
 
-var _isImmutable = __webpack_require__(586);
+var _isImmutable = __webpack_require__(585);
 
 var _isImmutable2 = _interopRequireDefault(_isImmutable);
 
-var _trackForMutations = __webpack_require__(587);
+var _trackForMutations = __webpack_require__(586);
 
 var _trackForMutations2 = _interopRequireDefault(_trackForMutations);
 
@@ -52599,7 +52641,7 @@ function immutableStateInvariantMiddleware() {
 }
 
 /***/ }),
-/* 585 */
+/* 584 */
 /***/ (function(module, exports) {
 
 exports = module.exports = stringify
@@ -52632,7 +52674,7 @@ function serializer(replacer, cycleReplacer) {
 
 
 /***/ }),
-/* 586 */
+/* 585 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52650,7 +52692,7 @@ function isImmutableDefault(value) {
 }
 
 /***/ }),
-/* 587 */
+/* 586 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52737,7 +52779,7 @@ function _detectMutations(isImmutable) {
 }
 
 /***/ }),
-/* 588 */
+/* 587 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52766,7 +52808,7 @@ thunk.withExtraArgument = createThunkMiddleware;
 exports['default'] = thunk;
 
 /***/ }),
-/* 589 */
+/* 588 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -63026,20 +63068,19 @@ return jQuery;
 
 
 /***/ }),
-/* 590 */,
+/* 589 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 590 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
 /* 591 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 592 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 593 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

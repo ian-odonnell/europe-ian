@@ -27139,11 +27139,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (props) {
   var buttons = [];
-  buttons.push(_react2.default.createElement(
-    'td',
-    { key: 0, className: 'filterTitle' },
-    'Show automatic updates from:'
-  ));
   buttons.push(_react2.default.createElement(_chatFilterButton2.default, { key: 1, filterName: 'wow', buttonLabel: 'World of Warcraft', showMessages: props.filters.showWow, changeFilter: props.changeFilter }));
   buttons.push(_react2.default.createElement(_chatFilterButton2.default, { key: 2, filterName: 'diablo', buttonLabel: 'Diablo', showMessages: props.filters.showDiablo, changeFilter: props.changeFilter }));
   buttons.push(_react2.default.createElement(_chatFilterButton2.default, { key: 3, filterName: 'overwatch', buttonLabel: 'Overwatch', showMessages: props.filters.showOverwatch, changeFilter: props.changeFilter }));
@@ -27151,21 +27146,61 @@ exports.default = function (props) {
 
   return _react2.default.createElement(
     'div',
-    { className: 'chatFilters' },
+    { className: 'dropdown' },
     _react2.default.createElement(
-      'table',
-      null,
+      'div',
+      { className: 'filterHeader', onClick: function onClick() {
+          document.getElementById('filterDropdown').classList.toggle('visiblePanel');
+        } },
       _react2.default.createElement(
-        'tbody',
+        'div',
+        { className: 'downArrow' },
+        _react2.default.createElement('img', { src: '/images/DownArrow.png' })
+      ),
+      _react2.default.createElement(
+        'div',
         null,
         _react2.default.createElement(
-          'tr',
+          'span',
           null,
-          buttons
+          'Achievement Filters'
+        )
+      )
+    ),
+    _react2.default.createElement(
+      'div',
+      { id: 'filterDropdown', className: 'filterDropdown' },
+      _react2.default.createElement(
+        'table',
+        null,
+        _react2.default.createElement(
+          'tbody',
+          null,
+          buttons.map(function (b) {
+            return _react2.default.createElement(
+              'tr',
+              null,
+              b
+            );
+          })
         )
       )
     )
   );
+
+  /*
+   return (
+    <div className="chatFilters">
+      <table>
+        <tbody>
+          <tr>
+            {buttons}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+  */
 };
 
 /***/ }),
@@ -27305,38 +27340,46 @@ var UserPanel = function (_React$Component) {
       }
 
       var loginPanel = _react2.default.createElement(
-        'div',
+        'table',
         { className: 'loginPanel' },
         _react2.default.createElement(
-          'div',
-          null,
-          loginMessage
-        ),
-        _react2.default.createElement(
-          'div',
+          'tbody',
           null,
           _react2.default.createElement(
-            'a',
-            { href: googleUrl },
-            _react2.default.createElement('img', { src: '/images/Google.jpg' })
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'a',
-            { href: twitterUrl },
-            _react2.default.createElement('img', { src: '/images/Twitter.png' })
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'a',
-            { href: steamUrl },
-            _react2.default.createElement('img', { src: '/images/Steam.png' })
+            'tr',
+            null,
+            _react2.default.createElement(
+              'td',
+              null,
+              loginMessage
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              _react2.default.createElement(
+                'a',
+                { href: googleUrl },
+                _react2.default.createElement('img', { src: '/images/Google.jpg' })
+              )
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              _react2.default.createElement(
+                'a',
+                { href: twitterUrl },
+                _react2.default.createElement('img', { src: '/images/Twitter.png' })
+              )
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              _react2.default.createElement(
+                'a',
+                { href: steamUrl },
+                _react2.default.createElement('img', { src: '/images/Steam.png' })
+              )
+            )
           )
         )
       );
