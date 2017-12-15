@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ChatMessagePersona from './chatMessagePersona';
 import ChatMessageBody from './chatMessageBody';
 import ChatMessageGame from './chatMessageGame';

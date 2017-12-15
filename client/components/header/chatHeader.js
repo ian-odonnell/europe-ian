@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ChatFilters from './chatFilters';
 import UserPanel from './userPanel';
 import { connect } from 'react-redux';

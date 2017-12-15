@@ -5,7 +5,7 @@ import rp from 'request-promise';
 const router = express.Router();
 
 // TODO: Christ, this is insecure.  And on a GET, as well?  Remove it when I have an actual deployment process!
-router.get('/initdb', async function (req, res, next) {
+router.get('/initdb', async function (req, res) {
   await models.sequelize.sync({ force: false });
   res.json({ done: "Done" });
 });
@@ -17,7 +17,6 @@ router.get('/version', function (req, res) {
 router.get('/steam/*', async function (req, res) {
   try {
     const steamUrl = 'http://api.steampowered.com/' + req.originalUrl.replace('/admin/steam/', '');
-    console.log(steamUrl);
     var options = {
       uri: steamUrl,
       headers: {

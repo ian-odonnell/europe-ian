@@ -8,15 +8,16 @@ router.get('/version', (req, res) => {
   res.json({ ver: 1.1 });
 });
 
+/*
 router.get('/game', async (req, res) => {
   try {
     const result = await models.achievementView.findAll();
 
     res.json(result);
   } catch (err) {
-    console.log(err);
   }
 });
+*/
 
 router.get('/latest', async function (req, res) {
   try {

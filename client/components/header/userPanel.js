@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 class UserPanel extends React.Component {
   constructor(props, context) {
@@ -64,26 +63,6 @@ class UserPanel extends React.Component {
         </div>
       </div>
     );
-
-    /*
-    login =
-      <div className='headerLogin'>
-        <table>
-          <tbody>
-            <tr><td colspan={2}>{loginMessage}</td></tr>
-            <tr>
-              <td><a href={googleUrl}><img src='/images/Google.jpg' /></a></td>
-              <td><a href={twitterUrl}><img src='/images/Twitter.png' /></a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>;
-    return (
-      <div className='userPanel'>
-        {login}
-        {persona}
-      </div>
-    );*/
   }
 }
 

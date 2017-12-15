@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ChatMessage from './chatMessage';
 import { connect } from 'react-redux';
 

@@ -12,12 +12,14 @@ export default function chatReducer(state = { parentUser: undefined, activePerso
 
     case 'NEXT_PERSONA':
     case 'PREVIOUS_PERSONA':
-      let personaIndex = state.parentUser.personas.findIndex(p => p.id === state.activePersona.id);
-      if (personaIndex !== -1) {
-        personaIndex = (personaIndex + (action.type == 'NEXT_PERSONA' ? 1 : state.parentUser.personas.length - 1)) % state.parentUser.personas.length;
-        return Object.assign({}, state, { activePersona: state.parentUser.personas[personaIndex] });
+      {
+        let personaIndex = state.parentUser.personas.findIndex(p => p.id === state.activePersona.id);
+        if (personaIndex !== -1) {
+          personaIndex = (personaIndex + (action.type == 'NEXT_PERSONA' ? 1 : state.parentUser.personas.length - 1)) % state.parentUser.personas.length;
+          return Object.assign({}, state, { activePersona: state.parentUser.personas[personaIndex] });
+        }
+        return state;
       }
-      return state;
 
     default:
       return state;

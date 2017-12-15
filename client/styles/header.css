@@ -1,0 +1,143 @@
+.chatHeader {
+  display:flex;
+  height: 10vh;
+  min-height: 44px;
+  max-height: 100px;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1vw;
+  padding-right: 1vw;
+}
+
+.chatFilters {
+  margin-top: auto;
+  margin-bottom: auto;
+  float: left;
+}
+
+.chatFilters td {
+  border: 2px;
+  padding: 4px;
+  height: 6vh;
+}
+
+.filterTitle {
+  background-color: #eeffdd;
+  color: black;
+}
+
+.filterButtonShow {
+  background-color: white;
+  color: black;
+}
+
+.filterButtonHide {
+  background-color: gray;
+  color: black;
+}
+
+@media only screen and (max-width: 850px) {
+  .chatFilters {
+    display: none;
+  }
+}
+
+.postMessageButton {
+  height: 4vh;
+  min-height: 32px;
+  max-height: 48px;
+  min-width: 135px;
+  background-color: #eeffbb;
+  background:linear-gradient(#eeffbb, #eeffdd);
+  color: black;
+}
+
+.dropdown {
+}
+
+.dropdownHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffff99;
+  background:linear-gradient(#ffff99, #ffffbb);
+  height: 5vh;
+  width: 15vw;
+  padding: 0.5vh;
+  min-height: 32px;
+  max-height: 64px;
+  border: 1px solid black;
+  text-overflow: ellipsis;
+}
+
+.dropdownHeader div span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 8vw;
+}
+
+.miniAvatar img {
+  min-width: 32px;
+  min-height: 32px;
+  width: 5vh;
+  height: 5vh;
+}
+
+.downArrow img {
+  padding-left: 1vw;
+  width: 16px;
+  height: 16px;
+}
+
+.dropdownContent {
+  display:none;
+  position: absolute;
+  background-color: #ffff99;
+  background:linear-gradient(#ffff99, #ffffbb);
+  box-shadow: 0px 8px 16px 0px;
+  padding: 10px;
+  right: 0;
+  margin-top: 10px;
+  margin-right: 20px;
+  z-index: 98;
+}
+
+.visiblePanel {
+  display: block;
+}
+
+.loginPanel {
+  height: 32px;
+  line-height: 32px;
+}
+
+.loginPanel div {
+  float: left;
+}
+
+.loginPanel div img {
+  margin-left:5px;
+  width: 32px;
+  height: 32px;
+}
+
+.personaSelector {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.personaSelectorName {
+  text-align: center;
+}
+
+.personaSelectorAvatar img {
+  width: 80px;
+  height: 80px;
+}
+
+.personaSelectorArrow img {
+  width: 24px;
+  height: 24px;
+}

@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 export default (props) => {
   const toggleClass = props.showMessages ? "filterButtonShow" : "filterButtonHide";

@@ -76,7 +76,7 @@ router.get('/steam', async function (req, res, next) {
     });
   }
   catch (err) {
-    console.log(err);
+    // console.log(err);
     res.json({argh: 'error'});
   next();
   }

@@ -1,11 +1,7 @@
 "use strict";
 
-import fs  from 'fs';
-import  path from 'path';
 import Sequelize from 'sequelize';
 import config from '../../config';
-
-const env = process.env.NODE_ENV || "development";
 
 // var config = require(path.join(__dirname, '../../config', 'config.json'))[env];
 
@@ -63,4 +59,5 @@ toLink.forEach(model => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+// module.exports = db;
+export default db;

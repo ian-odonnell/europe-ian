@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ChatFilterButton from './chatFilterButton';
 
 export default (props) => {

@@ -28,6 +28,7 @@
     // Overrides
     "no-console": 1, // 0: Off, 1: Warning, 2: Error
     "react/jsx-uses-vars": 1,
+    "react/jsx-uses-react": 1,
     "react/react-in-jsx-scope": 1
   },
   "globals": {

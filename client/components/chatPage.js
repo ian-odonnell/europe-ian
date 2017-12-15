@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ChieveChatApi from '../api/chieveChatApi';
 import ChatHeader from './header/chatHeader';
 import ChatFeed from './feed/chatFeed';
