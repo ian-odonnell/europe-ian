@@ -32,16 +32,8 @@ var toLink = [];
 // TODO: Maybe file scan the current directory (and children?) - Sequelize's import functionality was struggling once deployed to Azure,
 // so dropped back to this hard-coded list of models for now
 var models = [
-  require('./achievement'),
-  require('./achievementView'),
-  require('./game'),
-  require('./message'),
-  require('./persona'),
-  require('./user'),
-  require('./localuser'),
-  require('./steamuser'),
-  require('./googleuser'),
-  require('./twitteruser')
+  require('./location'),
+  require('./photo')
 ];
 
 models.forEach(model => {
