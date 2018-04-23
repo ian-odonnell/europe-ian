@@ -45405,7 +45405,11 @@ var EuropeMap = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'cityLabel' },
-              _react2.default.createElement('img', { src: '/images/Star.png' }),
+              _react2.default.createElement(
+                'a',
+                { href: '' },
+                _react2.default.createElement('img', { src: '/images/Star.png' })
+              ),
               _react2.default.createElement(
                 'span',
                 null,

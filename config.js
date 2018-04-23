@@ -8,7 +8,7 @@ var config = {
 
   // Database details
   databaseHost: process.env.DATABASE_HOST || "ian-odonnell.database.windows.net",
-  databaseName: process.env.DATABASE_NAME || "chievechat",
+  databaseName: process.env.DATABASE_NAME || "ian-odonnell",
   databaseUser: process.env.DATABASE_USER || "ian-odonnell",
   databasePassword: process.env.DATABASE_PASSWORD || "",
 

@@ -1691,7 +1691,7 @@ var config = {
 
   // Database details
   databaseHost: process.env.DATABASE_HOST || "ian-odonnell.database.windows.net",
-  databaseName: process.env.DATABASE_NAME || "chievechat",
+  databaseName: process.env.DATABASE_NAME || "ian-odonnell",
   databaseUser: process.env.DATABASE_USER || "ian-odonnell",
   databasePassword: process.env.DATABASE_PASSWORD || "",
 
@@ -10666,7 +10666,11 @@ var EuropeMap = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'cityLabel' },
-              _react2.default.createElement('img', { src: '/images/Star.png' }),
+              _react2.default.createElement(
+                'a',
+                { href: '' },
+                _react2.default.createElement('img', { src: '/images/Star.png' })
+              ),
               _react2.default.createElement(
                 'span',
                 null,

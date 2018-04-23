@@ -20,7 +20,7 @@ class EuropeMap extends React.Component {
         <div className='mapWrapper'>
           <div className='europeMap'>
             <div className='cityLabel'>
-              <img src='/images/Star.png'/>
+              <a href=''><img src='/images/Star.png'/></a>
               <span>Budapest</span>
             </div>
           </div>

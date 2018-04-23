@@ -1,3 +1,9 @@
+/* Fonts */
+@font-face {
+  font-family: 'Atlantis';
+  src: url('/fonts/Atlantis.ttf');
+}
+
 /* General styles */
 a {
   text-decoration: none;
@@ -43,7 +49,23 @@ body {
   top: 55%;
   left: 62%;
 }
-.chatFeed {
+
+.cityLabel span {
+  display: none;
+}
+
+.cityLabel a:hover + span {
+  font-family: 'Atlantis';
+  font-size: xx-large;
+  display: block;
+  position: absolute;
+  top: -45px;
+  left: -50px;
+  width: 100px;
+  text-align: center;
+}
+  
+  .chatFeed {
   padding: 0 1vw 1vw 1vw;
 }
 
