@@ -39,6 +39,7 @@ body {
 
 .europeMap {
   background-image: url('/images/EuropeMap.png');
+  box-shadow: #024 0 0 10px 10px;
   background-size: cover;
   padding-bottom: 72.1%;
   position: relative;
@@ -76,8 +77,8 @@ body {
 
 
 div.albumSheet {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  text-align: center;
+  padding: 20px;
   overflow: hidden;
 }
 
@@ -167,7 +168,7 @@ div.polaroidWrapper figure figcaption{
   padding-top: 10px;
   display: block;
   text-align: center;
-  font-family: 'DuDu';
+  font-family: 'Atlantis';
   font-size:1.5em;
   color: #000000;
   letter-spacing: 0.09em;
@@ -178,7 +179,7 @@ div.polaroidWrapper figure figcaption{
   margin-top: 10px;
   font-size: x-large;
   text-align: center;
-  font-family: 'DuDu';
+  font-family: 'Atlantis';
 }
 
 .fancybox-title a {

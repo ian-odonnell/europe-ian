@@ -10203,11 +10203,16 @@ var AlbumSheet = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.loadPhotosForLocation(this.props.location.id);
+      console.log('did mount');
+      console.log(this.props);
+      this.loadPhotosForLocation(this.props.location);
     }
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(newProps) {
+      console.log('will receive props');
+      console.log(newProps);
+      console.log(newProps.Location);
       this.loadPhotosForLocation(newProps.location);
     }
   }, {
@@ -10219,11 +10224,12 @@ var AlbumSheet = function (_React$Component) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                console.log('Load photos for id ' + locationId);
                 this.setState({ photos: null });
-                _context.next = 3;
+                _context.next = 4;
                 return _localApi2.default.getLocationPhotos(locationId);
 
-              case 3:
+              case 4:
                 photos = _context.sent;
 
                 this.setState({
@@ -10232,7 +10238,7 @@ var AlbumSheet = function (_React$Component) {
                   }), imagesToLoad: photos.length > 0
                 });
 
-              case 5:
+              case 6:
               case 'end':
                 return _context.stop();
             }
@@ -10571,6 +10577,10 @@ var _Location = __webpack_require__(357);
 
 var _Location2 = _interopRequireDefault(_Location);
 
+var _Photo = __webpack_require__(360);
+
+var _Photo2 = _interopRequireDefault(_Photo);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -10637,13 +10647,29 @@ router.get('/locations', function () {
 
 router.get('/photos/:locationId', function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(req, res) {
+    var photos;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            res.json([{ id: 1, thumbUrl: 'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_thumb.jpg', zoomUrl: 'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_large.jpg', caption: 'One' }, { id: 2, thumbUrl: 'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_thumb.jpg', zoomUrl: 'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_large.jpg', caption: 'Two' }, { id: 3, thumbUrl: 'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_thumb.jpg', zoomUrl: 'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_large.jpg', caption: 'Three' }, { id: 4, thumbUrl: 'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_thumb.jpg', zoomUrl: 'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_large.jpg', caption: 'Four' }, { id: 5, thumbUrl: 'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_thumb.jpg', zoomUrl: 'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_large.jpg', caption: 'Five' }, { id: 6, thumbUrl: 'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_thumb.jpg', zoomUrl: 'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_large.jpg', caption: 'Six' }]);
+            _context3.next = 2;
+            return _Photo2.default.getPhotosForLocation(req.params.locationId);
 
-          case 1:
+          case 2:
+            photos = _context3.sent;
+
+            res.json(photos);
+
+            /*[
+              {id:1, thumbUrl:'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_thumb.jpg', zoomUrl:'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_large.jpg', caption:'One'},
+              {id:2, thumbUrl:'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_thumb.jpg', zoomUrl:'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_large.jpg', caption:'Two'},
+              {id:3, thumbUrl:'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_thumb.jpg', zoomUrl:'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_large.jpg', caption:'Three'},
+              {id:4, thumbUrl:'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_thumb.jpg', zoomUrl:'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_large.jpg', caption:'Four'},
+              {id:5, thumbUrl:'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_thumb.jpg', zoomUrl:'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_large.jpg', caption:'Five'},
+              {id:6, thumbUrl:'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_thumb.jpg', zoomUrl:'http://www.lifeontrains.com/usaroth/UploadedImages/8D989F_large.jpg', caption:'Six'}
+            ]);*/
+
+          case 4:
           case 'end':
             return _context3.stop();
         }
@@ -10753,6 +10779,34 @@ module.exports = require("bcrypt-nodejs");
 /***/ (function(module, exports) {
 
 module.exports = require("connect-mssql");
+
+/***/ }),
+/* 360 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _dbmodels = __webpack_require__(130);
+
+var _dbmodels2 = _interopRequireDefault(_dbmodels);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable no-extra-boolean-cast */
+
+exports.getPhotosForLocation = function (locationId) {
+  return new Promise(function (resolve) {
+    var selectedPhotos = _dbmodels2.default.photo.findAll({ where: { locationId: locationId } });
+    resolve(selectedPhotos);
+  });
+};
+
+exports.truncate = function () {
+  return _dbmodels2.default.photo.destroy({
+    where: {}
+  });
+};
 
 /***/ })
 /******/ ]);

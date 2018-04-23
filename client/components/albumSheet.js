@@ -15,14 +15,20 @@ class AlbumSheet extends React.Component {
   }
 
   componentDidMount() {
-    this.loadPhotosForLocation(this.props.location.id);
+    console.log('did mount');
+    console.log(this.props);
+    this.loadPhotosForLocation(this.props.location);
   }
 
   componentWillReceiveProps(newProps) {
-    this.loadPhotosForLocation(newProps.location);
+      console.log('will receive props');
+      console.log(newProps);
+      console.log(newProps.Location);
+      this.loadPhotosForLocation(newProps.location);
   }
 
   async loadPhotosForLocation(locationId) {
+      console.log('Load photos for id ' + locationId);
     this.setState({ photos: null });
     var photos = await LocalApi.getLocationPhotos(locationId);
     this.setState({
