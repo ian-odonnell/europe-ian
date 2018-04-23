@@ -9,11 +9,16 @@ import { Provider } from 'react-redux';
 import jquery from "jquery";
 
 import './client/styles/style.css';
-import './client/styles/chatfeed.css';
-import './client/styles/header.css';
+import 'fancybox/dist/css/jquery.fancybox.css';
+import 'fancybox/dist/helpers/css/jquery.fancybox-buttons.css';
+
 
 global.$ = jquery;
-window.$ = window.jQuery = jquery;
+window.$ = window.jQuery = require('jquery');
+
+
+require('fancybox/dist/js/jquery.fancybox');
+require('fancybox/dist/helpers/js/jquery.fancybox-buttons.js');
 
 const store = configureStore();
 

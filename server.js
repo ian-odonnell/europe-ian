@@ -16,7 +16,6 @@ import { Provider } from 'react-redux';
 
 // Server
 import adminApi from './server/localApi/admin';
-import auth from './server/auth';
 import bcrypt from 'bcrypt-nodejs';
 
 // Config

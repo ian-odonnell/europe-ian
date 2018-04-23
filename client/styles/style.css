@@ -32,7 +32,7 @@ body {
 
 /* Interactive map of Europe */
 .mapWrapper {
-  max-width: 60vw;
+  max-width: 70vw;
   margin-left: auto;
   margin-right: auto;
 }
@@ -46,8 +46,7 @@ body {
 
 .cityLabel {
   position: absolute;
-  top: 55%;
-  left: 62%;
+  transform: translate(-50%, -50%);
 }
 
 .cityLabel span {
@@ -55,14 +54,135 @@ body {
 }
 
 .cityLabel a:hover + span {
+  text-shadow: #999 1px 1px;
   font-family: 'Atlantis';
   font-size: xx-large;
   display: block;
   position: absolute;
-  top: -45px;
+  top: -50px;
   left: -50px;
   width: 100px;
   text-align: center;
 }
   
-  
+
+
+
+
+
+
+
+
+
+
+div.albumSheet {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  overflow: hidden;
+}
+
+div.polaroidWrapper {
+  width: 250px;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+div.polaroidWrapper figure {
+  display: block;
+  padding: 6px 8px 10px 8px; /*size of the frame*/
+  float:left; /*places the images in a horizontal line*/
+  position:relative; /*allows precise positioning of the tape in step 5- see support section below for more info*/
+  margin:10px 20px; /*space between the images*/
+
+  /*give the frame's background colour a gradient*/
+  background: #eee6d8; /*fallback colour for browsers that don't support gradients*/
+  background: -webkit-linear-gradient(top, #ede1c9, #fef8e2 20%, #f2ebde 60%);
+  background: -moz-linear-gradient(top, #ede1c9, #fef8e2 20%, #f2ebde 60%);
+  background: -o-linear-gradient(top, #ede1c9, #fef8e2 20%, #f2ebde 60%);
+  background: -ms-linear-gradient(top, #ede1c9, #fef8e2 20%, #f2ebde 60%);
+  background: linear-gradient(top, #ede1c9, #fef8e2 20%, #f2ebde 60%);
+
+  -webkit-transform:rotate(-1deg);
+  -moz-transform: rotate(-1deg);
+  -o-transform: rotate(-1deg);
+  -ms-transform: rotate(-1deg);
+  transform: rotate(-1deg);
+
+  /* Remove jagged edges in Chrome */
+  -webkit-backface-visibility: hidden;
+
+  /*give the Polaroids a small drop shadow*/
+  -webkit-box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, .75);
+  -moz-box-shadow: 2px 2px 4px 2x rgba(0, 0, 0, .75);
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .75);
+}
+
+/***Rotate each even numbered image 2 degrees clockwise***/
+
+div.polaroidWrapper figure.evenfigure { /*see support section below for more info on nth-child*/
+  -webkit-transform:rotate(2deg);
+  -moz-transform: rotate(2deg);
+  -o-transform: rotate(2deg);
+  -ms-transform: rotate(2deg);
+  transform: rotate(2deg);
+
+  /*because the image is rotated the opposite way, the drop-shadow needs moving to the other side of the image*/
+
+  -webkit-box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .75);
+  -moz-box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .75);
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .75);
+}
+
+div.polaroidWrapper figure:before { /*see the support section below to more info on using the :before psuedo element*/
+  content: '';
+  display: block;
+  position: absolute;
+  left:5px; /*postion from the left side of the frame (positive value move the tape right, negative moves it left)*/
+  top: -15px; /*position from the top of the frame (positive move it above the frame, negative below)*/
+  width: 75px; /*width of the tape*/
+  height: 25px; /*height of the tape*/
+  background-color: rgba(222,220,198,0.7); /*colour of the tape, use rgba to make it slightly transparent*/
+
+  /*rotate the tape 12 degrees anti-clockwise*/
+  -webkit-transform: rotate(-12deg);
+  -moz-transform: rotate(-12deg);
+  -o-transform: rotate(-12deg);
+  -ms-transform: rotate(-12deg);
+}
+
+/**The tape for the even numbered images needs to be rotated the opposite way, as the images are, and positioned on the other side of the frame, I've also changed the width slightly**/
+div.polaroidWrapper figure.evenfigure:before {
+  left:130px;
+  top: -15px;
+  width: 55px;
+  height: 25px;
+  -webkit-transform: rotate(12deg);
+  -moz-transform: rotate(12deg);
+  -o-transform: rotate(12deg);
+  -ms-transform: rotate(12deg);
+}
+
+div.polaroidWrapper figure figcaption{
+  padding-top: 10px;
+  display: block;
+  text-align: center;
+  font-family: 'DuDu';
+  font-size:1.5em;
+  color: #000000;
+  letter-spacing: 0.09em;
+  -webkit-text-stroke: 0.25px;
+}
+
+.fancybox-title {
+  margin-top: 10px;
+  font-size: x-large;
+  text-align: center;
+  font-family: 'DuDu';
+}
+
+.fancybox-title a {
+  color: #0000ff;
+  text-decoration: none;
+}
+

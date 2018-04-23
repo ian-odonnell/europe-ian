@@ -17,8 +17,13 @@ const client = {
   },
   module: {
     loaders: [
+      { test: /\.css$/, loader: "style-loader!css-loader" },
       { test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader'] },
-      { test: /\.css$/, loader: ExtractTextPlugin.extract('css-loader?sourceMap') }
+      { test: /\.js$/, include: [/whatwg-.*/], loaders: ['babel-loader'] },
+      { test: /\.(png|jpg|gif)$/, loader: 'url-loader' },
+/*
+      { test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader'] },
+      { test: /\.css$/, loader: ExtractTextPlugin.extract('css-loader?sourceMap') }*/
     ]
     /*
     rules: [

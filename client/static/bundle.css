@@ -32,7 +32,7 @@ body {
 
 /* Interactive map of Europe */
 .mapWrapper {
-  max-width: 60vw;
+  max-width: 70vw;
   margin-left: auto;
   margin-right: auto;
 }
@@ -46,8 +46,7 @@ body {
 
 .cityLabel {
   position: absolute;
-  top: 55%;
-  left: 62%;
+  transform: translate(-50%, -50%);
 }
 
 .cityLabel span {
@@ -55,314 +54,137 @@ body {
 }
 
 .cityLabel a:hover + span {
+  text-shadow: #999 1px 1px;
   font-family: 'Atlantis';
   font-size: xx-large;
   display: block;
   position: absolute;
-  top: -45px;
+  top: -50px;
   left: -50px;
   width: 100px;
   text-align: center;
 }
   
-  .chatFeed {
-  padding: 0 1vw 1vw 1vw;
-}
 
-.chatFeed table {
-  border-collapse: collapse;
-}
 
-.chatTable {
-}
 
-.personaColumn {
-  width: 5vw;
-  min-width: 60px;
-  max-width: 150px;
-}
 
-.gameColumn {
-  width: 190px;
-}
 
-tr.chatMessageHidden {
-  display:none;
-}
 
-tr.chatMessage td {
-  background-color: #ffff99;
-  background:linear-gradient(#eeffbb, #eeffdd);
-  padding: 6px;
-  border: solid 1px #003300;
-}
 
-.chatMessageBody {
-  vertical-align: top;
-  position: relative;
-}
 
-.chatMessageBody div:first-child {
-  min-height: 75px;
-}
 
-.chatMessageTimestamp {
-  font-size: small;
-  position: absolute;
-  right:0;
-  bottom:0;
-  text-align: right;
-  margin-right:5px;
-  margin-bottom: 5px;
-}
 
-.replyLink {
-  float: right;
-}
-
-.replyLink img {
-  width: 20px;
-  height: 20px;
-}
-
-.chatMessagePersona {
-  width: 8vw;
-  max-width: 150px;
-  vertical-align: top;
-}
-
-.chatMessagePersona div {
-  width: 8vw;
-  padding-bottom: 5px;
-}
-
-.chatMessagePersona div.personaName {
+div.albumSheet {
+  padding-top: 20px;
+  padding-bottom: 20px;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-.chatMessagePersona img {
-  width: 8vw;
-  max-width: 100%;
-}
-
-.chatMessageGame {
-  vertical-align: top;
-}
-
-.chatMessageGame img {
-  width: 16vw;
-  max-width: 184px;
-}
-
-@media only screen and (max-width: 800px) {
-  .chatMessageGame {
-    display: none;
-  }
-}
-
-.chatMessageBody {
-  width: 100%;
-}
-
-.bodyAchievement div {
-  float: left;
-  padding-right: 10px;
-}
-
-.bodyAchievement span.achievementName {
-  font-weight: bold;
-}
-
-.bodyAchievement span.achievementDescription {
-  font-style: italic;
-}
-
-table.chatMessageReplies {
-  margin: 10px 0 0 10px;
-}
-
-td.replyPersona {
-  vertical-align: top;
-  min-width: 10vw;
-  font-weight: bold;
-  background: linear-gradient(#eeeeee, #dddddd)!important;
-}
-
-td.replyBody {
-  background: linear-gradient(#ffffff, #eeeeee)!important;
-  min-width: 30vw;
-  position: relative;
-}
-.chatHeader {
-  display:flex;
-  height: 10vh;
-  min-height: 44px;
-  max-height: 100px;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 1vw;
-  padding-right: 1vw;
-}
-
-.chatFilters {
-  margin-top: auto;
-  margin-bottom: auto;
-  float: left;
-}
-
-.chatFilters td {
-  border: 2px;
-  padding: 4px;
-  height: 6vh;
-}
-
-.filterHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #eeffbb;
-  background:linear-gradient(#eeffbb, #eeffdd);
-  height: 5vh;
-  padding: 0.5vh;
-  min-height: 32px;
-  max-height: 64px;
-  border: 1px solid black;
-  text-overflow: ellipsis;
-}
-
-.filterDropdown {
-  display:none;
-  border: 1px solid black;
-  position: absolute;
-  background-color: black;
-  box-shadow: 0px 8px 16px 0px;
-  left: 0;
-  margin-top: 0px;
-  margin-left: 0px;
-  z-index: 98;
-}
-
-.filterButtonShow {
-  padding: 5px;
-  background-color: white;
-  color: black;
-}
-
-.filterButtonHide {
-  padding: 5px;
-  background-color: gray;
-  color: black;
-}
-
-@media only screen and (max-width: 850px) {
-  .chatFilters {
-    display: none;
-  }
-}
-
-.postMessageButton {
-  height: 4vh;
-  min-height: 32px;
-  max-height: 48px;
-  min-width: 135px;
-  background-color: #eeffbb;
-  background:linear-gradient(#eeffbb, #eeffdd);
-  color: black;
-}
-
-.dropdown {
-  position: relative;
-}
-
-.dropdownHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #ffff99;
-  background:linear-gradient(#ffff99, #ffffbb);
-  height: 5vh;
-  min-width: 120px;
-  max-width: 20vw;
-  padding: 0.5vh;
-  min-height: 32px;
-  max-height: 64px;
-  border: 1px solid black;
-  text-overflow: ellipsis;
-}
-
-.miniAvatar img {
-  min-width: 32px;
-  min-height: 32px;
-  width: 5vh;
-  height: 5vh;
-}
-
-.dropdownHeader div span {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  min-width: 40px;
-  max-width: 15vw;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-
-.downArrow img {
-  width: 16px;
-  height: 16px;
-}
-
-.dropdownContent {
-  display:none;
-  position: absolute;
-  background-color: #ffff99;
-  background:linear-gradient(#ffff99, #ffffbb);
-  box-shadow: 0px 8px 16px 0px;
-  padding: 10px;
-  right: 0;
-  margin-top: 10px;
-  margin-right: 10px;
-  z-index: 98;
-}
-
-.visiblePanel {
+div.polaroidWrapper {
+  width: 250px;
+  text-align: center;
+  vertical-align: middle;
   display: inline-block;
 }
 
-.loginPanel {
-  height: 32px;
-  line-height: 32px;
+div.polaroidWrapper figure {
+  display: block;
+  padding: 6px 8px 10px 8px; /*size of the frame*/
+  float:left; /*places the images in a horizontal line*/
+  position:relative; /*allows precise positioning of the tape in step 5- see support section below for more info*/
+  margin:10px 20px; /*space between the images*/
+
+  /*give the frame's background colour a gradient*/
+  background: #eee6d8; /*fallback colour for browsers that don't support gradients*/
+  background: -webkit-linear-gradient(top, #ede1c9, #fef8e2 20%, #f2ebde 60%);
+  background: -moz-linear-gradient(top, #ede1c9, #fef8e2 20%, #f2ebde 60%);
+  background: -o-linear-gradient(top, #ede1c9, #fef8e2 20%, #f2ebde 60%);
+  background: -ms-linear-gradient(top, #ede1c9, #fef8e2 20%, #f2ebde 60%);
+  background: linear-gradient(top, #ede1c9, #fef8e2 20%, #f2ebde 60%);
+
+  -webkit-transform:rotate(-1deg);
+  -moz-transform: rotate(-1deg);
+  -o-transform: rotate(-1deg);
+  -ms-transform: rotate(-1deg);
+  transform: rotate(-1deg);
+
+  /* Remove jagged edges in Chrome */
+  -webkit-backface-visibility: hidden;
+
+  /*give the Polaroids a small drop shadow*/
+  -webkit-box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, .75);
+  -moz-box-shadow: 2px 2px 4px 2x rgba(0, 0, 0, .75);
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .75);
 }
 
-.loginPanel tbody tr td {
-  white-space: nowrap;
+/***Rotate each even numbered image 2 degrees clockwise***/
+
+div.polaroidWrapper figure.evenfigure { /*see support section below for more info on nth-child*/
+  -webkit-transform:rotate(2deg);
+  -moz-transform: rotate(2deg);
+  -o-transform: rotate(2deg);
+  -ms-transform: rotate(2deg);
+  transform: rotate(2deg);
+
+  /*because the image is rotated the opposite way, the drop-shadow needs moving to the other side of the image*/
+
+  -webkit-box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .75);
+  -moz-box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .75);
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .75);
 }
 
-.loginPanel tbody tr td img {
-  width: 32px;
-  height: 32px;
+div.polaroidWrapper figure:before { /*see the support section below to more info on using the :before psuedo element*/
+  content: '';
+  display: block;
+  position: absolute;
+  left:5px; /*postion from the left side of the frame (positive value move the tape right, negative moves it left)*/
+  top: -15px; /*position from the top of the frame (positive move it above the frame, negative below)*/
+  width: 75px; /*width of the tape*/
+  height: 25px; /*height of the tape*/
+  background-color: rgba(222,220,198,0.7); /*colour of the tape, use rgba to make it slightly transparent*/
+
+  /*rotate the tape 12 degrees anti-clockwise*/
+  -webkit-transform: rotate(-12deg);
+  -moz-transform: rotate(-12deg);
+  -o-transform: rotate(-12deg);
+  -ms-transform: rotate(-12deg);
 }
 
-.personaSelector {
-  margin-left: auto;
-  margin-right: auto;
+/**The tape for the even numbered images needs to be rotated the opposite way, as the images are, and positioned on the other side of the frame, I've also changed the width slightly**/
+div.polaroidWrapper figure.evenfigure:before {
+  left:130px;
+  top: -15px;
+  width: 55px;
+  height: 25px;
+  -webkit-transform: rotate(12deg);
+  -moz-transform: rotate(12deg);
+  -o-transform: rotate(12deg);
+  -ms-transform: rotate(12deg);
 }
 
-.personaSelectorName {
+div.polaroidWrapper figure figcaption{
+  padding-top: 10px;
+  display: block;
   text-align: center;
+  font-family: 'DuDu';
+  font-size:1.5em;
+  color: #000000;
+  letter-spacing: 0.09em;
+  -webkit-text-stroke: 0.25px;
 }
 
-.personaSelectorAvatar img {
-  width: 80px;
-  height: 80px;
+.fancybox-title {
+  margin-top: 10px;
+  font-size: x-large;
+  text-align: center;
+  font-family: 'DuDu';
 }
 
-.personaSelectorArrow img {
-  width: 24px;
-  height: 24px;
+.fancybox-title a {
+  color: #0000ff;
+  text-decoration: none;
 }
+
 
 /*# sourceMappingURL=bundle.css.map*/

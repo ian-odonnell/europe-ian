@@ -1,5 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import AlbumSheet from './albumSheet';
+import LocalApi from '../api/localApi';
 
 class EuropeMap extends React.Component {
   constructor(props, context) {
@@ -9,27 +12,49 @@ class EuropeMap extends React.Component {
   }
 
   async componentDidMount() {
+    var locations = await LocalApi.getLocations();
+
+    // Newest trip to the top
+    locations.sort((a, b) => { return a.mapPositionY - b.mapPositionY; });
+    this.setState({ locations });
   }
 
   render() {
+    const { match: { params } } = this.props;
+
+    let photoSheet = undefined;
+    if(params.location) {
+      photoSheet = <AlbumSheet location={params.location} />
+    }
+
+    let cities = [];
+
+    if(this.state.locations) {
+      for(let city of this.state.locations) {
+        cities.push(
+          <div key={city.id} className='cityLabel' style={{top: city.mapPositionY/10 + '%', left: city.mapPositionX/10 + '%'}}>
+            <NavLink to={`/${city.id}`}><img src='/images/RedDot.png'/></NavLink>
+            <span>{city.name}</span>
+          </div>
+          )
+      }
+    }
+
     return (
       <div className=''>
         <div className='title'>
           <img src='/images/Title.png'/>
         </div>
+        {photoSheet}
         <div className='mapWrapper'>
           <div className='europeMap'>
-            <div className='cityLabel'>
-              <a href=''><img src='/images/Star.png'/></a>
-              <span>Budapest</span>
-            </div>
+            {cities}
           </div>
         </div>
       </div>
     );
   }
 }
-
 
 
 function mapStateToProps(state) {
