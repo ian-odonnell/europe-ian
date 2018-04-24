@@ -22,21 +22,57 @@ body {
 
 /* Europe Ian title */
 .title {
+  width: 100%;
   text-align: center;
   margin-top: 2vh;
   margin-bottom: 2vh;
 }
 
-.title img {
+img.titleimage {
   width: 30vw;
+}
+
+img.orcimage {
+  width: 10vw;
+  position: absolute;
+  right: 0;
 }
 
 /* Interactive map of Europe */
 .mapWrapper {
-  max-width: 70vw;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2vh;
+}
+
+@media (max-aspect-ratio: 1200/1000) {
+  .mapWrapper {
+    max-width: 90vw;
+  }
+}
+
+@media (min-aspect-ratio: 1200/1000) {
+  .mapWrapper {
+    max-width: 80vw;
+  }
+}
+
+@media (min-aspect-ratio: 1330/1000) {
+  .mapWrapper {
+    max-width: 70vw;
+  }
+}
+
+@media (min-aspect-ratio: 1500/1000) {
+  .mapWrapper {
+    max-width: 60vw;
+  }
+}
+
+@media (min-aspect-ratio: 1700/1000) {
+  .mapWrapper {
+    max-width: 50vw;
+  }
 }
 
 .europeMap {
@@ -71,9 +107,24 @@ body {
 }
   
 
+/* Footer */
+div.leftfooter {
+  width: 40%;
+  max-width: 200px;
+  float: left;
+  text-align: left;
+}
 
+div.rightfooter {
+  width: 40%;
+  max-width: 200px;
+  float: right;
+  text-align: right;
+}
 
-
+div.footer div img {
+  max-width: 100%;
+}
 
 
 

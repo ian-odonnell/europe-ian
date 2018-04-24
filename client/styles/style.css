@@ -40,10 +40,39 @@ img.orcimage {
 
 /* Interactive map of Europe */
 .mapWrapper {
-  max-width: 70vw;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2vh;
+}
+
+@media (max-aspect-ratio: 1200/1000) {
+  .mapWrapper {
+    max-width: 90vw;
+  }
+}
+
+@media (min-aspect-ratio: 1200/1000) {
+  .mapWrapper {
+    max-width: 80vw;
+  }
+}
+
+@media (min-aspect-ratio: 1330/1000) {
+  .mapWrapper {
+    max-width: 70vw;
+  }
+}
+
+@media (min-aspect-ratio: 1500/1000) {
+  .mapWrapper {
+    max-width: 60vw;
+  }
+}
+
+@media (min-aspect-ratio: 1700/1000) {
+  .mapWrapper {
+    max-width: 50vw;
+  }
 }
 
 .europeMap {
