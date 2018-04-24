@@ -38,6 +38,7 @@ var uploading = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, __dirname + '/client/static/upload');
+//      cb(null, __dirname + '/../../client/static/upload');
     },
     filename: function (req, file, cb) {
       var parts = file.originalname.split('.');
@@ -50,6 +51,8 @@ var uploading = multer({
 router.post('/uploadimage',
     uploading.single('image'),
     async function (req, res) {
+      if(req.body.uploadpwd != "106Points") throw "Invalid password";
+      
       // req.user now contains details about the authenticated user
       // TODO: Introduce a proper config module
       var env = process.env.NODE_ENV || "development";
@@ -77,6 +80,7 @@ router.post('/uploadimage',
       }
       zoomImage.write(req.file.path.replace('-original', '-zoom'));
       var zoomUrl = BASE_IMAGE_URL + req.file.filename.replace('-original', '-zoom');
+
 
       var photoData = { timestamp: Date.now(), thumbUrl, zoomUrl, caption: req.body.caption, description: req.body.description, locationId: req.body.locationId };
       var dbPhoto = await Photo.createPhoto(photoData);

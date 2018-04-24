@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import AlbumSheet from './albumSheet';
 import LocalApi from '../api/localApi';
-import ImageUpload from './imageUpload';
 
 class EuropeMap extends React.Component {
   constructor(props, context) {
@@ -53,7 +52,6 @@ class EuropeMap extends React.Component {
             {cities}
           </div>
         </div>
-        <ImageUpload />
       </div>
     );
   }
