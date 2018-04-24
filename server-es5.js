@@ -10233,13 +10233,14 @@ var AlbumSheet = function (_React$Component) {
               case 4:
                 photos = _context.sent;
 
+                console.log("Images to load: " + photos.length);
                 this.setState({
                   photos: photos.sort(function (a, b) {
                     return Date.parse(a.timestamp) - Date.parse(b.timestamp);
                   }), imagesToLoad: photos.length > 0
                 });
 
-              case 6:
+              case 7:
               case 'end':
                 return _context.stop();
             }
@@ -10320,11 +10321,7 @@ var AlbumSheet = function (_React$Component) {
         return _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement(
-            'div',
-            { className: 'loader' },
-            'Loading...'
-          ),
+          _react2.default.createElement('div', { className: 'loader' }),
           _react2.default.createElement(
             'div',
             { className: 'albumSheet', style: { display: "none" } },

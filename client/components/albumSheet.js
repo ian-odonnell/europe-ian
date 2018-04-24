@@ -31,6 +31,7 @@ class AlbumSheet extends React.Component {
       console.log('Load photos for id ' + locationId);
     this.setState({ photos: null });
     var photos = await LocalApi.getLocationPhotos(locationId);
+    console.log("Images to load: " + photos.length);
     this.setState({
       photos: photos.sort((a, b) => {
         return Date.parse(a.timestamp) - Date.parse(b.timestamp);
@@ -95,7 +96,6 @@ class AlbumSheet extends React.Component {
       return (
         <div>
           <div className="loader">
-            Loading...
           </div>
           <div className="albumSheet" style={{ display: "none" }}>
             {photoList}
