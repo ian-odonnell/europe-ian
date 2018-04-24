@@ -37,7 +37,7 @@ router.get('/photos/:locationId', async function(req, res) {
 var uploading = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, __dirname + '/../../client/static/upload');
+      cb(null, __dirname + '/client/static/upload');
     },
     filename: function (req, file, cb) {
       var parts = file.originalname.split('.');

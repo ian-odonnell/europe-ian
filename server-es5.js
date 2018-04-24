@@ -11053,7 +11053,7 @@ router.get('/photos/:locationId', function () {
 var uploading = (0, _multer2.default)({
   storage: _multer2.default.diskStorage({
     destination: function destination(req, file, cb) {
-      cb(null, __dirname + '/../../client/static/upload');
+      cb(null, __dirname + '/client/static/upload');
     },
     filename: function filename(req, file, cb) {
       var parts = file.originalname.split('.');
