@@ -9,6 +9,10 @@ localApi.getLocations = async () => {
 
 localApi.getLocationPhotos = async (locationId) => {
   return await localApi.get(`/admin/photos/${locationId}`);
-} 
+}
+
+localApi.uploadPhoto = async(photoData) => {
+  return await localApi.postFormData('/admin/uploadimage', photoData);
+}
 
 export default localApi;

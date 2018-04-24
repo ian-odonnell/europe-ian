@@ -7519,6 +7519,31 @@ localApi.getLocationPhotos = function () {
   };
 }();
 
+localApi.uploadPhoto = function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(photoData) {
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.next = 2;
+            return localApi.postFormData('/admin/uploadimage', photoData);
+
+          case 2:
+            return _context3.abrupt('return', _context3.sent);
+
+          case 3:
+          case 'end':
+            return _context3.stop();
+        }
+      }
+    }, _callee3, undefined);
+  }));
+
+  return function (_x2) {
+    return _ref3.apply(this, arguments);
+  };
+}();
+
 exports.default = localApi;
 
 /***/ }),
@@ -44090,6 +44115,10 @@ var _localApi = __webpack_require__(174);
 
 var _localApi2 = _interopRequireDefault(_localApi);
 
+var _imageUpload = __webpack_require__(472);
+
+var _imageUpload2 = _interopRequireDefault(_imageUpload);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -44219,7 +44248,8 @@ var EuropeMap = function (_React$Component) {
             { className: 'europeMap' },
             cities
           )
-        )
+        ),
+        _react2.default.createElement(_imageUpload2.default, null)
       );
     }
   }]);
@@ -45629,7 +45659,7 @@ var ExternalApi = exports.ExternalApi = function () {
   }
 
   _createClass(ExternalApi, [{
-    key: 'get',
+    key: "get",
     value: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(relativeUrl) {
         var fullUrl;
@@ -45648,10 +45678,10 @@ var ExternalApi = exports.ExternalApi = function () {
                 return $.getJSON(fullUrl, { _: new Date().getTime() });
 
               case 4:
-                return _context.abrupt('return', _context.sent);
+                return _context.abrupt("return", _context.sent);
 
               case 5:
-              case 'end':
+              case "end":
                 return _context.stop();
             }
           }
@@ -45665,7 +45695,7 @@ var ExternalApi = exports.ExternalApi = function () {
       return get;
     }()
   }, {
-    key: 'post',
+    key: "post",
     value: function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(relativeUrl, body) {
         var fullUrl;
@@ -45683,10 +45713,10 @@ var ExternalApi = exports.ExternalApi = function () {
                 return $.post(fullUrl, body);
 
               case 4:
-                return _context2.abrupt('return', _context2.sent);
+                return _context2.abrupt("return", _context2.sent);
 
               case 5:
-              case 'end':
+              case "end":
                 return _context2.stop();
             }
           }
@@ -45698,6 +45728,54 @@ var ExternalApi = exports.ExternalApi = function () {
       }
 
       return post;
+    }()
+  }, {
+    key: "postFormData",
+    value: function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(relativeUrl, formData, authToken) {
+        var fullUrl, headers;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                fullUrl = relativeUrl;
+
+                if (this.baseUrl && this.baseUrl.length > 0) {
+                  fullUrl = (0, _urlJoin2.default)(this.baseUrl, relativeUrl);
+                }
+
+                headers = {};
+
+                if (authToken) {
+                  headers.Authorization = "Bearer " + authToken;
+                }
+
+                _context3.next = 6;
+                return $.ajax({
+                  type: "POST",
+                  url: fullUrl,
+                  data: formData,
+                  processData: false,
+                  contentType: false,
+                  headers: headers
+                });
+
+              case 6:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function postFormData(_x4, _x5, _x6) {
+        return _ref3.apply(this, arguments);
+      }
+
+      return postFormData;
     }()
   }]);
 
@@ -48553,6 +48631,283 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAMAAAAP
 
 }(jQuery));
 
+
+/***/ }),
+/* 472 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(10);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(382);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _localApi = __webpack_require__(174);
+
+var _localApi2 = _interopRequireDefault(_localApi);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ImageUpload = function (_React$Component) {
+  _inherits(ImageUpload, _React$Component);
+
+  function ImageUpload(props, context) {
+    _classCallCheck(this, ImageUpload);
+
+    var _this = _possibleConstructorReturn(this, (ImageUpload.__proto__ || Object.getPrototypeOf(ImageUpload)).call(this, props, context));
+
+    _this.state = { locations: [], selectedLocationId: undefined, message: "" };
+    return _this;
+  }
+
+  _createClass(ImageUpload, [{
+    key: 'componentDidMount',
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var locations, defaultLocationId;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _localApi2.default.getLocations();
+
+              case 2:
+                locations = _context.sent;
+                defaultLocationId = undefined;
+
+                locations.forEach(function (location) {
+                  // Default to the latest location with an uploaded photo
+                  // That makes it easy to keep uploading photos to the same location or to move onto the next
+                  if (location.photosExist) {
+                    defaultLocationId = location.id;
+                  }
+                });
+
+                this.setState({ locations: locations, selectedLocationId: defaultLocationId });
+
+              case 6:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function componentDidMount() {
+        return _ref.apply(this, arguments);
+      }
+
+      return componentDidMount;
+    }()
+  }, {
+    key: 'setMessage',
+    value: function setMessage(message) {
+      this.setState({ locations: this.state.locations, selectedLocationId: this.state.selectedLocationId, message: message });
+    }
+  }, {
+    key: 'submitForm',
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var formData;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                console.log("Hello?");
+                this.setMessage("Uploading photo...");
+                formData = new FormData(_reactDom2.default.findDOMNode(this.refs.uploadForm));
+
+                console.log(formData);
+                _context2.prev = 4;
+                _context2.next = 7;
+                return _localApi2.default.uploadPhoto(formData);
+
+              case 7:
+                this.setMessage("Upload complete!");
+                _reactDom2.default.findDOMNode(this.refs.captionInput).value = "";
+                _reactDom2.default.findDOMNode(this.refs.descriptionInput).value = "";
+                _reactDom2.default.findDOMNode(this.refs.fileInput).value = "";
+                _context2.next = 17;
+                break;
+
+              case 13:
+                _context2.prev = 13;
+                _context2.t0 = _context2['catch'](4);
+
+                console.log(_context2.t0);
+                this.setMessage("Upload failed!");
+
+              case 17:
+                return _context2.abrupt('return', false);
+
+              case 18:
+              case 'end':
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[4, 13]]);
+      }));
+
+      function submitForm() {
+        return _ref2.apply(this, arguments);
+      }
+
+      return submitForm;
+    }()
+  }, {
+    key: 'changeLocation',
+    value: function changeLocation() {
+      var newLocationId = _reactDom2.default.findDOMNode(this.refs.locationSelection).value;
+      this.setState({ locations: this.state.locations, selectedLocationId: newLocationId });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var locationOptions = [];
+      this.state.locations.forEach(function (location) {
+        locationOptions.push(_react2.default.createElement(
+          'option',
+          { key: location.id, value: location.id },
+          location.name
+        ));
+      });
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'imageUpload' },
+        _react2.default.createElement(
+          'form',
+          { ref: 'uploadForm' },
+          _react2.default.createElement(
+            'table',
+            null,
+            _react2.default.createElement(
+              'tbody',
+              null,
+              _react2.default.createElement(
+                'tr',
+                null,
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  'Admin password:'
+                ),
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  _react2.default.createElement('input', { ref: 'password', name: 'uploadpwd', type: 'password' })
+                )
+              ),
+              _react2.default.createElement(
+                'tr',
+                null,
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  'Select an image to upload:'
+                ),
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  _react2.default.createElement('input', { ref: 'fileInput', type: 'file', name: 'image' })
+                )
+              ),
+              _react2.default.createElement(
+                'tr',
+                null,
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  'Caption:'
+                ),
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  _react2.default.createElement('input', { ref: 'captionInput', name: 'caption' })
+                )
+              ),
+              _react2.default.createElement(
+                'tr',
+                null,
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  'Description:'
+                ),
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  _react2.default.createElement('input', { ref: 'descriptionInput', name: 'description' })
+                )
+              ),
+              _react2.default.createElement(
+                'tr',
+                null,
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  'Location:'
+                ),
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  _react2.default.createElement(
+                    'select',
+                    { ref: 'locationSelection', name: 'locationId', value: this.state.selectedLocationId, onChange: this.changeLocation.bind(this) },
+                    locationOptions
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'tr',
+                null,
+                _react2.default.createElement(
+                  'td',
+                  { colSpan: '2' },
+                  _react2.default.createElement(
+                    'button',
+                    { type: 'button', onClick: this.submitForm.bind(this) },
+                    'Upload Image'
+                  )
+                )
+              )
+            )
+          )
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          'span',
+          null,
+          this.state.message
+        )
+      );
+    }
+  }]);
+
+  return ImageUpload;
+}(_react2.default.Component);
+
+exports.default = ImageUpload;
 
 /***/ })
 /******/ ]);
