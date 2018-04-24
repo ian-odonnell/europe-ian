@@ -1,7 +1,7 @@
 /* Fonts */
 @font-face {
-  font-family: 'Atlantis';
-  src: url('/fonts/Atlantis.ttf');
+  font-family: 'Hand';
+  src: url('/fonts/Hand.ttf');
 }
 
 /* General styles */
@@ -54,16 +54,17 @@ body {
   display: none;
 }
 
-.cityLabel a:hover + span {
+.cityLabel a:hover ~ span {
   text-shadow: #999 1px 1px;
-  font-family: 'Atlantis';
-  font-size: xx-large;
+  font-family: 'Hand';
+  font-size: 3vw;
   display: block;
   position: absolute;
   top: -50px;
   left: -50px;
   width: 100px;
   text-align: center;
+  z-index: -999;
 }
   
 
@@ -168,7 +169,7 @@ div.polaroidWrapper figure figcaption{
   padding-top: 10px;
   display: block;
   text-align: center;
-  font-family: 'Atlantis';
+  font-family: 'Hand';
   font-size:1.5em;
   color: #000000;
   letter-spacing: 0.09em;
@@ -179,7 +180,7 @@ div.polaroidWrapper figure figcaption{
   margin-top: 10px;
   font-size: x-large;
   text-align: center;
-  font-family: 'Atlantis';
+  font-family: 'Hand';
 }
 
 .fancybox-title a {

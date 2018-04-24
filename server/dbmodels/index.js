@@ -33,6 +33,7 @@ var toLink = [];
 // so dropped back to this hard-coded list of models for now
 var models = [
   require('./location'),
+  require('./locationView'),
   require('./photo')
 ];
 

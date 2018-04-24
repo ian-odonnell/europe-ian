@@ -4,7 +4,7 @@ import models from '../../dbmodels';
 
 exports.getAllLocations = () => {
   return new Promise((resolve) => {
-    var allLocations = models.location.findAll();
+    var allLocations = models.locationView.findAll();
     resolve(allLocations);
   });
 };

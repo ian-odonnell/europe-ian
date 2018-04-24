@@ -31,9 +31,10 @@ class EuropeMap extends React.Component {
 
     if(this.state.locations) {
       for(let city of this.state.locations) {
+        const dotImage = city.photosExist ? 'RedDot.png' : 'GreyDot.png';
         cities.push(
           <div key={city.id} className='cityLabel' style={{top: city.mapPositionY/10 + '%', left: city.mapPositionX/10 + '%'}}>
-            <NavLink to={`/${city.id}`}><img src='/images/RedDot.png'/></NavLink>
+            <NavLink to={`/${city.id}`}><img src={`/images/${dotImage}`}/></NavLink>
             <span>{city.name}</span>
           </div>
           )
