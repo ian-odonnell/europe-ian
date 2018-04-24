@@ -22,13 +22,20 @@ body {
 
 /* Europe Ian title */
 .title {
+  width: 100%;
   text-align: center;
   margin-top: 2vh;
   margin-bottom: 2vh;
 }
 
-.title img {
+img.titleimage {
   width: 30vw;
+}
+
+img.orcimage {
+  width: 10vw;
+  position: absolute;
+  right: 0;
 }
 
 /* Interactive map of Europe */
@@ -71,9 +78,24 @@ body {
 }
   
 
+/* Footer */
+div.leftfooter {
+  width: 40%;
+  max-width: 200px;
+  float: left;
+  text-align: left;
+}
 
+div.rightfooter {
+  width: 40%;
+  max-width: 200px;
+  float: right;
+  text-align: right;
+}
 
-
+div.footer div img {
+  max-width: 100%;
+}
 
 
 

@@ -44,12 +44,25 @@ class EuropeMap extends React.Component {
     return (
       <div className=''>
         <div className='title'>
-          <img src='/images/Title.png'/>
+          <img className='titleimage' src='/images/Title.png'/>
+          <img className='orcimage' src='/images/OrcPhotoPlain.jpg'/>
         </div>
         {photoSheet}
         <div className='mapWrapper'>
           <div className='europeMap'>
             {cities}
+          </div>
+        </div>
+        <div className='footer'>
+          <div className='leftfooter'>
+            <a href='http://www.lifeontrains.com/'>
+              <img src='/images/BlizzConPhoto.jpg'/>
+            </a>
+          </div>
+          <div className='rightfooter'>
+            <a href='http://www.lifeontrains.com/Album/35'>
+              <img src='/images/ThamesPathPhoto.jpg'/>
+            </a>
           </div>
         </div>
       </div>
