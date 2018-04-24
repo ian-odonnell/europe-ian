@@ -3046,7 +3046,7 @@ var toLink = [];
 
 // TODO: Maybe file scan the current directory (and children?) - Sequelize's import functionality was struggling once deployed to Azure,
 // so dropped back to this hard-coded list of models for now
-var models = [__webpack_require__(354), __webpack_require__(361), __webpack_require__(355)];
+var models = [__webpack_require__(354), __webpack_require__(355), __webpack_require__(356)];
 
 models.forEach(function (model) {
   var sequelizeModel = model(sequelize, _sequelize2.default);
@@ -9805,7 +9805,7 @@ var _admin = __webpack_require__(352);
 
 var _admin2 = _interopRequireDefault(_admin);
 
-var _bcryptNodejs = __webpack_require__(359);
+var _bcryptNodejs = __webpack_require__(360);
 
 var _bcryptNodejs2 = _interopRequireDefault(_bcryptNodejs);
 
@@ -9840,7 +9840,7 @@ app.set('views', _path2.default.join(__dirname, './client/views'));
 app.use(_express2.default.static(_path2.default.join(__dirname, './client/static')));
 
 // Set up session handling and authentication
-var MSSQLStore = __webpack_require__(360)(_expressSession2.default);
+var MSSQLStore = __webpack_require__(361)(_expressSession2.default);
 var sqlConfig = {
   user: _config2.default.databaseUser,
   password: _config2.default.databasePassword,
@@ -10567,15 +10567,15 @@ var _dbmodels = __webpack_require__(92);
 
 var _dbmodels2 = _interopRequireDefault(_dbmodels);
 
-var _requestPromise = __webpack_require__(356);
+var _requestPromise = __webpack_require__(357);
 
 var _requestPromise2 = _interopRequireDefault(_requestPromise);
 
-var _Location = __webpack_require__(357);
+var _Location = __webpack_require__(358);
 
 var _Location2 = _interopRequireDefault(_Location);
 
-var _Photo = __webpack_require__(358);
+var _Photo = __webpack_require__(359);
 
 var _Photo2 = _interopRequireDefault(_Photo);
 
@@ -10715,6 +10715,37 @@ module.exports = function (sequelize, DataTypes) {
 
 
 module.exports = function (sequelize, DataTypes) {
+
+  var LocationView = sequelize.define("locationView", {
+    id: { type: DataTypes.INTEGER, primaryKey: true },
+    name: { type: DataTypes.STRING },
+    mapPositionX: { type: DataTypes.INTEGER },
+    mapPositionY: { type: DataTypes.INTEGER },
+    sortOrder: { type: DataTypes.INTEGER },
+    photosExist: { type: DataTypes.INTEGER }
+  }, {
+    tableName: "v_Locations",
+    timestamps: false
+  });
+
+  LocationView.sync = function () {
+    Promise.resolve();
+  };
+  LocationView.drop = function () {
+    Promise.resolve();
+  };
+
+  return LocationView;
+};
+
+/***/ }),
+/* 356 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (sequelize, DataTypes) {
   var Photo = sequelize.define("photo", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     thumbUrl: { type: DataTypes.STRING },
@@ -10733,13 +10764,13 @@ module.exports = function (sequelize, DataTypes) {
 };
 
 /***/ }),
-/* 356 */
+/* 357 */
 /***/ (function(module, exports) {
 
 module.exports = require("request-promise");
 
 /***/ }),
-/* 357 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10767,7 +10798,7 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 358 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10795,47 +10826,16 @@ exports.truncate = function () {
 };
 
 /***/ }),
-/* 359 */
+/* 360 */
 /***/ (function(module, exports) {
 
 module.exports = require("bcrypt-nodejs");
 
 /***/ }),
-/* 360 */
+/* 361 */
 /***/ (function(module, exports) {
 
 module.exports = require("connect-mssql");
-
-/***/ }),
-/* 361 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function (sequelize, DataTypes) {
-
-  var LocationView = sequelize.define("locationView", {
-    id: { type: DataTypes.INTEGER, primaryKey: true },
-    name: { type: DataTypes.STRING },
-    mapPositionX: { type: DataTypes.INTEGER },
-    mapPositionY: { type: DataTypes.INTEGER },
-    sortOrder: { type: DataTypes.INTEGER },
-    photosExist: { type: DataTypes.INTEGER }
-  }, {
-    tableName: "v_Locations",
-    timestamps: false
-  });
-
-  LocationView.sync = function () {
-    Promise.resolve();
-  };
-  LocationView.drop = function () {
-    Promise.resolve();
-  };
-
-  return LocationView;
-};
 
 /***/ })
 /******/ ]);

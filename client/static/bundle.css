@@ -1,7 +1,7 @@
 /* Fonts */
 @font-face {
-  font-family: 'Atlantis';
-  src: url('/fonts/Atlantis.ttf');
+  font-family: 'Hand';
+  src: url('/fonts/Hand.ttf');
 }
 
 /* General styles */
@@ -23,6 +23,7 @@ body {
 /* Europe Ian title */
 .title {
   text-align: center;
+  margin-top: 2vh;
   margin-bottom: 2vh;
 }
 
@@ -35,12 +36,14 @@ body {
   max-width: 70vw;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 2vh;
 }
 
 .europeMap {
-  background-image: url('/images/EuropeMap.png');
+  background-image: url('/images/EuropeBlue.jpg');
+  box-shadow: #024 0 0 10px 10px;
   background-size: cover;
-  padding-bottom: 72.1%;
+  padding-bottom: 76.6%;
   position: relative;
 }
 
@@ -53,16 +56,18 @@ body {
   display: none;
 }
 
-.cityLabel a:hover + span {
-  text-shadow: #999 1px 1px;
-  font-family: 'Atlantis';
-  font-size: xx-large;
+.cityLabel a:hover ~ span {
+  color: #000;
+  text-shadow: #fff 1px 1px;
+  font-family: 'Hand';
+  font-size: 4vw;
   display: block;
   position: absolute;
-  top: -50px;
-  left: -50px;
-  width: 100px;
+  top: -4.25vw;
+  left: -10vw;
+  width: 20vw;
   text-align: center;
+  z-index: -999;
 }
   
 
@@ -76,8 +81,8 @@ body {
 
 
 div.albumSheet {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  text-align: center;
+  padding: 20px;
   overflow: hidden;
 }
 
@@ -167,7 +172,7 @@ div.polaroidWrapper figure figcaption{
   padding-top: 10px;
   display: block;
   text-align: center;
-  font-family: 'DuDu';
+  font-family: 'Hand';
   font-size:1.5em;
   color: #000000;
   letter-spacing: 0.09em;
@@ -178,7 +183,7 @@ div.polaroidWrapper figure figcaption{
   margin-top: 10px;
   font-size: x-large;
   text-align: center;
-  font-family: 'DuDu';
+  font-family: 'Hand';
 }
 
 .fancybox-title a {
@@ -187,4 +192,85 @@ div.polaroidWrapper figure figcaption{
 }
 
 
-/*# sourceMappingURL=bundle.css.map*/
+
+.loader {
+  color: #000000;
+  opacity: 0.5;
+  font-size: 90px;
+  text-indent: -9999em;
+  overflow: hidden;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  margin: 72px auto;
+  position: relative;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+  animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+}
+@-webkit-keyframes load6 {
+  0% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+  5%,
+  95% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+  10%,
+  59% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+  }
+  20% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+  }
+  38% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+  }
+  100% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+}
+@keyframes load6 {
+  0% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+  5%,
+  95% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+  10%,
+  59% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+  }
+  20% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+  }
+  38% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+  }
+  100% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+}
+@-webkit-keyframes round {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes round {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
