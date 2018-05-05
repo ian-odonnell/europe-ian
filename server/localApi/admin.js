@@ -45,7 +45,7 @@ var uploading = multer({
       cb(null, UUID.generate().substring(0, 8) + '-original.' + parts[parts.length - 1]);
     }
   }),
-  limits: { fileSize: 2000000 }
+  limits: { fileSize: 5000000 }
 });
 
 router.post('/uploadimage',

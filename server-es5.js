@@ -11087,7 +11087,7 @@ var uploading = (0, _multer2.default)({
       cb(null, _UUID2.default.generate().substring(0, 8) + '-original.' + parts[parts.length - 1]);
     }
   }),
-  limits: { fileSize: 2000000 }
+  limits: { fileSize: 5000000 }
 });
 
 router.post('/uploadimage', uploading.single('image'), function () {
