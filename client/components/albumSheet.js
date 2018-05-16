@@ -4,6 +4,7 @@ import LocalApi from '../api/localApi';
 class AlbumSheet extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.alreadyLoading = false;
     this.state = { photos: null, imagesToLoad: false };
   }
 
@@ -21,22 +22,27 @@ class AlbumSheet extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-      console.log('will receive props');
-      console.log(newProps);
-      console.log(newProps.Location);
-      this.loadPhotosForLocation(newProps.location);
+    console.log('will receive props');
+    console.log(newProps);
+    console.log(newProps.Location);
+    this.loadPhotosForLocation(newProps.location);
   }
 
   async loadPhotosForLocation(locationId) {
-      console.log('Load photos for id ' + locationId);
-    this.setState({ photos: null });
-    var photos = await LocalApi.getLocationPhotos(locationId);
-    console.log("Images to load: " + photos.length);
-    this.setState({
-      photos: photos.sort((a, b) => {
-        return Date.parse(a.timestamp) - Date.parse(b.timestamp);
-      }), imagesToLoad: (photos.length > 0)
-    });
+    console.log('Load photos for id ' + locationId + ' loading: ' + this.alreadyLoading);
+    if (!this.alreadyLoading) {
+      this.alreadyLoading = true;
+      this.setState({ photos: null });
+      var photos = await LocalApi.getLocationPhotos(locationId);
+      console.log("Images to load: " + photos.length);
+      this.setState({
+        photos: photos.sort((a, b) => {
+          return Date.parse(a.timestamp) - Date.parse(b.timestamp);
+        }), imagesToLoad: (photos.length > 0)
+      });
+      this.alreadyLoading = false;
+      console.log('Loaded');
+    }
   }
 
   componentDidUpdate() {

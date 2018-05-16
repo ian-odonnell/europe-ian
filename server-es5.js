@@ -10243,6 +10243,7 @@ var AlbumSheet = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (AlbumSheet.__proto__ || Object.getPrototypeOf(AlbumSheet)).call(this, props, context));
 
+    _this.alreadyLoading = false;
     _this.state = { photos: null, imagesToLoad: false };
     return _this;
   }
@@ -10281,12 +10282,19 @@ var AlbumSheet = function (_React$Component) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log('Load photos for id ' + locationId);
+                console.log('Load photos for id ' + locationId + ' loading: ' + this.alreadyLoading);
+
+                if (this.alreadyLoading) {
+                  _context.next = 11;
+                  break;
+                }
+
+                this.alreadyLoading = true;
                 this.setState({ photos: null });
-                _context.next = 4;
+                _context.next = 6;
                 return _localApi2.default.getLocationPhotos(locationId);
 
-              case 4:
+              case 6:
                 photos = _context.sent;
 
                 console.log("Images to load: " + photos.length);
@@ -10295,8 +10303,10 @@ var AlbumSheet = function (_React$Component) {
                     return Date.parse(a.timestamp) - Date.parse(b.timestamp);
                   }), imagesToLoad: photos.length > 0
                 });
+                this.alreadyLoading = false;
+                console.log('Loaded');
 
-              case 7:
+              case 11:
               case 'end':
                 return _context.stop();
             }
